@@ -1,7 +1,7 @@
 package com.example.prettyguardian.block;
 
 import com.example.prettyguardian.item.ModItem;
-import com.max.prettyguardian.PrettyGuardian;
+import com.example.prettyguardian.PrettyGuardian;
 import com.example.prettyguardian.block.custom.PicnicBasketBlock;
 import com.example.prettyguardian.block.custom.SeaShell;
 import com.example.prettyguardian.block.custom.SilverCrystalBlock;
@@ -18,7 +18,7 @@ import com.example.prettyguardian.block.custom.plush.PlushiesBlock;
 import com.example.prettyguardian.block.custom.plush.RandomPlushBoxBlock;
 import com.example.prettyguardian.block.custom.table.GemPolishingStationBlock;
 import com.example.prettyguardian.block.custom.table.MoonAltarBlock;
-import com.max.prettyguardian.worldgen.tree.TreeGrowers;
+import com.example.prettyguardian.worldgen.tree.TreeGrowers;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
@@ -28,12 +28,13 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-import static com.max.prettyguardian.item.PrettyGuardianItem.ITEMS;
+import static com.example.prettyguardian.item.ModItem.ITEMS;
 
 public class ModBlock {
     private ModBlock() {
@@ -41,8 +42,6 @@ public class ModBlock {
     }
 
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(PrettyGuardian.MOD_ID);
-
-
 
     public static final DeferredBlock<Block> CHOCOLATE_CAKE = registryBlock("chocolate_cake", () -> new BaseCake(cakeProperties()));
     public static final DeferredBlock<Block> CREAM_CAKE = registryBlock("cream_cake", () -> new BaseCake(cakeProperties()));

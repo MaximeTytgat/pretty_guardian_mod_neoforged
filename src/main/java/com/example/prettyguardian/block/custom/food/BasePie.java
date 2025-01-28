@@ -1,6 +1,6 @@
 package com.example.prettyguardian.block.custom.food;
 
-import com.max.prettyguardian.particle.ModParticles;
+import com.example.prettyguardian.particle.ModParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;

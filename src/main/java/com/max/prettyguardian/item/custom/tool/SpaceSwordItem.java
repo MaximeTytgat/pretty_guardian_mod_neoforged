@@ -1,6 +1,6 @@
 package com.max.prettyguardian.item.custom.tool;
 
-import com.max.prettyguardian.enchantment.ModEnchantments;
+import com.example.prettyguardian.enchantment.ModEnchantments;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;

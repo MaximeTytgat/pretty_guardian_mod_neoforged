@@ -1,16 +1,16 @@
 package com.max.prettyguardian.event;
 
-import com.max.prettyguardian.PrettyGuardian;
+import com.example.prettyguardian.PrettyGuardian;
 import com.max.prettyguardian.blocks.PrettyGuardianBlock;
-import com.max.prettyguardian.blocks.entity.ModBlockEntities;
-import com.max.prettyguardian.blocks.entity.renderer.MoonAltarBlockEntityRenderer;
+import com.example.prettyguardian.block.entity.ModBlockEntities;
+import com.example.prettyguardian.block.entity.renderer.MoonAltarBlockEntityRenderer;
 import com.max.prettyguardian.entity.client.butterfly.ButterflyModel;
 import com.max.prettyguardian.entity.client.celestialrabbit.CelestialRabbitModel;
 import com.max.prettyguardian.entity.client.ModModelLayers;
 import com.max.prettyguardian.entity.client.celestialrabbit.CelestialRabbitOnShoulderLayer;
 import com.max.prettyguardian.entity.client.fairy.FairyModel;
-import com.max.prettyguardian.particle.ModParticles;
-import com.max.prettyguardian.particle.custom.*;
+import com.example.prettyguardian.particle.ModParticles;
+import com.example.prettyguardian.particle.custom.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.CowModel;
 import net.minecraft.client.renderer.BiomeColors;

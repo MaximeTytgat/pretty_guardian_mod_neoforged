@@ -2,12 +2,12 @@ package com.max.prettyguardian.item.custom.tool;
 
 
 import com.max.prettyguardian.item.client.EternalSilverCristalStaffRenderer;
-import com.max.prettyguardian.util.EnchantmentUtils;
-import com.max.prettyguardian.util.ModTags;
-import com.max.prettyguardian.sound.ModSounds;
+import com.example.prettyguardian.util.EnchantmentUtils;
+import com.example.prettyguardian.util.ModTags;
+import com.example.prettyguardian.sound.ModSounds;
 import com.max.prettyguardian.item.PrettyGuardianItem;
 import com.max.prettyguardian.item.custom.projectiles.StarLightItem;
-import com.max.prettyguardian.worldgen.entity.projectile.StarLightEntity;
+import com.example.prettyguardian.worldgen.entity.projectile.StarLightEntity;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundSource;
@@ -21,7 +21,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;

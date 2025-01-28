@@ -1,11 +1,11 @@
 package com.max.prettyguardian.client.renderer;
 
-import com.max.prettyguardian.PrettyGuardian;
+import com.example.prettyguardian.PrettyGuardian;
 import com.max.prettyguardian.client.renderer.entity.projectiles.BubbleRenderer;
 import com.max.prettyguardian.client.renderer.entity.projectiles.CuteArrowRenderer;
 import com.max.prettyguardian.client.renderer.entity.projectiles.HeartRenderer;
 import com.max.prettyguardian.client.renderer.entity.projectiles.StarLightRenderer;
-import com.max.prettyguardian.worldgen.entity.ModEntityType;
+import com.example.prettyguardian.worldgen.entity.ModEntityType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;

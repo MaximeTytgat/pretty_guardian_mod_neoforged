@@ -1,6 +1,6 @@
 package com.example.prettyguardian.block.custom.plush;
 
-import com.max.prettyguardian.blocks.PrettyGuardianBlock;
+import com.example.prettyguardian.block.ModBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.Containers;
@@ -59,23 +59,23 @@ public class RandomPlushBoxBlock extends Block {
             boolean b
     ) {
         Block[] plushBlocks = {
-                PrettyGuardianBlock.MYMELODY_PLUSH.get(),
-                PrettyGuardianBlock.KUROMI_PLUSH.get(),
-                PrettyGuardianBlock.CAVALIER_PLUSH.get(),
-                PrettyGuardianBlock.TEDDYBEAR_PLUSH.get(),
-                PrettyGuardianBlock.RABBIT_PLUSH.get(),
-                PrettyGuardianBlock.COW_PLUSH.get(),
-                PrettyGuardianBlock.CINNAMOROLL_PLUSH.get(),
-                PrettyGuardianBlock.BABYYODA_PLUSH.get(),
-                PrettyGuardianBlock.CAPPUCCINO_PLUSH.get(),
-                PrettyGuardianBlock.CHIFFON_PLUSH.get(),
-                PrettyGuardianBlock.EXPRESSO_PLUSH.get(),
-                PrettyGuardianBlock.MOCHA_PLUSH.get(),
-                PrettyGuardianBlock.PRINCESS_PORON_PLUSH.get(),
+                ModBlock.MYMELODY_PLUSH.get(),
+                ModBlock.KUROMI_PLUSH.get(),
+                ModBlock.CAVALIER_PLUSH.get(),
+                ModBlock.TEDDYBEAR_PLUSH.get(),
+                ModBlock.RABBIT_PLUSH.get(),
+                ModBlock.COW_PLUSH.get(),
+                ModBlock.CINNAMOROLL_PLUSH.get(),
+                ModBlock.BABYYODA_PLUSH.get(),
+                ModBlock.CAPPUCCINO_PLUSH.get(),
+                ModBlock.CHIFFON_PLUSH.get(),
+                ModBlock.EXPRESSO_PLUSH.get(),
+                ModBlock.MOCHA_PLUSH.get(),
+                ModBlock.PRINCESS_PORON_PLUSH.get(),
         };
 
         Block[] onePercentBlocks = {
-                PrettyGuardianBlock.PLUSH_BEAR_HUGE.get(),
+                ModBlock.PLUSH_BEAR_HUGE.get(),
         };
 
         if (level.random.nextInt(100) == 0) {

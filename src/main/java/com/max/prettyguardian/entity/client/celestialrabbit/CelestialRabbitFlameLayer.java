@@ -1,6 +1,6 @@
 package com.max.prettyguardian.entity.client.celestialrabbit;
 
-import com.max.prettyguardian.PrettyGuardian;
+import com.example.prettyguardian.PrettyGuardian;
 import com.max.prettyguardian.entity.custom.CelestialRabbitEntity;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;

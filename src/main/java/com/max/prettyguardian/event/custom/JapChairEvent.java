@@ -1,8 +1,8 @@
 package com.max.prettyguardian.event.custom;
 
-import com.max.prettyguardian.PrettyGuardian;
+import com.example.prettyguardian.PrettyGuardian;
 import com.example.prettyguardian.block.custom.furniture.JapChairBlock;
-import com.max.prettyguardian.worldgen.entity.ModEntityType;
+import com.example.prettyguardian.worldgen.entity.ModEntityType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.core.BlockPos;

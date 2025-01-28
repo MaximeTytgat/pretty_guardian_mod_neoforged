@@ -2,7 +2,7 @@ package com.max.prettyguardian.item.custom.tool;
 
 import com.max.prettyguardian.item.PrettyGuardianItem;
 import com.max.prettyguardian.item.custom.projectiles.BubbleItem;
-import com.max.prettyguardian.worldgen.entity.projectile.BubbleEntity;
+import com.example.prettyguardian.worldgen.entity.projectile.BubbleEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.AnimationUtils;
 import net.minecraft.client.model.HumanoidModel;

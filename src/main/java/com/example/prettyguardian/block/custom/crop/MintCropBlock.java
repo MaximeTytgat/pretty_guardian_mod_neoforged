@@ -1,5 +1,6 @@
 package com.example.prettyguardian.block.custom.crop;
 
+import com.example.prettyguardian.item.ModItem;
 import com.max.prettyguardian.item.PrettyGuardianItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
@@ -48,7 +49,7 @@ public class MintCropBlock extends CropBlock {
     }
     @Override
     protected @NotNull ItemLike getBaseSeedId() {
-        return PrettyGuardianItem.MINT_SEEDS.get();
+        return ModItem.MINT_SEEDS.get();
     }
 
     @Override
@@ -80,9 +81,9 @@ public class MintCropBlock extends CropBlock {
             level.setBlockAndUpdate(blockPos, blockState.setValue(AGE, 0));
             level.addDestroyBlockEffect(blockPos, blockState);
 
-            Block.popResource(level, blockPos, new ItemStack(PrettyGuardianItem.MINT.get()));
+            Block.popResource(level, blockPos, new ItemStack(ModItem.MINT.get()));
             if (bonusSeed == 1) {
-                Block.popResource(level, blockPos, new ItemStack(PrettyGuardianItem.MINT_SEEDS.get()));
+                Block.popResource(level, blockPos, new ItemStack(ModItem.MINT_SEEDS.get()));
             }
 
             return InteractionResult.SUCCESS;

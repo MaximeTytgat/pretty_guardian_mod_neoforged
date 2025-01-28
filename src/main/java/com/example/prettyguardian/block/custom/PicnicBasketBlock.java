@@ -1,6 +1,6 @@
 package com.example.prettyguardian.block.custom;
 
-import com.max.prettyguardian.blocks.entity.PicnicBasketBlockEntity;
+import com.example.prettyguardian.block.entity.PicnicBasketBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;

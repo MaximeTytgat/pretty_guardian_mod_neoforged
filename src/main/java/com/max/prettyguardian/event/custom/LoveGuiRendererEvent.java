@@ -3,7 +3,7 @@ package com.max.prettyguardian.event.custom;
 import com.max.prettyguardian.client.gui.sreens.LoveEffectHubOverlay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import com.max.prettyguardian.PrettyGuardian;
+import com.example.prettyguardian.PrettyGuardian;
 import net.minecraft.client.gui.LayeredDraw;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.common.Mod;

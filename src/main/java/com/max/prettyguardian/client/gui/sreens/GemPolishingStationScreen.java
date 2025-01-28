@@ -1,6 +1,6 @@
 package com.max.prettyguardian.client.gui.sreens;
 
-import com.max.prettyguardian.PrettyGuardian;
+import com.example.prettyguardian.PrettyGuardian;
 import com.max.prettyguardian.client.gui.sreens.inventory.GemPolishingStationMenu;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;

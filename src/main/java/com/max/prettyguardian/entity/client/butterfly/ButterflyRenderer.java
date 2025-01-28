@@ -1,6 +1,6 @@
 package com.max.prettyguardian.entity.client.butterfly;
 
-import com.max.prettyguardian.PrettyGuardian;
+import com.example.prettyguardian.PrettyGuardian;
 import com.max.prettyguardian.entity.client.ModModelLayers;
 import com.max.prettyguardian.entity.custom.ButterflyEntity;
 import com.google.common.collect.Maps;

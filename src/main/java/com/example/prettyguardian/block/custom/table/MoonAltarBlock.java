@@ -1,7 +1,7 @@
 package com.example.prettyguardian.block.custom.table;
 
-import com.max.prettyguardian.blocks.entity.ModBlockEntities;
-import com.max.prettyguardian.blocks.entity.MoonAltarBlockEntity;
+import com.example.prettyguardian.block.entity.ModBlockEntities;
+import com.example.prettyguardian.block.entity.MoonAltarBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

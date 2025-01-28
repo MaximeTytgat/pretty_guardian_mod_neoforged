@@ -1,6 +1,6 @@
 package com.max.prettyguardian.item;
 
-import com.max.prettyguardian.PrettyGuardian;
+import com.example.prettyguardian.PrettyGuardian;
 import com.max.prettyguardian.blocks.PrettyGuardianBlock;
 import com.max.prettyguardian.entity.ModEntities;
 import com.max.prettyguardian.entity.custom.ButterflyEntity;
@@ -13,7 +13,7 @@ import com.max.prettyguardian.item.custom.projectiles.CuteArrowItem;
 import com.max.prettyguardian.item.custom.projectiles.HeartItem;
 import com.max.prettyguardian.item.custom.projectiles.StarLightItem;
 import com.max.prettyguardian.item.custom.tool.*;
-import com.max.prettyguardian.sound.ModSounds;
+import com.example.prettyguardian.sound.ModSounds;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;

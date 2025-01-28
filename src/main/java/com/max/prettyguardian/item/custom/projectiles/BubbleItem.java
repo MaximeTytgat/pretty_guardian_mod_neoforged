@@ -1,8 +1,8 @@
 package com.max.prettyguardian.item.custom.projectiles;
 
 
-import com.max.prettyguardian.worldgen.entity.ModEntityType;
-import com.max.prettyguardian.worldgen.entity.projectile.BubbleEntity;
+import com.example.prettyguardian.worldgen.entity.ModEntityType;
+import com.example.prettyguardian.worldgen.entity.projectile.BubbleEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 

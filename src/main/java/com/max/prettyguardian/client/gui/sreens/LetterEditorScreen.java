@@ -1,6 +1,6 @@
 package com.max.prettyguardian.client.gui.sreens;
 
-import com.max.prettyguardian.PrettyGuardian;
+import com.example.prettyguardian.PrettyGuardian;
 import com.max.prettyguardian.client.gui.components.CustomFittingMultiLineTextWidget;
 import com.max.prettyguardian.client.gui.components.CustomMultiLineEditBox;
 import com.max.prettyguardian.client.gui.components.CustomStringWidget;

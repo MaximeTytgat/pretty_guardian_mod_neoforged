@@ -1,7 +1,7 @@
 package com.example.prettyguardian.block.custom;
 
-import com.max.prettyguardian.blocks.entity.ModBlockEntities;
-import com.max.prettyguardian.blocks.entity.SilverCrystalBlockEntity;
+import com.example.prettyguardian.block.entity.ModBlockEntities;
+import com.example.prettyguardian.block.entity.SilverCrystalBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;

@@ -1,8 +1,8 @@
 package com.max.prettyguardian.client.gui.sreens.inventory;
 
-import com.max.prettyguardian.PrettyGuardian;
+import com.example.prettyguardian.PrettyGuardian;
 import com.max.prettyguardian.blocks.PrettyGuardianBlock;
-import com.max.prettyguardian.blocks.entity.GemPolishingStationBlockEntity;
+import com.example.prettyguardian.block.entity.GemPolishingStationBlockEntity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;

@@ -1,6 +1,6 @@
 package com.max.prettyguardian.event.custom;
 
-import com.max.prettyguardian.PrettyGuardian;
+import com.example.prettyguardian.PrettyGuardian;
 import com.max.prettyguardian.item.PrettyGuardianItem;
 import com.max.prettyguardian.item.custom.food.ClassicDonut;
 import net.minecraft.world.InteractionHand;

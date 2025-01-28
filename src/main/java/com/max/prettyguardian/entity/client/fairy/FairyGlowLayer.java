@@ -1,7 +1,7 @@
 package com.max.prettyguardian.entity.client.fairy;
 
 import com.google.common.collect.Maps;
-import com.max.prettyguardian.PrettyGuardian;
+import com.example.prettyguardian.PrettyGuardian;
 import com.max.prettyguardian.entity.custom.FairyEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

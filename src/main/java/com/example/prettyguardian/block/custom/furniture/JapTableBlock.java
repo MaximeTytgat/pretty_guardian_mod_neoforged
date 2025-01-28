@@ -1,6 +1,6 @@
 package com.example.prettyguardian.block.custom.furniture;
 
-import com.max.prettyguardian.util.ModTags;
+import com.example.prettyguardian.util.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;

@@ -1,6 +1,6 @@
 package com.max.prettyguardian.client.gui.sreens;
 
-import com.max.prettyguardian.effect.ModEffects;
+import com.example.prettyguardian.effect.ModEffects;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -25,7 +25,7 @@ public class LoveEffectHubOverlay implements LayeredDraw.Layer {
 
         LocalPlayer player = minecraft.player;
         if (player.getHealth() <= 0) return;
-        if (player.hasEffect(ModEffects.LOVE.getHolder().get())) {
+        if (player.hasEffect(ModEffects.LOVE)) {
             renderPinkBlurOnScreen(guiGraphics);
         }
     }

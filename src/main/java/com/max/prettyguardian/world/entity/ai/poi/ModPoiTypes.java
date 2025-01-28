@@ -1,6 +1,6 @@
 package com.max.prettyguardian.world.entity.ai.poi;
 
-import com.max.prettyguardian.PrettyGuardian;
+import com.example.prettyguardian.PrettyGuardian;
 import com.max.prettyguardian.blocks.PrettyGuardianBlock;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
 import com.google.common.collect.ImmutableSet;

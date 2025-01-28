@@ -1,6 +1,6 @@
 package com.max.prettyguardian.item.client;
 
-import com.max.prettyguardian.PrettyGuardian;
+import com.example.prettyguardian.PrettyGuardian;
 import com.max.prettyguardian.item.custom.tool.EternalSilverCristalStaffitem;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.GeoModel;

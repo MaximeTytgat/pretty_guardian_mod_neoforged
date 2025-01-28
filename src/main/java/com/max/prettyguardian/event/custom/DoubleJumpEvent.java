@@ -1,6 +1,6 @@
 package com.max.prettyguardian.event.custom;
 
-import com.max.prettyguardian.PrettyGuardian;
+import com.example.prettyguardian.PrettyGuardian;
 import com.max.prettyguardian.item.PrettyGuardianItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
