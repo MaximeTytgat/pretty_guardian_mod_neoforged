@@ -1,6 +1,6 @@
 package com.max.prettyguardian.event.custom;
 
-import com.max.prettyguardian.item.PrettyGuardianItem;
+import com.example.prettyguardian.item.item.PrettyGuardianItem;
 import com.example.prettyguardian.potion.ModPotions;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraftforge.event.brewing.BrewingRecipeRegisterEvent;

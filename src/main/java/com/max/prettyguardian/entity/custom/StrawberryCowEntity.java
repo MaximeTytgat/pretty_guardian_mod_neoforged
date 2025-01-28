@@ -1,7 +1,7 @@
 package com.max.prettyguardian.entity.custom;
 
 import com.max.prettyguardian.entity.ModEntities;
-import com.max.prettyguardian.item.PrettyGuardianItem;
+import com.example.prettyguardian.item.item.PrettyGuardianItem;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;

@@ -1,7 +1,7 @@
 package com.example.prettyguardian.block.custom.crop;
 
 import com.example.prettyguardian.item.ModItem;
-import com.max.prettyguardian.item.PrettyGuardianItem;
+import com.example.prettyguardian.item.item.PrettyGuardianItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;

@@ -6,7 +6,7 @@ import com.max.prettyguardian.entity.ModEntities;
 import com.max.prettyguardian.entity.custom.CelestialRabbitEntity;
 import com.max.prettyguardian.entityonshoulder.PlayerEntityOnShoulder;
 import com.max.prettyguardian.entityonshoulder.PlayerEntityOnShoulderProvider;
-import com.max.prettyguardian.item.PrettyGuardianItem;
+import com.example.prettyguardian.item.item.PrettyGuardianItem;
 import com.max.prettyguardian.networking.ModMessages;
 import com.max.prettyguardian.networking.packet.PlayerEntityOnShoulderDataSCPacket;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;

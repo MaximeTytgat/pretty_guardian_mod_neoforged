@@ -1,7 +1,7 @@
 package com.max.prettyguardian.client.gui.sreens.inventory;
 
 import com.example.prettyguardian.PrettyGuardian;
-import com.max.prettyguardian.item.PrettyGuardianItem;
+import com.example.prettyguardian.item.item.PrettyGuardianItem;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;

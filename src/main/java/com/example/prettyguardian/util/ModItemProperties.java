@@ -1,7 +1,7 @@
 package com.example.prettyguardian.util;
 
 import com.example.prettyguardian.PrettyGuardian;
-import com.max.prettyguardian.item.PrettyGuardianItem;
+import com.example.prettyguardian.item.item.PrettyGuardianItem;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;

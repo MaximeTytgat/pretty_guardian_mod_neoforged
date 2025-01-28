@@ -70,12 +70,8 @@ public class PrettyGuardian
         ComposterBlock.COMPOSTABLES.put(ModItem.MINT.get(), 0.65F);
         ComposterBlock.COMPOSTABLES.put(ModItem.VANILLA.get(), 0.65F);
 
-        if (Config.logDirtBlock)
-            LOGGER.info("DIRT BLOCK >> {}", BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
-
-        LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
-
-        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
+        if (Config.oneShotPlayers != null)
+            LOGGER.info("ONE SHOT PLAYERS >> {}", Config.oneShotPlayers);
     }
 
     @SubscribeEvent

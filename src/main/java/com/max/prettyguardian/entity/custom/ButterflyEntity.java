@@ -1,8 +1,8 @@
 package com.max.prettyguardian.entity.custom;
 
 import com.max.prettyguardian.entity.ModEntities;
-import com.max.prettyguardian.item.PrettyGuardianItem;
-import com.max.prettyguardian.item.custom.tool.ButterflyNetItem;
+import com.example.prettyguardian.item.item.PrettyGuardianItem;
+import com.example.prettyguardian.item.custom.tool.ButterflyNetItem;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

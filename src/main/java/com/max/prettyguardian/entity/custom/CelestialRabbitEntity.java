@@ -2,7 +2,7 @@ package com.max.prettyguardian.entity.custom;
 
 import com.max.prettyguardian.entity.ModEntities;
 import com.max.prettyguardian.entity.goal.StopMoveWhenOrderedToGoal;
-import com.max.prettyguardian.item.PrettyGuardianItem;
+import com.example.prettyguardian.item.item.PrettyGuardianItem;
 import com.example.prettyguardian.particle.ModParticles;
 import com.example.prettyguardian.sound.ModSounds;
 import com.example.prettyguardian.util.ModTags;
