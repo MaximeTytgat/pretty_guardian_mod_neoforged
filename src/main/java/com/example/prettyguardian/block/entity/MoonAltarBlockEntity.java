@@ -2,7 +2,7 @@ package com.example.prettyguardian.block.entity;
 
 import com.max.prettyguardian.blocks.PrettyGuardianBlock;
 import com.example.prettyguardian.block.custom.table.MoonAltarBlock;
-import com.max.prettyguardian.client.gui.sreens.inventory.MoonAltarMenu;
+import com.example.prettyguardian.client.gui.sreens.inventory.MoonAltarMenu;
 import com.example.prettyguardian.item.item.PrettyGuardianItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

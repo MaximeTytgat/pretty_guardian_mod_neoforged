@@ -1,6 +1,6 @@
 package com.example.prettyguardian.item.custom;
 
-import com.max.prettyguardian.entity.custom.ButterflyEntity;
+import com.example.prettyguardian.entity.custom.ButterflyEntity;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.*;

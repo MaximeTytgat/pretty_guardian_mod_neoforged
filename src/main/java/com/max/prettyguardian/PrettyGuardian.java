@@ -3,25 +3,25 @@ package com.max.prettyguardian;
 import com.example.prettyguardian.CreativeTab;
 import com.max.prettyguardian.blocks.PrettyGuardianBlock;
 import com.example.prettyguardian.block.entity.ModBlockEntities;
-import com.max.prettyguardian.client.gui.sreens.*;
-import com.max.prettyguardian.component.ModDataComponentTypes;
+import com.example.prettyguardian.client.gui.sreens.*;
+import com.example.prettyguardian.component.ModAttachmentTypes;
 import com.example.prettyguardian.effect.ModEffects;
 import com.example.prettyguardian.enchantment.ModEnchantmentEffects;
-import com.max.prettyguardian.entity.ModEntities;
-import com.max.prettyguardian.entity.client.butterfly.ButterflyRenderer;
-import com.max.prettyguardian.entity.client.celestialrabbit.CelestialRabbitRenderer;
-import com.max.prettyguardian.entity.client.fairy.FairyRenderer;
-import com.max.prettyguardian.entity.client.strawberrycow.StrawberryCowRenderer;
+import com.example.prettyguardian.entity.ModEntities;
+import com.example.prettyguardian.entity.client.butterfly.ButterflyRenderer;
+import com.example.prettyguardian.entity.client.celestialrabbit.CelestialRabbitRenderer;
+import com.example.prettyguardian.entity.client.fairy.FairyRenderer;
+import com.example.prettyguardian.entity.client.strawberrycow.StrawberryCowRenderer;
 import com.max.prettyguardian.event.custom.JapChairEvent;
 import com.example.prettyguardian.item.item.PrettyGuardianItem;
 import com.example.prettyguardian.loot.ModLootModifiers;
 import com.max.prettyguardian.networking.ModMessages;
 import com.example.prettyguardian.particle.ModParticles;
-import com.max.prettyguardian.client.gui.sreens.inventory.ModMenuTypes;
+import com.example.prettyguardian.client.gui.sreens.inventory.ModMenuTypes;
 import com.example.prettyguardian.potion.ModPotions;
 import com.example.prettyguardian.sound.ModSounds;
 import com.example.prettyguardian.util.ModItemProperties;
-import com.max.prettyguardian.world.entity.ai.poi.ModPoiTypes;
+import com.example.prettyguardian.world.entity.ai.poi.ModPoiTypes;
 import com.example.prettyguardian.worldgen.entity.ModEntityType;
 import com.example.prettyguardian.worldgen.structure.ModStructures;
 import com.mojang.logging.LogUtils;
@@ -50,7 +50,7 @@ public class PrettyGuardian
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        ModDataComponentTypes.register(modEventBus);
+        ModAttachmentTypes.register(modEventBus);
 
         PrettyGuardianBlock.register(modEventBus);
         PrettyGuardianItem.register(modEventBus);

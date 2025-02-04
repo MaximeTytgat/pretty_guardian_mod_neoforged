@@ -1,7 +1,10 @@
 package com.example.prettyguardian.item.custom;
 
-import com.max.prettyguardian.client.gui.sreens.inventory.GiftBoxMenu;
-import com.max.prettyguardian.component.ModDataComponentTypes;
+import com.example.prettyguardian.block.custom.PicnicBasketBlock;
+import com.example.prettyguardian.client.gui.sreens.inventory.GiftBoxMenu;
+import com.example.prettyguardian.client.gui.sreens.inventory.PicnicBasketMenu;
+import com.example.prettyguardian.component.ModAttachmentTypes;
+import com.example.prettyguardian.component.ModDataComponentTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;

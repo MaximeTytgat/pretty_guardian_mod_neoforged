@@ -1,6 +1,6 @@
 package com.max.prettyguardian.event.custom;
 
-import com.max.prettyguardian.client.gui.sreens.LoveEffectHubOverlay;
+import com.example.prettyguardian.client.gui.sreens.LoveEffectHubOverlay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import com.example.prettyguardian.PrettyGuardian;

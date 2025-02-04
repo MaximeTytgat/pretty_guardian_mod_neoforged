@@ -1,21 +1,20 @@
 package com.max.prettyguardian.event;
 
 import com.example.prettyguardian.PrettyGuardian;
-import com.max.prettyguardian.blocks.PrettyGuardianBlock;
-import com.max.prettyguardian.entity.ModEntities;
-import com.max.prettyguardian.entity.custom.CelestialRabbitEntity;
-import com.max.prettyguardian.entityonshoulder.PlayerEntityOnShoulder;
-import com.max.prettyguardian.entityonshoulder.PlayerEntityOnShoulderProvider;
-import com.example.prettyguardian.item.item.PrettyGuardianItem;
+import com.example.prettyguardian.block.ModBlock;
+import com.example.prettyguardian.component.ModAttachmentTypes;
+import com.example.prettyguardian.entity.ModEntities;
+import com.example.prettyguardian.entity.custom.CelestialRabbitEntity;
+import com.example.prettyguardian.entityonshoulder.PlayerEntityOnShoulder;
+import com.example.prettyguardian.entityonshoulder.PlayerEntityOnShoulderProvider;
+import com.example.prettyguardian.item.ModItem;
 import com.max.prettyguardian.networking.ModMessages;
 import com.max.prettyguardian.networking.packet.PlayerEntityOnShoulderDataSCPacket;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
@@ -25,69 +24,78 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.village.VillagerTradesEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.LogicalSide;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 
 import java.util.List;
 import java.util.Objects;
 
-@Mod.EventBusSubscriber(modid = PrettyGuardian.MOD_ID)
+@EventBusSubscriber(modid = PrettyGuardian.MOD_ID)
 public class ModEvents {
     private ModEvents() {}
-    @SubscribeEvent
-    public static void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
-        if(
-                event.getObject() instanceof Player
-                && !event
-                        .getObject()
-                        .getCapability(PlayerEntityOnShoulderProvider.PLAYER_ENTITY_ON_SHOULDER_CAPABILITY)
-                        .isPresent()
-        ) {
-                event.addCapability(ResourceLocation.fromNamespaceAndPath(PrettyGuardian.MOD_ID, "properties"), new PlayerEntityOnShoulderProvider());
-            }
+// TODO: Suppress this
+//    @SubscribeEvent
+//    public static void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
+//        if(
+//                event.getObject() instanceof Player
+//                && !event
+//                        .getObject()
+//                        .getCapability(PlayerEntityOnShoulderProvider.PLAYER_ENTITY_ON_SHOULDER_CAPABILITY)
+//                        .isPresent()
+//        ) {
+//                event.addCapability(ResourceLocation.fromNamespaceAndPath(PrettyGuardian.MOD_ID, "properties"), new PlayerEntityOnShoulderProvider());
+//            }
+//
+//    }
 
-    }
+// TODO: Needed ?
+//    @SubscribeEvent
+//    public static void onPlayerCloned(PlayerEvent.Clone event) {
+//        if(event.isWasDeath()) {
+//            event.getOriginal()
+//                    .getCapability(PlayerEntityOnShoulderProvider.PLAYER_ENTITY_ON_SHOULDER_CAPABILITY)
+//                    .ifPresent(oldStore ->
+//                            event.getOriginal()
+//                                    .getCapability(PlayerEntityOnShoulderProvider.PLAYER_ENTITY_ON_SHOULDER_CAPABILITY)
+//                                    .ifPresent(newStore -> newStore.copyFrom(oldStore)
+//                                    ));
+//        }
+//    }
 
     @SubscribeEvent
-    public static void onPlayerCloned(PlayerEvent.Clone event) {
-        if(event.isWasDeath()) {
-            event.getOriginal()
-                    .getCapability(PlayerEntityOnShoulderProvider.PLAYER_ENTITY_ON_SHOULDER_CAPABILITY)
-                    .ifPresent(oldStore ->
-                            event.getOriginal()
-                                    .getCapability(PlayerEntityOnShoulderProvider.PLAYER_ENTITY_ON_SHOULDER_CAPABILITY)
-                                    .ifPresent(newStore -> newStore.copyFrom(oldStore)
-                                    ));
-        }
-    }
-
-    @SubscribeEvent
-    public static void onIteractWithBlock(PlayerInteractEvent.RightClickBlock event) {
+    public static void onInteractWithBlock(PlayerInteractEvent.RightClickBlock event) {
         if (!event.getSide().isClient()) {
             Player player = event.getEntity();
 
-            if (validPlayer(player)) {
+            if (isNotValidPlayer(player)) {
                 return;
             }
 
-            if (hasAllConditionsForProcess(event, player)) {
-                player.getCapability(PlayerEntityOnShoulderProvider.PLAYER_ENTITY_ON_SHOULDER_CAPABILITY).ifPresent(entityOnShoulder -> {
-                    if (entityOnShoulder.getEntityType() != null && entityOnShoulder.getEntityType() == ModEntities.CELESTIAL_RABBIT.get()) {
-                        bringTheAnimalDownFromTheShoulder(event, entityOnShoulder, player);
-                    }
-                });
+            if (hasAllConditionsForProcess(event, player) && player.hasData(ModAttachmentTypes.PLAYER_ENTITY_ON_SHOULDER)) {
+                PlayerEntityOnShoulder entityOnShoulder = player.getData(ModAttachmentTypes.PLAYER_ENTITY_ON_SHOULDER);
+
+                if (entityOnShoulder.getEntityType() != null && entityOnShoulder.getEntityType() == ModEntities.CELESTIAL_RABBIT.get()) {
+                    bringTheAnimalDownFromTheShoulder(event, entityOnShoulder, player);
+                }
             }
 
         }
+    }
+
+    private static boolean isNotValidPlayer(Player player) {
+        return player == null || player.isSpectator() || player.getVehicle() != null;
+    }
+
+    private static boolean hasAllConditionsForProcess(PlayerInteractEvent.RightClickBlock event, Player player) {
+        return player.isShiftKeyDown()
+                && event.getHand() == InteractionHand.MAIN_HAND
+                && player.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Items.AIR
+                && event.getSide() == LogicalSide.SERVER;
     }
 
     private static void bringTheAnimalDownFromTheShoulder(PlayerInteractEvent.RightClickBlock event, PlayerEntityOnShoulder entityOnShoulder, Player player) {
@@ -135,25 +143,16 @@ public class ModEvents {
         );
     }
 
-    private static boolean hasAllConditionsForProcess(PlayerInteractEvent.RightClickBlock event, Player player) {
-        return player.isShiftKeyDown()
-                && event.getHand() == InteractionHand.MAIN_HAND
-                && player.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Items.AIR
-                && event.getSide() == LogicalSide.SERVER;
-    }
-
-    private static boolean validPlayer(Player player) {
-        return player == null || player.isSpectator() || player.getVehicle() != null;
-    }
-
     @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
         Player player = event.getEntity();
 
+        if (isNotValidPlayer(player)) {
+            return;
+        }
+
         if (
             event.getTarget() instanceof LivingEntity livingEntity
-            && !player.isSpectator()
-            && player.getVehicle() == null
             && !player.level().isClientSide
             && livingEntity instanceof CelestialRabbitEntity celestialRabbit
             && player.isShiftKeyDown()
@@ -161,46 +160,47 @@ public class ModEvents {
             &&  (Objects.equals(Objects.requireNonNull(celestialRabbit.getOwnerUUID()).toString(), player.getUUID().toString()))
             && event.getSide() == LogicalSide.SERVER
         ) {
-            player.getCapability(PlayerEntityOnShoulderProvider.PLAYER_ENTITY_ON_SHOULDER_CAPABILITY).ifPresent(entityOnShoulder -> {
-                if(entityOnShoulder.getEntityType() == null) {
-                    DyeColor collarColor = celestialRabbit.getCollarColor();
-                    Component name = celestialRabbit.hasCustomName() ? celestialRabbit.getCustomName() : null;
-                    boolean isInSittingPose = celestialRabbit.isInSittingPose();
+            PlayerEntityOnShoulder entityOnShoulder = player.getData(ModAttachmentTypes.PLAYER_ENTITY_ON_SHOULDER);
 
-                    entityOnShoulder.setEntityOnShoulder(ModEntities.CELESTIAL_RABBIT.get(), collarColor, name, isInSittingPose);
+            if (entityOnShoulder.getEntityType() == null) {
+                DyeColor collarColor = celestialRabbit.getCollarColor();
+                Component name = celestialRabbit.hasCustomName() ? celestialRabbit.getCustomName() : null;
+                boolean isInSittingPose = celestialRabbit.isInSittingPose();
 
-                    livingEntity.discard();
+                entityOnShoulder.setEntityOnShoulder(ModEntities.CELESTIAL_RABBIT.get(), collarColor, name, isInSittingPose);
 
-                    ModMessages.sendToAllPlayers(
-                            new PlayerEntityOnShoulderDataSCPacket(
-                                    player.getStringUUID(),
-                                    true
-                            )
-                    );
-                }
-            });
+                livingEntity.discard();
+
+                ModMessages.sendToAllPlayers(
+                        new PlayerEntityOnShoulderDataSCPacket(
+                                player.getStringUUID(),
+                                true
+                        )
+                );
+            }
         }
     }
 
+// TODO: Needed ?
+//    @SubscribeEvent
+//    public static void onPlayerJoinWorld(EntityJoinLevelEvent event) {
+//        if(
+//                !event.getLevel().isClientSide()
+//                && event.getEntity() instanceof ServerPlayer player
+//        ) {
+//                player.getCapability(PlayerEntityOnShoulderProvider.PLAYER_ENTITY_ON_SHOULDER_CAPABILITY).ifPresent(entityOnShoulder -> {
+//                    if (entityOnShoulder.getEntityType() != null) {
+//                        ModMessages.sendToAllPlayers(new PlayerEntityOnShoulderDataSCPacket(
+//                                player.getStringUUID(),
+//                                true
+//                        ));
+//                    }
+//                });
+//            }
+//
+//    }
 
-    @SubscribeEvent
-    public static void onPlayerJoinWorld(EntityJoinLevelEvent event) {
-        if(
-                !event.getLevel().isClientSide()
-                && event.getEntity() instanceof ServerPlayer player
-        ) {
-                player.getCapability(PlayerEntityOnShoulderProvider.PLAYER_ENTITY_ON_SHOULDER_CAPABILITY).ifPresent(entityOnShoulder -> {
-                    if (entityOnShoulder.getEntityType() != null) {
-                        ModMessages.sendToAllPlayers(new PlayerEntityOnShoulderDataSCPacket(
-                                player.getStringUUID(),
-                                true
-                        ));
-                    }
-                });
-            }
-
-    }
-
+    // TODO: add config to choose if the rabbit should spawn, die or stay on the shoulder
     @SubscribeEvent
     public static void onEntityDeath(LivingDeathEvent event) {
         if(event.getEntity() instanceof Player player) {
@@ -236,7 +236,7 @@ public class ModEvents {
             int villagerLevel = 1;
 
             trades.get(villagerLevel).add((trader, random) -> new MerchantOffer(
-                    new ItemCost(PrettyGuardianItem.STRAWBERRY.get(), 7),
+                    new ItemCost(ModItem.STRAWBERRY.get(), 7),
                     itemStack,
                     12,
                     2,
@@ -244,7 +244,7 @@ public class ModEvents {
             ));
 
             trades.get(villagerLevel).add((trader, random) -> new MerchantOffer(
-                    new ItemCost(PrettyGuardianItem.MINT.get(), 7),
+                    new ItemCost(ModItem.MINT.get(), 7),
                     itemStack,
                     12,
                     2,
@@ -252,7 +252,7 @@ public class ModEvents {
             ));
 
             trades.get(villagerLevel).add((trader, random) -> new MerchantOffer(
-                    new ItemCost(PrettyGuardianItem.VANILLA.get(), 5),
+                    new ItemCost(ModItem.VANILLA.get(), 5),
                     itemStack,
                     12,
                     2,
@@ -261,7 +261,7 @@ public class ModEvents {
 
             trades.get(3).add((trader, random) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 1),
-                    new ItemStack(PrettyGuardianBlock.CREAM_STRAWBERRY_CAKE.get(), 1),
+                    new ItemStack(ModBlock.CREAM_STRAWBERRY_CAKE.get(), 1),
                     8,
                     8,
                     0.35F
@@ -269,7 +269,7 @@ public class ModEvents {
 
             trades.get(3).add((trader, random) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 1),
-                    new ItemStack(PrettyGuardianBlock.STRAWBERRY_CHOCO_CAKE.get(), 1),
+                    new ItemStack(ModBlock.STRAWBERRY_CHOCO_CAKE.get(), 1),
                     8,
                     8,
                     0.35F
@@ -277,7 +277,7 @@ public class ModEvents {
 
             trades.get(3).add((trader, random) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 1),
-                    new ItemStack(PrettyGuardianBlock.CREAM_CAKE.get(), 1),
+                    new ItemStack(ModBlock.CREAM_CAKE.get(), 1),
                     8,
                     8,
                     0.35F
@@ -285,7 +285,7 @@ public class ModEvents {
 
             trades.get(3).add((trader, random) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 1),
-                    new ItemStack(PrettyGuardianBlock.BERRY_STRAWBERRY_CAKE.get(), 1),
+                    new ItemStack(ModBlock.BERRY_STRAWBERRY_CAKE.get(), 1),
                     8,
                     8,
                     0.35F
@@ -293,7 +293,7 @@ public class ModEvents {
 
             trades.get(3).add((trader, random) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 1),
-                    new ItemStack(PrettyGuardianBlock.STRAWBERRY_CAKE.get(), 1),
+                    new ItemStack(ModBlock.STRAWBERRY_CAKE.get(), 1),
                     8,
                     8,
                     0.35F
@@ -301,7 +301,7 @@ public class ModEvents {
 
             trades.get(3).add((trader, random) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 1),
-                    new ItemStack(PrettyGuardianBlock.RHUM_CAKE.get(), 1),
+                    new ItemStack(ModBlock.RHUM_CAKE.get(), 1),
                     8,
                     8,
                     0.35F
@@ -309,7 +309,7 @@ public class ModEvents {
 
             trades.get(3).add((trader, random) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 1),
-                    new ItemStack(PrettyGuardianBlock.CHOCOLATE_CAKE.get(), 1),
+                    new ItemStack(ModBlock.CHOCOLATE_CAKE.get(), 1),
                     8,
                     8,
                     0.35F
@@ -317,7 +317,7 @@ public class ModEvents {
 
             trades.get(3).add((trader, random) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 1),
-                    new ItemStack(PrettyGuardianBlock.VELVET_CAKE.get(), 1),
+                    new ItemStack(ModBlock.VELVET_CAKE.get(), 1),
                     8,
                     8,
                     0.35F

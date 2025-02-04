@@ -1,7 +1,7 @@
 package com.example.prettyguardian.block.entity;
 
 import com.example.prettyguardian.block.custom.PicnicBasketBlock;
-import com.max.prettyguardian.client.gui.sreens.inventory.PicnicBasketMenu;
+import com.example.prettyguardian.client.gui.sreens.inventory.PicnicBasketMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -21,7 +21,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraftforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -139,10 +138,5 @@ public class  PicnicBasketBlockEntity extends RandomizableContainerBlockEntity i
     @Override
     protected @NotNull AbstractContainerMenu createMenu(int id, @NotNull Inventory inventory) {
         return new PicnicBasketMenu(id, inventory, this);
-    }
-
-    @Override
-    protected @NotNull IItemHandler createUnSidedHandler() {
-        return new net.minecraftforge.items.wrapper.SidedInvWrapper(this, Direction.UP);
     }
 }

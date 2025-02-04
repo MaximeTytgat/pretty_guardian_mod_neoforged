@@ -2,8 +2,8 @@ package com.example.prettyguardian.item;
 
 import com.example.prettyguardian.block.ModBlock;
 import com.example.prettyguardian.PrettyGuardian;
-import com.max.prettyguardian.entity.ModEntities;
-import com.max.prettyguardian.entity.custom.ButterflyEntity;
+import com.example.prettyguardian.entity.ModEntities;
+import com.example.prettyguardian.entity.custom.ButterflyEntity;
 import com.example.prettyguardian.item.custom.*;
 import com.example.prettyguardian.item.custom.food.ClassicDonut;
 import com.example.prettyguardian.item.custom.food.MilkItem;

@@ -3,25 +3,20 @@ package com.example.prettyguardian.item.custom.tool;
 import com.example.prettyguardian.item.ModItem;
 import com.example.prettyguardian.item.custom.projectiles.BubbleItem;
 import com.example.prettyguardian.worldgen.entity.projectile.BubbleEntity;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.AnimationUtils;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
-import java.util.function.Consumer;
 
 public class NeptunesMirror extends Item {
 
@@ -105,50 +100,6 @@ public class NeptunesMirror extends Item {
     @Override
     public @NotNull UseAnim getUseAnimation(@NotNull ItemStack stack) {
         return UseAnim.NONE;
-    }
-
-    @Override
-    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-        consumer.accept(new IClientItemExtensions() {
-
-            private static final HumanoidModel.ArmPose EXAMPLE_POSE = HumanoidModel.ArmPose.create("EXAMPLE", false, (model, entity, arm) -> {
-                NeptunesMirror.animateHands(model, entity, arm == HumanoidArm.LEFT);
-            });
-
-            @Override
-            public HumanoidModel.ArmPose getArmPose(LivingEntity entityLiving, InteractionHand hand, ItemStack itemStack) {
-                if (!itemStack.isEmpty()) {
-                    if (entityLiving.getUsedItemHand() == hand && entityLiving.getUseItemRemainingTicks() > 0) {
-                        return EXAMPLE_POSE;
-                    }
-                }
-                return HumanoidModel.ArmPose.EMPTY;
-            }
-
-            @Override
-            public boolean applyForgeHandTransform(PoseStack poseStack, LocalPlayer player, HumanoidArm arm, ItemStack itemInHand, float partialTick, float equipProcess, float swingProcess) {
-                int i = arm == HumanoidArm.RIGHT ? 1 : -1;
-
-                poseStack.translate(i * 0.56F, -0.52F, -0.72F);
-
-                if (player.isUsingItem() && player.getUseItemRemainingTicks() > 0 && player.getUseItem() == itemInHand) {
-                    float timeLeft = itemInHand.getUseDuration(player) - (player.getUseItemRemainingTicks() - partialTick + 1.0F);
-                    float f12 = 1;
-
-                    float f15 = Mth.sin((timeLeft - 0.1F) * 1.3F);
-                    float f18 = f12 - 0.1F;
-                    float f20 = f15 * f18;
-                    poseStack.translate(0, f20 * 0.004F, 0);
-
-                    poseStack.translate(0, 0, f12 * 0.04F);
-                    poseStack.scale(1.0F, 1.0F, 1.0F + f12 * 0.2F);
-                }
-
-                return true;
-            }
-        });
-
-        super.initializeClient(consumer);
     }
 
     private static void animateHands(HumanoidModel<?> model, LivingEntity entity, boolean leftHand) {
