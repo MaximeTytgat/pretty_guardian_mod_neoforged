@@ -1,6 +1,6 @@
 package com.example.prettyguardian.block.custom.crop;
 
-import com.example.prettyguardian.item.item.PrettyGuardianItem;
+import com.example.prettyguardian.item.ModItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -49,7 +49,7 @@ public class StrawberryCropBlock extends CropBlock {
 
     @Override
     protected @NotNull ItemLike getBaseSeedId() {
-        return PrettyGuardianItem.STRAWBERRY_SEEDS.get();
+        return ModItem.STRAWBERRY_SEEDS.get();
     }
 
     @Override
@@ -81,9 +81,9 @@ public class StrawberryCropBlock extends CropBlock {
             level.setBlockAndUpdate(blockPos, blockState.setValue(AGE, 0));
             level.addDestroyBlockEffect(blockPos, blockState);
 
-            Block.popResource(level, blockPos, new ItemStack(PrettyGuardianItem.STRAWBERRY.get(), 2));
+            Block.popResource(level, blockPos, new ItemStack(ModItem.STRAWBERRY.get(), 2));
             if (bonusSeed == 1) {
-                Block.popResource(level, blockPos, new ItemStack(PrettyGuardianItem.STRAWBERRY_SEEDS.get()));
+                Block.popResource(level, blockPos, new ItemStack(ModItem.STRAWBERRY_SEEDS.get()));
             }
 
             return InteractionResult.SUCCESS;

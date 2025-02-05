@@ -1,7 +1,7 @@
 package com.example.prettyguardian.block.entity;
 
 import com.example.prettyguardian.client.gui.sreens.inventory.GemPolishingStationMenu;
-import com.example.prettyguardian.item.item.PrettyGuardianItem;
+import com.example.prettyguardian.item.ModItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -130,7 +130,7 @@ public class GemPolishingStationBlockEntity extends BaseContainerBlockEntity imp
     }
 
     private void craftItem() {
-        ItemStack result = new ItemStack(PrettyGuardianItem.RUBY.get());
+        ItemStack result = new ItemStack(ModItem.RUBY.get());
         this.itemHandler.extractItem(INPUT_SLOT, 1, false);
 
         this.itemHandler.setStackInSlot(
@@ -143,8 +143,8 @@ public class GemPolishingStationBlockEntity extends BaseContainerBlockEntity imp
     }
 
     private boolean hasRecipe() {
-        boolean hasCraftingItem = this.itemHandler.getStackInSlot(INPUT_SLOT).getItem() == PrettyGuardianItem.RAW_RUBY.get();
-        ItemStack result = new ItemStack(PrettyGuardianItem.RUBY.get());
+        boolean hasCraftingItem = this.itemHandler.getStackInSlot(INPUT_SLOT).getItem() == ModItem.RAW_RUBY.get();
+        ItemStack result = new ItemStack(ModItem.RUBY.get());
         return hasCraftingItem && canInsertAmountIntoOutputSlot(result.getCount()) && canInsertItemIntoOutputSlot(result.getItem());
     }
 

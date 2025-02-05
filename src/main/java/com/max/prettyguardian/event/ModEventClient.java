@@ -7,14 +7,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 
 import java.util.Random;
 
-@Mod.EventBusSubscriber(modid = PrettyGuardian.MOD_ID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = PrettyGuardian.MOD_ID, value = Dist.CLIENT)
 public class ModEventClient {
 
     public static final Random RANDOM = new Random();
@@ -23,7 +23,7 @@ public class ModEventClient {
 
     @SubscribeEvent
     // TODO: apply particle effects to all players with entities on their shoulders (we need to tick on all players in client side)
-    public static void onPlayerTick(TickEvent.ClientTickEvent event) {
+    public static void onPlayerTick(ClientTickEvent event) {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
         MinecraftServer server = minecraft.getSingleplayerServer();

@@ -24,6 +24,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
 import net.neoforged.neoforge.registries.DeferredItem;
 import org.jetbrains.annotations.NotNull;
 
@@ -44,6 +45,22 @@ public class CropLeavesBlock extends LeavesBlock implements BonemealableBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(DISTANCE, PERSISTENT, AGE, WATERLOGGED);
+    }
+
+    protected IntegerProperty getAgeProperty() {
+        return AGE;
+    }
+
+    public int getAge(BlockState state) {
+        return state.getValue(this.getAgeProperty());
+    }
+
+    public int getMaxAge() {
+        return MAX_AGE;
+    }
+
+    public BlockState getStateForAge(int age) {
+        return this.defaultBlockState().setValue(this.getAgeProperty(), age);
     }
 
     @Override
@@ -73,33 +90,19 @@ public class CropLeavesBlock extends LeavesBlock implements BonemealableBlock {
     }
 
     @Override
-    public void randomTick(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull RandomSource rand) {
+    protected void randomTick(@NotNull BlockState state, ServerLevel level, @NotNull BlockPos pos, @NotNull RandomSource random) {
         if (this.decaying(state)) {
             dropResources(state, level, pos);
             level.removeBlock(pos, false);
-        } else if (level.isAreaLoaded(pos, 1) && canGrow(state) && level.getMaxLocalRawBrightness(pos.above()) >= 9) {
-            boolean def =  rand.nextInt() > (99 - 5);
-
-             if (ForgeHooks.onCropsGrowPre(level, pos, state, def)) {
-                performBonemeal(level, rand, pos, state);
-                ForgeHooks.onCropsGrowPost(level, pos, state);
-            }
-        }
-    }
-
-    protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (level.isAreaLoaded(pos, 1)) {
-            if (level.getRawBrightness(pos, 0) >= 9) {
-                int i = this.getAge(state);
-                if (i < this.getMaxAge()) {
-                    float f = getGrowthSpeed(state, level, pos);
-                    if (CommonHooks.canCropGrow(level, pos, state, random.nextInt((int)(25.0F / f) + 1) == 0)) {
-                        level.setBlock(pos, this.getStateForAge(i + 1), 2);
-                        CommonHooks.fireCropGrowPost(level, pos, state);
-                    }
+        } else if (level.isAreaLoaded(pos, 1) && level.getRawBrightness(pos, 0) >= 9) {
+            int i = this.getAge(state);
+            if (i < this.getMaxAge()) {
+                float f = 1;
+                if (CommonHooks.canCropGrow(level, pos, state, random.nextInt((int)(25.0F / f) + 1) == 0)) {
+                    level.setBlock(pos, this.getStateForAge(i + 1), 2);
+                    CommonHooks.fireCropGrowPost(level, pos, state);
                 }
             }
-
         }
     }
 
@@ -129,6 +132,8 @@ public class CropLeavesBlock extends LeavesBlock implements BonemealableBlock {
             return blockState.hasProperty(DISTANCE) ? OptionalInt.of(blockState.getValue(DISTANCE)) : OptionalInt.empty();
         }
     }
+
+
 
     @Override
     public void tick(@NotNull BlockState blockState, ServerLevel serverLevel, @NotNull BlockPos blockPos, @NotNull RandomSource randomSource) {

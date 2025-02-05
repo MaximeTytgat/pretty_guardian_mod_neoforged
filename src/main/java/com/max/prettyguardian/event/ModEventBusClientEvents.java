@@ -1,7 +1,7 @@
 package com.max.prettyguardian.event;
 
 import com.example.prettyguardian.PrettyGuardian;
-import com.max.prettyguardian.blocks.PrettyGuardianBlock;
+import com.example.prettyguardian.block.ModBlock;
 import com.example.prettyguardian.block.entity.ModBlockEntities;
 import com.example.prettyguardian.block.entity.renderer.MoonAltarBlockEntityRenderer;
 import com.example.prettyguardian.entity.client.butterfly.ButterflyModel;
@@ -19,14 +19,14 @@ import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 
-@Mod.EventBusSubscriber(modid = PrettyGuardian.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = PrettyGuardian.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ModEventBusClientEvents {
     private ModEventBusClientEvents() {}
 
@@ -74,7 +74,7 @@ public class ModEventBusClientEvents {
     @SubscribeEvent
     public static void onEntityAddLayers(EntityRenderersEvent.AddLayers event) {
         for (PlayerSkin.Model skinName : event.getSkins()) {
-            PlayerRenderer parent = event.getPlayerSkin(skinName);
+            PlayerRenderer parent = event.getSkin(skinName);
             if (parent != null) {
                 parent.addLayer(new CelestialRabbitOnShoulderLayer<>(parent));
             }
@@ -86,9 +86,9 @@ public class ModEventBusClientEvents {
     {
         event.register(
                 (state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getAverageFoliageColor(world, pos) : FoliageColor.getDefaultColor(),
-                PrettyGuardianBlock.BOBA_LEAVES_CROP.get(),
-                PrettyGuardianBlock.LEMON_LEAVES_CROP.get(),
-                PrettyGuardianBlock.PISTACHIO_LEAVES_CROP.get()
+                ModBlock.BOBA_LEAVES_CROP.get(),
+                ModBlock.LEMON_LEAVES_CROP.get(),
+                ModBlock.PISTACHIO_LEAVES_CROP.get()
         );
     }
 
@@ -98,9 +98,9 @@ public class ModEventBusClientEvents {
         event.register((stack, tintIndex) -> {
             BlockState state = ((BlockItem)stack.getItem()).getBlock().defaultBlockState();
             return event.getBlockColors().getColor(state, null, null, tintIndex);
-        }, PrettyGuardianBlock.BOBA_LEAVES_CROP.get(),
-                PrettyGuardianBlock.LEMON_LEAVES_CROP.get(),
-                PrettyGuardianBlock.PISTACHIO_LEAVES_CROP.get()
+        }, ModBlock.BOBA_LEAVES_CROP.get(),
+                ModBlock.LEMON_LEAVES_CROP.get(),
+                ModBlock.PISTACHIO_LEAVES_CROP.get()
         );
     }
 }
