@@ -1,8 +1,8 @@
 package com.max.prettyguardian.event;
 
-import com.example.prettyguardian.PrettyGuardian;
-import com.example.prettyguardian.client.ClientPlayerEntityOnShoulderData;
-import com.example.prettyguardian.particle.ModParticles;
+import com.max.prettyguardian.PrettyGuardian;
+import com.max.prettyguardian.client.ClientPlayerEntityOnShoulderData;
+import com.max.prettyguardian.particle.ModParticles;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.entity.player.Player;

@@ -1,8 +1,7 @@
 package com.max.prettyguardian.networking.packet;
 
-import com.example.prettyguardian.client.ClientPlayerEntityOnShoulderData;
+import com.max.prettyguardian.client.ClientPlayerEntityOnShoulderData;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.event.network.CustomPayloadEvent;
 
 public class PlayerEntityOnShoulderDataSCPacket {
     private final String playerId;

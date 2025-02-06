@@ -1,8 +1,8 @@
 package com.max.prettyguardian.event.custom;
 
-import com.example.prettyguardian.PrettyGuardian;
-import com.example.prettyguardian.item.item.PrettyGuardianItem;
-import com.example.prettyguardian.item.custom.food.ClassicDonut;
+import com.max.prettyguardian.PrettyGuardian;
+import com.max.prettyguardian.item.item.PrettyGuardianItem;
+import com.max.prettyguardian.item.custom.food.ClassicDonut;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;

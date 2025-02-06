@@ -3,7 +3,6 @@ package com.max.prettyguardian.networking;
 import com.max.prettyguardian.networking.packet.PlayerEntityOnShoulderDataSCPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.*;
 
 import static com.max.prettyguardian.PrettyGuardian.MOD_ID;
 

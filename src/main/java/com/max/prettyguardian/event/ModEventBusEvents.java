@@ -1,11 +1,11 @@
 package com.max.prettyguardian.event;
 
-import com.example.prettyguardian.PrettyGuardian;
-import com.example.prettyguardian.entity.ModEntities;
-import com.example.prettyguardian.entity.custom.ButterflyEntity;
-import com.example.prettyguardian.entity.custom.CelestialRabbitEntity;
-import com.example.prettyguardian.entity.custom.FairyEntity;
-import com.example.prettyguardian.entity.custom.StrawberryCowEntity;
+import com.max.prettyguardian.PrettyGuardian;
+import com.max.prettyguardian.entity.ModEntities;
+import com.max.prettyguardian.entity.custom.ButterflyEntity;
+import com.max.prettyguardian.entity.custom.CelestialRabbitEntity;
+import com.max.prettyguardian.entity.custom.FairyEntity;
+import com.max.prettyguardian.entity.custom.StrawberryCowEntity;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.levelgen.Heightmap;
