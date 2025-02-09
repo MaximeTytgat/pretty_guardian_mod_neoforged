@@ -1,17 +1,17 @@
 package com.max.prettyguardian.event.custom;
 
-import com.max.prettyguardian.item.item.PrettyGuardianItem;
+import com.max.prettyguardian.item.ModItem;
 import com.max.prettyguardian.potion.ModPotions;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraftforge.event.brewing.BrewingRecipeRegisterEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 
-@Mod.EventBusSubscriber
+@EventBusSubscriber
 public class BrewingRecipeEvent {
     private BrewingRecipeEvent() {}
     @SubscribeEvent
-    public static void onBrewingRecipeEvent(BrewingRecipeRegisterEvent event) {
-        event.getBuilder().addMix(Potions.WATER, PrettyGuardianItem.FAIRY_DUST.get(), ModPotions.LOVE_POTION);
+    public static void onBrewingRecipeEvent(RegisterBrewingRecipesEvent event) {
+        event.getBuilder().addMix(Potions.WATER, ModItem.FAIRY_DUST.get(), ModPotions.LOVE_POTION);
     }
 }

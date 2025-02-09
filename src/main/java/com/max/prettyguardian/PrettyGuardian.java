@@ -32,7 +32,7 @@ import net.neoforged.neoforge.event.server.ServerStartingEvent;
 public class PrettyGuardian
 {
     public static final String MOD_ID = "prettyguardian";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public PrettyGuardian(IEventBus modEventBus, ModContainer modContainer)
     {

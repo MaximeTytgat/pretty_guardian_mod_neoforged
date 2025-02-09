@@ -13,6 +13,8 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
@@ -31,6 +33,7 @@ import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @EventBusSubscriber(modid = PrettyGuardian.MOD_ID)
 public class ModEvents {
@@ -76,8 +79,12 @@ public class ModEvents {
             if (hasAllConditionsForProcess(event, player) && player.hasData(ModAttachmentTypes.PLAYER_ENTITY_ON_SHOULDER)) {
                 PlayerEntityOnShoulder entityOnShoulder = player.getData(ModAttachmentTypes.PLAYER_ENTITY_ON_SHOULDER);
 
-                if (entityOnShoulder.getEntityType() != null && entityOnShoulder.getEntityType() == ModEntities.CELESTIAL_RABBIT.get()) {
-                    bringTheAnimalDownFromTheShoulder(event, entityOnShoulder, player);
+                if (entityOnShoulder.entityTypeDescriptionId() != null) {
+                    Optional<EntityType<?>> maybeEntityType = EntityType.byString(entityOnShoulder.entityTypeDescriptionId());
+
+                    if (maybeEntityType.isPresent() && maybeEntityType.get() == ModEntities.CELESTIAL_RABBIT.get()) {
+                        bringTheAnimalDownFromTheShoulder(event, entityOnShoulder, player);
+                    }
                 }
             }
 
@@ -122,10 +129,10 @@ public class ModEvents {
                 break;
         }
 
-        newRabbit.setCollarColor(entityOnShoulder.getCollarColor());
+        newRabbit.setCollarColor(DyeColor.byId(entityOnShoulder.collarDyeColorId()));
         newRabbit.setOrderedToSit(entityOnShoulder.isInSittingPose());
 
-        if (entityOnShoulder.getName() != null) newRabbit.setCustomName(entityOnShoulder.getName());
+        if (entityOnShoulder.name() != null) newRabbit.setCustomName(Component.nullToEmpty(entityOnShoulder.name()));
         newRabbit.tame(player);
 
         player.level().addFreshEntity(newRabbit);
@@ -159,16 +166,19 @@ public class ModEvents {
         ) {
             PlayerEntityOnShoulder entityOnShoulder = player.getData(ModAttachmentTypes.PLAYER_ENTITY_ON_SHOULDER);
 
-            if (entityOnShoulder.entityType == null) {
+            if (entityOnShoulder.entityTypeDescriptionId() == null) {
                 DyeColor collarColor = celestialRabbit.getCollarColor();
                 Component name = celestialRabbit.hasCustomName() ? celestialRabbit.getCustomName() : null;
                 boolean isInSittingPose = celestialRabbit.isInSittingPose();
 
-                entityOnShoulder.entityType = ModEntities.CELESTIAL_RABBIT.get();
-                entityOnShoulder.collarColor = collarColor;
-                entityOnShoulder.name = name;
-                entityOnShoulder.isInSittingPose = isInSittingPose;
+                entityOnShoulder = new PlayerEntityOnShoulder(
+                        ModEntities.CELESTIAL_RABBIT.get().getDescriptionId(),
+                        collarColor.getId(),
+                        name != null ? name.getString() : null,
+                        isInSittingPose
+                );
 
+                player.setData(ModAttachmentTypes.PLAYER_ENTITY_ON_SHOULDER, entityOnShoulder);
                 livingEntity.discard();
 
                 ModMessages.sendToAllPlayers(
@@ -206,12 +216,12 @@ public class ModEvents {
         if(event.getEntity() instanceof Player player && player.hasData(ModAttachmentTypes.PLAYER_ENTITY_ON_SHOULDER)) {
             PlayerEntityOnShoulder entityOnShoulder = player.getData(ModAttachmentTypes.PLAYER_ENTITY_ON_SHOULDER);
 
-            if(entityOnShoulder.entityType != null) {
+            if(entityOnShoulder.entityTypeDescriptionId() != null) {
                 CelestialRabbitEntity newRabbit = new CelestialRabbitEntity(ModEntities.CELESTIAL_RABBIT.get(), player.level());
                 newRabbit.setPos(player.getX(), player.getY() + 1.5, player.getZ());
-                newRabbit.setCollarColor(entityOnShoulder.collarColor);
+                newRabbit.setCollarColor(DyeColor.byId(entityOnShoulder.collarDyeColorId()));
                 newRabbit.setOrderedToSit(false);
-                if (entityOnShoulder.name != null) newRabbit.setCustomName(entityOnShoulder.name);
+                if (entityOnShoulder.name() != null) newRabbit.setCustomName(Component.nullToEmpty(entityOnShoulder.name()));
                 newRabbit.tame(player);
 
                 player.level().addFreshEntity(newRabbit);

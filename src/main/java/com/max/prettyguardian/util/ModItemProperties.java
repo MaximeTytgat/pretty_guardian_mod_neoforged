@@ -1,7 +1,7 @@
 package com.max.prettyguardian.util;
 
 import com.max.prettyguardian.PrettyGuardian;
-import com.max.prettyguardian.item.item.PrettyGuardianItem;
+import com.max.prettyguardian.item.ModItem;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -9,9 +9,9 @@ import net.minecraft.world.item.Item;
 public class ModItemProperties {
 
     public static void addCustomProperties() {
-        makeBow(PrettyGuardianItem.CUPIDON_BOW.get());
+        makeBow(ModItem.CUPIDON_BOW.get());
 
-        ItemProperties.register(PrettyGuardianItem.NEPTUNES_MIRROR.get(), ResourceLocation.fromNamespaceAndPath(PrettyGuardian.MOD_ID, "using"),
+        ItemProperties.register(ModItem.NEPTUNES_MIRROR.get(), ResourceLocation.fromNamespaceAndPath(PrettyGuardian.MOD_ID, "using"),
                 (stack, world, entity, s) -> entity != null && entity.isUsingItem() && stack.equals(entity.getUseItem()) ? 1.0F : 0.0F);
     }
 

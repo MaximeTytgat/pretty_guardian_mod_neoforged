@@ -1,20 +1,20 @@
 package com.max.prettyguardian.event.custom;
 
 import com.max.prettyguardian.PrettyGuardian;
-import com.max.prettyguardian.item.item.PrettyGuardianItem;
+import com.max.prettyguardian.item.ModItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.InputEvent;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.Date;
 import java.util.function.Predicate;
 
-@Mod.EventBusSubscriber(modid = PrettyGuardian.MOD_ID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = PrettyGuardian.MOD_ID, value = Dist.CLIENT)
 public class DoubleJumpEvent {
     private DoubleJumpEvent() {}
     private static final long COOLDOWN_MILLIS_DOUBLE_JUMP = 1300;
@@ -54,5 +54,5 @@ public class DoubleJumpEvent {
         return player.getInventory().hasAnyMatching(ETERNAL_SILVER_CISTAL_STAFF_ONLY);
     }
 
-    public static final Predicate<ItemStack> ETERNAL_SILVER_CISTAL_STAFF_ONLY = itemStack -> itemStack.is(PrettyGuardianItem.ETERNAL_SILVER_CRISTAL_STAFF.get());
+    public static final Predicate<ItemStack> ETERNAL_SILVER_CISTAL_STAFF_ONLY = itemStack -> itemStack.is(ModItem.ETERNAL_SILVER_CRISTAL_STAFF.get());
 }

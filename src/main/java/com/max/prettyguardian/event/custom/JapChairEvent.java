@@ -14,14 +14,14 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = PrettyGuardian.MOD_ID)
+@EventBusSubscriber(modid = PrettyGuardian.MOD_ID)
 public class JapChairEvent {
     private JapChairEvent() {}
     @SubscribeEvent

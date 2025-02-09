@@ -18,6 +18,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -60,17 +61,17 @@ public class ModItem {
     public static final DeferredItem<Item> STRAWBERRY_MILK_CARTON = ITEMS.register("strawberry_milk_carton", () -> new MilkItem(new Item.Properties().food(ModFoods.MILK_CARTON), false));
     public static final DeferredItem<Item> CHOCOLATE_MILK_CARTON = ITEMS.register("chocolate_milk_carton", () -> new MilkItem(new Item.Properties().food(ModFoods.MILK_CARTON), false));
     public static final DeferredItem<Item> VANILLA_MILK_CARTON = ITEMS.register("vanilla_milk_carton", () -> new MilkItem(new Item.Properties().food(ModFoods.MILK_CARTON), false));
-    public static final DeferredItem<Item> PISTACHIO_ICE_CREAM = ITEMS.register("pistachio_ice_cream", () -> new ReusableFoodContainerItem(new Item.Properties().food(ModFoods.ICE_CREAM), 32, com.max.prettyguardian.item.item.PrettyGuardianItem.ICE_CREAM_CUP, false));
-    public static final DeferredItem<Item> VANILLA_ICE_CREAM = ITEMS.register("vanilla_ice_cream", () -> new ReusableFoodContainerItem(new Item.Properties().food(ModFoods.ICE_CREAM), 32, com.max.prettyguardian.item.item.PrettyGuardianItem.ICE_CREAM_CUP, false));
-    public static final DeferredItem<Item> CHOCOLATE_ICE_CREAM = ITEMS.register("chocolate_ice_cream", () -> new ReusableFoodContainerItem(new Item.Properties().food(ModFoods.ICE_CREAM), 32, com.max.prettyguardian.item.item.PrettyGuardianItem.ICE_CREAM_CUP, false));
-    public static final DeferredItem<Item> STRAWBERRY_ICE_CREAM = ITEMS.register("strawberry_ice_cream", () -> new ReusableFoodContainerItem(new Item.Properties().food(ModFoods.ICE_CREAM), 32, com.max.prettyguardian.item.item.PrettyGuardianItem.ICE_CREAM_CUP, false));
-    public static final DeferredItem<Item> POKKY_ICE_CREAM = ITEMS.register("pokky_ice_cream", () -> new ReusableFoodContainerItem(new Item.Properties().food(ModFoods.POKKY_ICE_CREAM), 64, com.max.prettyguardian.item.item.PrettyGuardianItem.ICE_CREAM_CUP, false));
-    public static final DeferredItem<Item> APPLE_MOJITO = ITEMS.register("apple_mojito", () -> new ReusableFoodContainerItem(new Item.Properties().food(ModFoods.MOJITO), 32, com.max.prettyguardian.item.item.PrettyGuardianItem.JUICE_GLASS));
-    public static final DeferredItem<Item> MINT_MOJITO = ITEMS.register("mint_mojito", () -> new ReusableFoodContainerItem(new Item.Properties().food(ModFoods.MOJITO), 32, com.max.prettyguardian.item.item.PrettyGuardianItem.JUICE_GLASS));
-    public static final DeferredItem<Item> STRAWBERRY_MOJITO = ITEMS.register("strawberry_mojito", () -> new ReusableFoodContainerItem(new Item.Properties().food(ModFoods.MOJITO), 32, com.max.prettyguardian.item.item.PrettyGuardianItem.JUICE_GLASS));
-    public static final DeferredItem<Item> BUBBLETEA_MELON = ITEMS.register("bubbletea_melon", () -> new ReusableFoodContainerItem(new Item.Properties().food(ModFoods.BUBBLE_TEA), 32, com.max.prettyguardian.item.item.PrettyGuardianItem.JUICE_GLASS));
-    public static final DeferredItem<Item> BUBBLETEA_STRAWBERRY = ITEMS.register("bubbletea_strawberry", () -> new ReusableFoodContainerItem(new Item.Properties().food(ModFoods.BUBBLE_TEA), 32, com.max.prettyguardian.item.item.PrettyGuardianItem.JUICE_GLASS));
-    public static final DeferredItem<Item> BUBBLETEA_CARAMEL = ITEMS.register("bubbletea_caramel", () -> new ReusableFoodContainerItem(new Item.Properties().food(ModFoods.BUBBLE_TEA), 32, com.max.prettyguardian.item.item.PrettyGuardianItem.JUICE_GLASS));
+    public static final DeferredItem<Item> PISTACHIO_ICE_CREAM = ITEMS.register("pistachio_ice_cream", () -> new ReusableFoodContainerItem(new Item.Properties().food(ModFoods.ICE_CREAM), 32, ModItem.ICE_CREAM_CUP, false));
+    public static final DeferredItem<Item> VANILLA_ICE_CREAM = ITEMS.register("vanilla_ice_cream", () -> new ReusableFoodContainerItem(new Item.Properties().food(ModFoods.ICE_CREAM), 32, ModItem.ICE_CREAM_CUP, false));
+    public static final DeferredItem<Item> CHOCOLATE_ICE_CREAM = ITEMS.register("chocolate_ice_cream", () -> new ReusableFoodContainerItem(new Item.Properties().food(ModFoods.ICE_CREAM), 32, ModItem.ICE_CREAM_CUP, false));
+    public static final DeferredItem<Item> STRAWBERRY_ICE_CREAM = ITEMS.register("strawberry_ice_cream", () -> new ReusableFoodContainerItem(new Item.Properties().food(ModFoods.ICE_CREAM), 32, ModItem.ICE_CREAM_CUP, false));
+    public static final DeferredItem<Item> POKKY_ICE_CREAM = ITEMS.register("pokky_ice_cream", () -> new ReusableFoodContainerItem(new Item.Properties().food(ModFoods.POKKY_ICE_CREAM), 64, ModItem.ICE_CREAM_CUP, false));
+    public static final DeferredItem<Item> APPLE_MOJITO = ITEMS.register("apple_mojito", () -> new ReusableFoodContainerItem(new Item.Properties().food(ModFoods.MOJITO), 32, ModItem.JUICE_GLASS));
+    public static final DeferredItem<Item> MINT_MOJITO = ITEMS.register("mint_mojito", () -> new ReusableFoodContainerItem(new Item.Properties().food(ModFoods.MOJITO), 32, ModItem.JUICE_GLASS));
+    public static final DeferredItem<Item> STRAWBERRY_MOJITO = ITEMS.register("strawberry_mojito", () -> new ReusableFoodContainerItem(new Item.Properties().food(ModFoods.MOJITO), 32, ModItem.JUICE_GLASS));
+    public static final DeferredItem<Item> BUBBLETEA_MELON = ITEMS.register("bubbletea_melon", () -> new ReusableFoodContainerItem(new Item.Properties().food(ModFoods.BUBBLE_TEA), 32, ModItem.JUICE_GLASS));
+    public static final DeferredItem<Item> BUBBLETEA_STRAWBERRY = ITEMS.register("bubbletea_strawberry", () -> new ReusableFoodContainerItem(new Item.Properties().food(ModFoods.BUBBLE_TEA), 32, ModItem.JUICE_GLASS));
+    public static final DeferredItem<Item> BUBBLETEA_CARAMEL = ITEMS.register("bubbletea_caramel", () -> new ReusableFoodContainerItem(new Item.Properties().food(ModFoods.BUBBLE_TEA), 32, ModItem.JUICE_GLASS));
 
     public static final DeferredItem<Item> WAFFLE = ITEMS.register("waffle", () -> new Item(new Item.Properties().food(ModFoods.WAFFLE)));
     public static final DeferredItem<Item> FISH_WAFFLE = ITEMS.register("fish_waffle", () -> new Item(new Item.Properties().food(ModFoods.WAFFLE)));
@@ -150,8 +151,8 @@ public class ModItem {
     public static final DeferredItem<Item> PLUTONS_KEY = ITEMS.register("plutons_key", () -> new PlutonsKey(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> NEPTUNES_MIRROR = ITEMS.register("neptunes_mirror", () -> new NeptunesMirror(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> SPACE_SWORD = ITEMS.register("space_sword", () -> new SpaceSwordItem(ModToolTiers.SPACE_SWORD, new Item.Properties().stacksTo(1).attributes(SwordItem.createAttributes(ModToolTiers.RUBY,3, -2.4F))));
-    public static final DeferredItem<Item> STRAWBERRY_COW_EGG = ITEMS.register("strawberry_cow_egg", () -> new ForgeSpawnEggItem(ModEntities.STRAWBERRY_COW, 0xfcd6df, 0xf798be, new Item.Properties()));
-    public static final DeferredItem<Item> CELESTIAL_RABBIT_EGG = ITEMS.register("celestial_rabbit_egg", () -> new ForgeSpawnEggItem(ModEntities.CELESTIAL_RABBIT, 0xf564df, 0xf548be, new Item.Properties()));
+    public static final DeferredItem<Item> STRAWBERRY_COW_EGG = ITEMS.register("strawberry_cow_egg", () -> new DeferredSpawnEggItem(ModEntities.STRAWBERRY_COW, 0xfcd6df, 0xf798be, new Item.Properties()));
+    public static final DeferredItem<Item> CELESTIAL_RABBIT_EGG = ITEMS.register("celestial_rabbit_egg", () -> new DeferredSpawnEggItem(ModEntities.CELESTIAL_RABBIT, 0xf564df, 0xf548be, new Item.Properties()));
 
     public static final DeferredItem<Item> SAILORMOON_OST_MUSIC_DISC = ITEMS.register("sailormoon_ost_music_disc", () -> new Item(new Item.Properties().jukeboxPlayable(ModSounds.SAILORMOON_MOONPRIDE_KEY).stacksTo(1)));
     public static final DeferredItem<Item> FIREFLIES_MUSIC_DISC = ITEMS.register("fireflies_music_disc", () -> new Item(new Item.Properties().jukeboxPlayable(ModSounds.SAILORMOON_MOONPRIDE_KEY).stacksTo(1)));
@@ -163,7 +164,7 @@ public class ModItem {
     public static final DeferredItem<Item> GIFT_BOX = ITEMS.register("gift_box", () -> new GiftBoxItem(new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> LOVE_LETTER = ITEMS.register("love_letter", () -> new LoveLetterItem(new Item.Properties().stacksTo(1)));
 
-    public static final DeferredItem<Item> BUTTERFLY_NET = ITEMS.registerItem("butterfly_net", () -> new ButterflyNetItem(new Item.Properties().stacksTo(1).durability(100)));
+    public static final DeferredItem<Item> BUTTERFLY_NET = ITEMS.register("butterfly_net", () -> new ButterflyNetItem(new Item.Properties().stacksTo(1).durability(100)));
     public static final DeferredItem<Item> ADMIRAL_BUTTERFLY_EGG = ITEMS.register("admiral_butterfly_egg", () -> new ButterflyEggItem(ModEntities.BUTTERFLY, ButterflyEntity.Variant.ADMIRAL, new Item.Properties().stacksTo(16)));
     public static final DeferredItem<Item> APOLLO_BUTTERFLY_EGG = ITEMS.register("apollo_butterfly_egg", () -> new ButterflyEggItem(ModEntities.BUTTERFLY, ButterflyEntity.Variant.APOLLO, new Item.Properties().stacksTo(16)));
     public static final DeferredItem<Item> DUSK_BUTTERFLY_EGG = ITEMS.register("dusk_butterfly_egg", () -> new ButterflyEggItem(ModEntities.BUTTERFLY, ButterflyEntity.Variant.DUSK, new Item.Properties().stacksTo(16)));
@@ -175,7 +176,7 @@ public class ModItem {
     public static final DeferredItem<Item> SKIPPER_BUTTERFLY_EGG = ITEMS.register("skipper_butterfly_egg", () -> new ButterflyEggItem(ModEntities.BUTTERFLY, ButterflyEntity.Variant.SKIPPER, new Item.Properties().stacksTo(16)));
     public static final DeferredItem<Item> VIOLETTE_BUTTERFLY_EGG = ITEMS.register("violette_butterfly_egg", () -> new ButterflyEggItem(ModEntities.BUTTERFLY, ButterflyEntity.Variant.VIOLETTE, new Item.Properties().stacksTo(16)));
 
-    public static final DeferredItem<Item> FAIRY_EGG = ITEMS.register("fairy_egg", () -> new ForgeSpawnEggItem(ModEntities.FAIRY, 0xf5d6df, 0x9798be, new Item.Properties()));
+    public static final DeferredItem<Item> FAIRY_EGG = ITEMS.register("fairy_egg", () -> new DeferredSpawnEggItem(ModEntities.FAIRY, 0xf5d6df, 0x9798be, new Item.Properties()));
 
     public static final DeferredItem<Item> RUBY_TEMPLATE_UPGRADE = ITEMS.register("ruby_template_upgrade", () -> new SmithingTemplateItem(
             Component.translatable("item.prettyguardian.ruby_template_upgrade_apply_to"),

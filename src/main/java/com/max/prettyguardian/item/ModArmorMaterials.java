@@ -41,7 +41,7 @@ public class ModArmorMaterials {
             enumMap.put(ArmorItem.Type.HELMET, 4);
             enumMap.put(ArmorItem.Type.BODY, 15);
         }), 15,
-                () -> Ingredient.of(PrettyGuardianItem.PINK_SAPPHIRE.get()),
+                () -> Ingredient.of(ModItem.PINK_SAPPHIRE.get()),
                 List.of(
                         new ArmorMaterial.Layer(ResourceLocation.withDefaultNamespace(PINK_SAPPHIRE_STRING), "", true),
                         new ArmorMaterial.Layer(ResourceLocation.withDefaultNamespace(PINK_SAPPHIRE_STRING), "_overlay", false)
@@ -55,7 +55,7 @@ public class ModArmorMaterials {
             enumMap.put(ArmorItem.Type.HELMET, 5);
             enumMap.put(ArmorItem.Type.BODY, 17);
         }), 17,
-                () -> Ingredient.of(PrettyGuardianItem.RUBY.get()),
+                () -> Ingredient.of(ModItem.RUBY.get()),
                 List.of(
                         new ArmorMaterial.Layer(ResourceLocation.withDefaultNamespace("ruby"), "", true),
                         new ArmorMaterial.Layer(ResourceLocation.withDefaultNamespace("ruby"), "_overlay", false)

@@ -1,7 +1,7 @@
 package com.max.prettyguardian.client.gui.sreens.inventory;
 
 import com.max.prettyguardian.PrettyGuardian;
-import com.max.prettyguardian.item.item.PrettyGuardianItem;
+import com.max.prettyguardian.item.ModItem;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -29,19 +29,19 @@ public class MoonAltarMenu extends AbstractContainerMenu {
         this.addSlot(new Slot(data, 0, 56, -9) {
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
-                return stack.is(PrettyGuardianItem.PLUTONS_KEY.get());
+                return stack.is(ModItem.PLUTONS_KEY.get());
             }
         });
         this.addSlot(new Slot(data, 1, 104, -9) {
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
-                return stack.is(PrettyGuardianItem.SPACE_SWORD.get());
+                return stack.is(ModItem.SPACE_SWORD.get());
             }
         });
         this.addSlot(new Slot(data, 2, 80, 7) {
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
-                return stack.is(PrettyGuardianItem.NEPTUNES_MIRROR.get());
+                return stack.is(ModItem.NEPTUNES_MIRROR.get());
             }
 
         });
@@ -102,21 +102,21 @@ public class MoonAltarMenu extends AbstractContainerMenu {
     }
 
     private @Nullable ItemStack checkItemAndMoveIt(ItemStack itemToMove) {
-        if (itemToMove.is(PrettyGuardianItem.PLUTONS_KEY.get())) {
+        if (itemToMove.is(ModItem.PLUTONS_KEY.get())) {
             ItemStack itemInSlot = slots.get(TE_INVENTORY_FIRST_SLOT_INDEX).getItem();
-            if (itemInSlot.is(PrettyGuardianItem.PLUTONS_KEY.get()) ||
+            if (itemInSlot.is(ModItem.PLUTONS_KEY.get()) ||
                     !moveItemStackTo(itemToMove, TE_INVENTORY_FIRST_SLOT_INDEX, TE_INVENTORY_LAST_SLOT_INDEX, false)) {
                 return ItemStack.EMPTY;
             }
-        } else if (itemToMove.is(PrettyGuardianItem.SPACE_SWORD.get())) {
+        } else if (itemToMove.is(ModItem.SPACE_SWORD.get())) {
             ItemStack itemInSlot = slots.get(TE_INVENTORY_FIRST_SLOT_INDEX+1).getItem();
-            if (itemInSlot.is(PrettyGuardianItem.SPACE_SWORD.get()) ||
+            if (itemInSlot.is(ModItem.SPACE_SWORD.get()) ||
                     !moveItemStackTo(itemToMove, TE_INVENTORY_FIRST_SLOT_INDEX+1, TE_INVENTORY_LAST_SLOT_INDEX+1, false)) {
                 return ItemStack.EMPTY;
             }
-        } else if (itemToMove.is(PrettyGuardianItem.NEPTUNES_MIRROR.get())) {
+        } else if (itemToMove.is(ModItem.NEPTUNES_MIRROR.get())) {
             ItemStack itemInSlot = slots.get(TE_INVENTORY_FIRST_SLOT_INDEX+2).getItem();
-            if (itemInSlot.is(PrettyGuardianItem.NEPTUNES_MIRROR.get()) ||
+            if (itemInSlot.is(ModItem.NEPTUNES_MIRROR.get()) ||
                     !moveItemStackTo(itemToMove, TE_INVENTORY_FIRST_SLOT_INDEX+2, TE_INVENTORY_LAST_SLOT_INDEX+2, false)) {
                 return ItemStack.EMPTY;
             }

@@ -1,9 +1,7 @@
 package com.max.prettyguardian.block.entity;
 
-import com.max.prettyguardian.blocks.PrettyGuardianBlock;
 import com.max.prettyguardian.block.custom.table.MoonAltarBlock;
 import com.max.prettyguardian.client.gui.sreens.inventory.MoonAltarMenu;
-import com.max.prettyguardian.item.item.PrettyGuardianItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -21,10 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

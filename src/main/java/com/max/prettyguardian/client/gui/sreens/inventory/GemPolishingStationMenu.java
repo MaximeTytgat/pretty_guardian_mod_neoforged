@@ -1,7 +1,7 @@
 package com.max.prettyguardian.client.gui.sreens.inventory;
 
 import com.max.prettyguardian.PrettyGuardian;
-import com.max.prettyguardian.blocks.PrettyGuardianBlock;
+import com.max.prettyguardian.block.ModBlock;
 import com.max.prettyguardian.block.entity.GemPolishingStationBlockEntity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -10,8 +10,7 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 
 public class GemPolishingStationMenu extends AbstractContainerMenu {
@@ -105,7 +104,7 @@ public class GemPolishingStationMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(@NotNull Player player) {
-        return stillValid(ContainerLevelAccess.create(this.level, this.blockEntity.getBlockPos()), player, PrettyGuardianBlock.GEM_POLISHING_STATION.get());
+        return stillValid(ContainerLevelAccess.create(this.level, this.blockEntity.getBlockPos()), player, ModBlock.GEM_POLISHING_STATION.get());
     }
 
     private void addPlayerInventory(Inventory playerInventory) {
