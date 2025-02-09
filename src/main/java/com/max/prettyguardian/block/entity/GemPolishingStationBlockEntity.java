@@ -2,7 +2,9 @@ package com.max.prettyguardian.block.entity;
 
 import com.max.prettyguardian.client.gui.sreens.inventory.GemPolishingStationMenu;
 import com.max.prettyguardian.item.ModItem;
+import com.max.prettyguardian.recipe.ModRecipeType;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -13,26 +15,26 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.RecipeCraftingHolder;
-import net.minecraft.world.inventory.StackedContentsCompatible;
+import net.minecraft.world.entity.player.StackedContents;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class GemPolishingStationBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, RecipeCraftingHolder, StackedContentsCompatible, MenuProvider {
-    private final ItemStackHandler itemHandler = new ItemStackHandler(2);
+public class GemPolishingStationBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, RecipeCraftingHolder, StackedContentsCompatible {
     private static final int INPUT_SLOT = 0;
     private static final int OUTPUT_SLOT = 1;
 
     private static final int SIZE = 2;
-    private NonNullList<ItemStack> lazyItemHandler = NonNullList.withSize(SIZE, ItemStack.EMPTY);
+    private NonNullList<ItemStack> items = NonNullList.withSize(SIZE, ItemStack.EMPTY);
 
 
     protected final ContainerData data;
@@ -67,35 +69,45 @@ public class GemPolishingStationBlockEntity extends BaseContainerBlockEntity imp
         };
     }
 
+    // TODO: FIX THIS
     @Override
     public void onLoad() {
         super.onLoad();
-        lazyItemHandler = NonNullList.of(itemHandler);
+        items = NonNullList.withSize(SIZE, ItemStack.EMPTY);
     }
 
     public void drops() {
         if (level == null) return;
-        SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
-        for (int i = 0; i < itemHandler.getSlots(); i++) {
-            inventory.setItem(i, itemHandler.getStackInSlot(i));
+        SimpleContainer inventory = new SimpleContainer(SIZE);
+        for (int i = 0; i < this.getContainerSize(); i++) {
+            inventory.setItem(i, this.getItem(i));
         }
         Containers.dropContents(this.level, this.worldPosition, inventory);
     }
 
     @Override
-    public @NotNull Component getDisplayName() {
-        return Component.translatable("block.prettyguardian.gem_polishing_station");
+    protected @NotNull Component getDefaultName() {
+        return Component.translatable("container.giftBox.gem_polishing_station_block_entity");
     }
 
-    @Nullable
     @Override
-    public AbstractContainerMenu createMenu(int id, @NotNull Inventory inventory, @NotNull Player player) {
+    protected @NotNull NonNullList<ItemStack> getItems() {
+        return items;
+    }
+
+    @Override
+    protected void setItems(NonNullList<ItemStack> items) {
+        this.items = items;
+    }
+
+    @Override
+    protected @NotNull AbstractContainerMenu createMenu(int id, @NotNull Inventory inventory) {
         return new GemPolishingStationMenu(id, inventory, this, this.data);
     }
 
     @Override
     protected void saveAdditional(CompoundTag pTag, HolderLookup.@NotNull Provider provider) {
-        pTag.put("inventory", itemHandler.serializeNBT(provider));
+        pTag.put("inventory", items.serializeNBT(provider));
         pTag.putInt("gem_polishing_station.progress", progress);
 
         super.saveAdditional(pTag, provider);
@@ -104,7 +116,7 @@ public class GemPolishingStationBlockEntity extends BaseContainerBlockEntity imp
     @Override
     public void loadAdditional(@NotNull CompoundTag pTag, HolderLookup.@NotNull Provider provider) {
         super.loadAdditional(pTag, provider);
-        itemHandler.deserializeNBT(provider, pTag.getCompound("inventory"));
+        items.deserializeNBT(provider, pTag.getCompound("inventory"));
     }
 
     public void tick(
@@ -131,7 +143,7 @@ public class GemPolishingStationBlockEntity extends BaseContainerBlockEntity imp
 
     private void craftItem() {
         ItemStack result = new ItemStack(ModItem.RUBY.get());
-        this.itemHandler.extractItem(INPUT_SLOT, 1, false);
+        this.removeItem(INPUT_SLOT, 1);
 
         this.itemHandler.setStackInSlot(
                 OUTPUT_SLOT,
@@ -162,5 +174,53 @@ public class GemPolishingStationBlockEntity extends BaseContainerBlockEntity imp
 
     private void increaseCraftingProgress() {
         progress++;
+    }
+
+    @Override
+    public int[] getSlotsForFace(Direction direction) {
+        return new int[0];
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int i, ItemStack itemStack, @Nullable Direction direction) {
+        return false;
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int i, ItemStack itemStack, Direction direction) {
+        return false;
+    }
+
+    @Override
+    public int getContainerSize() {
+        return SIZE;
+    }
+
+    @Override
+    public void setRecipeUsed(@Nullable RecipeHolder<?> recipeHolder) {
+
+    }
+
+    @Override
+    public @Nullable RecipeHolder<?> getRecipeUsed() {
+        return null;
+    }
+
+    @Override
+    public void fillStackedContents(StackedContents stackedContents) {
+
+    }
+}
+public class GemPolishingStationBlockEntity extends AbstractFurnaceBlockEntity {
+    public GemPolishingStationBlockEntity(BlockPos pos, BlockState blockState) {
+        super(BlockEntityType.FURNACE, pos, blockState, ModRecipeType.POLISHING_RECIPE.get());
+    }
+
+    protected Component getDefaultName() {
+        return Component.translatable("container.furnace");
+    }
+
+    protected AbstractContainerMenu createMenu(int id, Inventory player) {
+        return new FurnaceMenu(id, player, this, this.dataAccess);
     }
 }

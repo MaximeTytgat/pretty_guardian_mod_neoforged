@@ -10,6 +10,7 @@ import com.max.prettyguardian.potion.ModPotions;
 
 import com.max.prettyguardian.worldgen.entity.ModEntityType;
 import com.max.prettyguardian.worldgen.structure.ModStructures;
+import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -27,6 +28,8 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+
+import java.util.Locale;
 
 @Mod(PrettyGuardian.MOD_ID)
 public class PrettyGuardian
@@ -87,5 +90,9 @@ public class PrettyGuardian
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
         }
+    }
+
+    public static ResourceLocation prefix(String name) {
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, name.toLowerCase(Locale.ROOT));
     }
 }
