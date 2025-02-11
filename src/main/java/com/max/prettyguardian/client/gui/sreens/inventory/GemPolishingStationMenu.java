@@ -32,10 +32,12 @@ public class GemPolishingStationMenu extends AbstractContainerMenu {
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
 
-        this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
-            this.addSlot(new SlotItemHandler(iItemHandler, 0, 80, 11));
-            this.addSlot(new SlotItemHandler(iItemHandler, 1, 80, 59));
-        });
+        // this.addSlot(new SlotItemHandler(dataInventory, 0, 80, 11));
+        // this.addSlot(new SlotItemHandler(dataInventory, 1, 80, 59));
+
+        checkContainerDataCount(data, 2);
+
+        this.addDataSlots(data);
     }
 
     public boolean isCrafting() {

@@ -1,0 +1,105 @@
+{
+  "sailormoon_ost_music_disc": {
+    "sounds": [
+      {
+        "name": "prettyguardian:sailormoon_ost_music_disc",
+        "stream": true
+      }
+    ]
+  },
+  "fireflies_music_disc": {
+    "sounds": [
+      {
+        "name": "prettyguardian:fireflies_music_disc",
+        "stream": true
+      }
+    ]
+  },
+  "tavern_music_disc": {
+    "sounds": [
+      {
+        "name": "prettyguardian:tavern_music_disc",
+        "stream": true
+      }
+    ]
+  },
+  "the_lantern_fair_music_disc": {
+    "sounds": [
+      {
+        "name": "prettyguardian:the_lantern_fair_music_disc",
+        "stream": true
+      }
+    ]
+  },
+  "lofi_music_disc": {
+    "sounds": [
+      {
+        "name": "prettyguardian:lofi_music_disc",
+        "stream": true
+      }
+    ]
+  },
+  "cute_want_shoot": {
+    "sounds": [
+      {
+        "name": "prettyguardian:cute_want_shoot"
+      }
+    ]
+  },
+  "fairy": {
+    "sounds": [
+      {
+        "name": "prettyguardian:fairy"
+      }
+    ]
+  },
+  "eternal_silver_cristal_staff_shoot": {
+    "sounds": [
+      {
+        "name": "prettyguardian:eternal_silver_cristal_staff_shoot"
+      }
+    ]
+  },
+  "celestial_rabbit_ambient_sound_0": {
+    "sounds": [
+      {
+        "name": "prettyguardian:celestial_rabbit_ambient_sound_0"
+      }
+    ]
+  },
+  "celestial_rabbit_ambient_sound_1": {
+    "sounds": [
+      {
+        "name": "prettyguardian:celestial_rabbit_ambient_sound_1"
+      }
+    ]
+  },
+  "celestial_rabbit_ambient_sound_2": {
+    "sounds": [
+      {
+        "name": "prettyguardian:celestial_rabbit_ambient_sound_2"
+      }
+    ]
+  },
+  "celestial_rabbit_ambient_sound_3": {
+    "sounds": [
+      {
+        "name": "prettyguardian:celestial_rabbit_ambient_sound_3"
+      }
+    ]
+  },
+  "celestial_rabbit_shoot": {
+    "sounds": [
+      {
+        "name": "prettyguardian:celestial_rabbit_shoot"
+      }
+    ]
+  },
+  "celestial_rabbit_death": {
+    "sounds": [
+      {
+        "name": "prettyguardian:celestial_rabbit_death"
+      }
+    ]
+  }
+}

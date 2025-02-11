@@ -1,6 +1,7 @@
 package com.max.prettyguardian.component;
 
 import com.max.prettyguardian.PrettyGuardian;
+import com.max.prettyguardian.component.custom.LoveLetterComponent;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
@@ -22,7 +23,6 @@ public class ModDataComponentTypes {
     public static final DeferredRegister.DataComponents REGISTRAR = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, PrettyGuardian.MOD_ID);
 
 
-    public record LoveLetterComponent(String loveLetterAuthor, String loveLetterText) {}
 
     public static final Codec<LoveLetterComponent> LOVE_LETTER_COMPONENT_CODEC = RecordCodecBuilder.create(instance ->
             instance.group(

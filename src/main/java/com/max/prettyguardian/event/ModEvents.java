@@ -8,12 +8,15 @@ import com.max.prettyguardian.entity.custom.CelestialRabbitEntity;
 import com.max.prettyguardian.entityonshoulder.PlayerEntityOnShoulder;
 import com.max.prettyguardian.item.ModItem;
 import com.max.prettyguardian.networking.ModMessages;
+import com.max.prettyguardian.networking.handler.ModClientPayloadHandler;
+import com.max.prettyguardian.networking.handler.ModServerPayloadHandler;
 import com.max.prettyguardian.networking.packet.PlayerEntityOnShoulderDataSCPacket;
+import com.mojang.datafixers.util.Either;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.npc.VillagerProfession;
@@ -27,9 +30,15 @@ import net.minecraft.world.item.trading.MerchantOffer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.LogicalSide;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.level.ChunkWatchEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.handling.DirectionalPayloadHandler;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 import java.util.List;
 import java.util.Objects;
@@ -37,6 +46,8 @@ import java.util.Optional;
 
 @EventBusSubscriber(modid = PrettyGuardian.MOD_ID)
 public class ModEvents {
+    private static Object PlayerEntityOnShoulderProvider;
+
     private ModEvents() {}
 // TODO: Suppress this
 //    @SubscribeEvent
@@ -139,9 +150,12 @@ public class ModEvents {
 
         player.removeData(ModAttachmentTypes.PLAYER_ENTITY_ON_SHOULDER);
 
-        ModMessages.sendToAllPlayers(
-                new PlayerEntityOnShoulderDataSCPacket(
+        PacketDistributor.sendToAllPlayers(
+                new PlayerEntityOnShoulder(
                         player.getStringUUID(),
+                        null,
+                        0,
+                        null,
                         false
                 )
         );
@@ -172,6 +186,7 @@ public class ModEvents {
                 boolean isInSittingPose = celestialRabbit.isInSittingPose();
 
                 entityOnShoulder = new PlayerEntityOnShoulder(
+                        player.getStringUUID(),
                         ModEntities.CELESTIAL_RABBIT.get().getDescriptionId(),
                         collarColor.getId(),
                         name != null ? name.getString() : null,
@@ -181,34 +196,29 @@ public class ModEvents {
                 player.setData(ModAttachmentTypes.PLAYER_ENTITY_ON_SHOULDER, entityOnShoulder);
                 livingEntity.discard();
 
-                ModMessages.sendToAllPlayers(
-                        new PlayerEntityOnShoulderDataSCPacket(
-                                player.getStringUUID(),
-                                true
-                        )
-                );
+                PacketDistributor.sendToAllPlayers(entityOnShoulder);
             }
         }
     }
 
-// TODO: Needed ?
-//    @SubscribeEvent
-//    public static void onPlayerJoinWorld(EntityJoinLevelEvent event) {
-//        if(
-//                !event.getLevel().isClientSide()
-//                && event.getEntity() instanceof ServerPlayer player
-//        ) {
-//                player.getCapability(PlayerEntityOnShoulderProvider.PLAYER_ENTITY_ON_SHOULDER_CAPABILITY).ifPresent(entityOnShoulder -> {
-//                    if (entityOnShoulder.getEntityType() != null) {
-//                        ModMessages.sendToAllPlayers(new PlayerEntityOnShoulderDataSCPacket(
-//                                player.getStringUUID(),
-//                                true
-//                        ));
-//                    }
-//                });
-//            }
-//
-//    }
+ // TODO: Needed ?
+    @SubscribeEvent
+    public static void onPlayerJoinWorld(EntityJoinLevelEvent event) {
+        if(
+                !event.getLevel().isClientSide()
+                && event.getEntity() instanceof ServerPlayer player
+        ) {
+                player.getCapability(PlayerEntityOnShoulderProvider.PLAYER_ENTITY_ON_SHOULDER_CAPABILITY).ifPresent(entityOnShoulder -> {
+                    if (entityOnShoulder.getEntityType() != null) {
+                        PacketDistributor.sendToAllPlayers(new PlayerEntityOnShoulderDataSCPacket(
+                                player.getStringUUID(),
+                                true
+                        ));
+                    }
+                });
+            }
+
+    }
 
     // TODO: add config to choose if the rabbit should spawn, die or stay on the shoulder
     @SubscribeEvent
@@ -228,14 +238,30 @@ public class ModEvents {
 
                 player.removeData(ModAttachmentTypes.PLAYER_ENTITY_ON_SHOULDER);
 
-                ModMessages.sendToAllPlayers(
-                        new PlayerEntityOnShoulderDataSCPacket(
+                PacketDistributor.sendToAllPlayers(
+                        new PlayerEntityOnShoulder(
                                 player.getStringUUID(),
+                                null,
+                                0,
+                                null,
                                 false
                         )
                 );
             }
         }
+    }
+
+    @SubscribeEvent
+    public static void register(final RegisterPayloadHandlersEvent event) {
+        final PayloadRegistrar registrar = event.registrar("1");
+        registrar.playBidirectional(
+                PlayerEntityOnShoulder.TYPE,
+                PlayerEntityOnShoulder.STREAM_CODEC,
+                new DirectionalPayloadHandler<>(
+                        ModClientPayloadHandler::handleDataOnMain,
+                        ModServerPayloadHandler::handleDataOnMain
+                )
+        );
     }
 
     @SubscribeEvent

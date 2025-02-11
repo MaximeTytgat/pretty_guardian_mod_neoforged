@@ -2,6 +2,8 @@ package com.max.prettyguardian.item.custom;
 
 import com.max.prettyguardian.client.gui.sreens.inventory.FakeLoveLetterMenu;
 import com.max.prettyguardian.component.ModAttachmentTypes;
+import com.max.prettyguardian.component.ModDataComponentTypes;
+import com.max.prettyguardian.component.custom.LoveLetterComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.*;
@@ -28,6 +30,11 @@ public class LoveLetterItem extends Item {
 
     @Override
     public boolean isFoil(ItemStack itemStack) {
-        return itemStack.has(ModAttachmentTypes.LOVE_LETTER_AUTHOR.get());
+        if (itemStack.has(ModDataComponentTypes.LOVE_LETTER_COMPONENT.get())) {
+            LoveLetterComponent loveLetter = itemStack.get(ModDataComponentTypes.LOVE_LETTER_COMPONENT.get());
+            return loveLetter != null && loveLetter.isSigned();
+        }
+
+        return false;
     }
 }

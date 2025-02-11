@@ -26,6 +26,7 @@ public class ModAttachmentTypes {
             () -> AttachmentType.builder(
                     () -> new PlayerEntityOnShoulder(
                             null,
+                            null,
                             DyeColor.LIGHT_BLUE.getId(),
                             null,
                             false

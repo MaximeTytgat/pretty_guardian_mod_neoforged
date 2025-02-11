@@ -22,13 +22,14 @@ public class PlayerEntityOnShoulderDataSCPacket {
         buf.writeBoolean(this.isEntityOnShoulder);
     }
 
-    public void handle(CustomPayloadEvent.Context context) {
-        context.enqueueWork(() -> {
-            // Here we are in the client
-            if (isEntityOnShoulder)
-                ClientPlayerEntityOnShoulderData.setEntityOnShoulder(this.playerId);
-            else
-                ClientPlayerEntityOnShoulderData.letGoEntity(this.playerId);
-        });
-    }
+    // TODO: Need this?
+//    public void handle(CustomPayloadEvent.Context context) {
+//        context.enqueueWork(() -> {
+//            // Here we are in the client
+//            if (isEntityOnShoulder)
+//                ClientPlayerEntityOnShoulderData.setEntityOnShoulder(this.playerId);
+//            else
+//                ClientPlayerEntityOnShoulderData.letGoEntity(this.playerId);
+//        });
+//    }
 }

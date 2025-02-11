@@ -1,6 +1,7 @@
 package com.max.prettyguardian.recipe;
 
 import com.max.prettyguardian.PrettyGuardian;
+import com.max.prettyguardian.recipe.custom.PolishingRecipe;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.bus.api.IEventBus;

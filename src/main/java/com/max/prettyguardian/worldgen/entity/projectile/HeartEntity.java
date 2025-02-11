@@ -17,6 +17,7 @@ import net.minecraft.world.phys.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.projectile.*;
 import net.minecraft.world.damagesource.DamageSource;
+import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.NotNull;
 
 public class HeartEntity extends Projectile {
@@ -58,7 +59,7 @@ public class HeartEntity extends Projectile {
             super.tick();
 
             HitResult hitresult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
-            if (hitresult.getType() != HitResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, hitresult)) {
+            if (hitresult.getType() != HitResult.Type.MISS && !EventHooks.onProjectileImpact(this, hitresult)) {
                 this.onHit(hitresult);
             }
 

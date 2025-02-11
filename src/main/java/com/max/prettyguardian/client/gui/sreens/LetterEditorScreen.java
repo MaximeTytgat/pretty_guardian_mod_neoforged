@@ -5,7 +5,9 @@ import com.max.prettyguardian.client.gui.components.CustomFittingMultiLineTextWi
 import com.max.prettyguardian.client.gui.components.CustomMultiLineEditBox;
 import com.max.prettyguardian.client.gui.components.CustomStringWidget;
 import com.max.prettyguardian.client.gui.sreens.inventory.FakeLoveLetterMenu;
-import com.max.prettyguardian.component.ModAttachmentTypes;
+import com.max.prettyguardian.component.ModDataComponentTypes;
+import com.max.prettyguardian.component.custom.LoveLetterComponent;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -20,6 +22,7 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.FireworkExplosion;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -65,10 +68,16 @@ public class LetterEditorScreen extends AbstractContainerScreen<FakeLoveLetterMe
         this.output.setMessage(Component.translatable("screen.prettyguardian.love_letter.placeholder").withStyle(Style.EMPTY.withColor(11828699)));
 
 
-        if (this.stack.has(ModAttachmentTypes.LOVE_LETTER_TEXT.get()) || this.stack.has(ModAttachmentTypes.LOVE_LETTER_AUTHOR.get())) {
-            String text = this.stack.get(ModAttachmentTypes.LOVE_LETTER_TEXT.get());
-            String author = this.stack.get(ModAttachmentTypes.LOVE_LETTER_AUTHOR.get());
-            if (text != null && author != null) {
+        if (this.stack.has(ModDataComponentTypes.LOVE_LETTER_COMPONENT.get())) {
+            LoveLetterComponent loveLetter = this.stack.get(ModDataComponentTypes.LOVE_LETTER_COMPONENT.get());
+            if (loveLetter == null) {
+                return;
+            }
+
+            String author = loveLetter.loveLetterAuthor();
+            String text = loveLetter.loveLetterText();
+
+            if (loveLetter.isSigned()) {
                 CustomFittingMultiLineTextWidget writtenOutput = new CustomFittingMultiLineTextWidget(
                         bookX + 30, bookY + 18, 105, 115,
                         Component.literal(text).withStyle(Style.EMPTY.withColor(11828699)),
@@ -94,7 +103,6 @@ public class LetterEditorScreen extends AbstractContainerScreen<FakeLoveLetterMe
                 this.addRenderableWidget(doneButton.build());
                 this.addRenderableWidget(signButton.build());
             }
-
         } else {
             this.addRenderableWidget(this.output);
             this.addRenderableWidget(doneButton.build());
@@ -160,9 +168,20 @@ public class LetterEditorScreen extends AbstractContainerScreen<FakeLoveLetterMe
     @Override
     public void onClose() {
         String text = this.output.getValue();
-        if (!this.stack.has(ModAttachmentTypes.LOVE_LETTER_AUTHOR.get())) {
-            this.stack.set(ModAttachmentTypes.LOVE_LETTER_TEXT.get(), text);
+        if (text == null || text.isEmpty()) {
+            return;
         }
+
+        this.stack.update(
+                ModDataComponentTypes.LOVE_LETTER_COMPONENT.get(),
+                LoveLetterComponent.DEFAULT,
+                loveLetter -> {
+                    if (!loveLetter.isSigned()) {
+                        return new LoveLetterComponent("", text);
+                    }
+                    return loveLetter;
+                }
+        );
         super.onClose();
     }
 
@@ -171,8 +190,11 @@ public class LetterEditorScreen extends AbstractContainerScreen<FakeLoveLetterMe
         String playerName = Minecraft.getInstance().player.getName().getString();
 
         if (Objects.equals(action, "sign")) {
-            this.stack.set(ModAttachmentTypes.LOVE_LETTER_TEXT.get(), this.output.getValue());
-            this.stack.set(ModAttachmentTypes.LOVE_LETTER_AUTHOR.get(), playerName);
+            this.stack.update(
+                    ModDataComponentTypes.LOVE_LETTER_COMPONENT.get(),
+                    LoveLetterComponent.DEFAULT,
+                    loveLetter -> new LoveLetterComponent(playerName, loveLetter.loveLetterText())
+            );
         }
 
         super.onClose();
