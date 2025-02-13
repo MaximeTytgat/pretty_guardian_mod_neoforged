@@ -1,7 +1,9 @@
 package com.max.prettyguardian.block.entity;
 
+import com.max.prettyguardian.block.ModBlock;
 import com.max.prettyguardian.block.custom.table.MoonAltarBlock;
 import com.max.prettyguardian.client.gui.sreens.inventory.MoonAltarMenu;
+import com.max.prettyguardian.item.ModItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -29,18 +31,9 @@ public class MoonAltarBlockEntity extends RandomizableContainerBlockEntity imple
     private static final int INPUT_SLOT_2 = 1;
     private static final int INPUT_SLOT_3 = 2;
     private static final int OUTPUT_SLOT = 3;
-    private final LazyOptional<ItemStackHandler> lazyItemHandler = LazyOptional.empty();
 
     public MoonAltarBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(ModBlockEntities.MOON_ALTAR_BE.get(), blockPos, blockState);
-    }
-
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            return lazyItemHandler.cast();
-        }
-        return super.getCapability(cap, side);
     }
 
     @Override
@@ -58,12 +51,6 @@ public class MoonAltarBlockEntity extends RandomizableContainerBlockEntity imple
             inventory.setItem(i, items.get(i));
         }
         Containers.dropContents(this.level, this.worldPosition, inventory);
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        lazyItemHandler.invalidate();
     }
 
     @Override
@@ -104,11 +91,11 @@ public class MoonAltarBlockEntity extends RandomizableContainerBlockEntity imple
     @Override
     public void setItem(int i, ItemStack itemStack) {
         this.unpackLootTable(null);
-        if (itemStack.getItem() == PrettyGuardianItem.PLUTONS_KEY.get()) {
+        if (itemStack.getItem() == ModItem.PLUTONS_KEY.get()) {
             this.getItems().set(0, itemStack);
-        } else if (itemStack.getItem() == PrettyGuardianItem.SPACE_SWORD.get()) {
+        } else if (itemStack.getItem() == ModItem.SPACE_SWORD.get()) {
             this.getItems().set(1, itemStack);
-        } else if (itemStack.getItem() == PrettyGuardianItem.NEPTUNES_MIRROR.get()) {
+        } else if (itemStack.getItem() == ModItem.NEPTUNES_MIRROR.get()) {
             this.getItems().set(2, itemStack);
         } else {
             this.getItems().set(i, itemStack);
@@ -139,7 +126,7 @@ public class MoonAltarBlockEntity extends RandomizableContainerBlockEntity imple
     }
 
     private void craftItem() {
-        ItemStack result = new ItemStack(PrettyGuardianBlock.SILVER_CRYSTAL.get());
+        ItemStack result = new ItemStack(ModBlock.SILVER_CRYSTAL.get());
         if (this.items == null) {
             return;
         }
@@ -158,7 +145,7 @@ public class MoonAltarBlockEntity extends RandomizableContainerBlockEntity imple
             return false;
         }
 
-        ItemStack result = new ItemStack(PrettyGuardianBlock.SILVER_CRYSTAL.get());
+        ItemStack result = new ItemStack(ModBlock.SILVER_CRYSTAL.get());
         return (!item1.isEmpty() && !item2.isEmpty() && !item3.isEmpty()) && canInsertAmountIntoOutputSlot(result.getCount()) && canInsertItemIntoOutputSlot(result.getItem());
     }
 

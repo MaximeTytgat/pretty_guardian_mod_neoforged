@@ -12,8 +12,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public record SlowEnchantmentEffect() implements EnchantmentEntityEffect {
-
-    public static final MapCodec<SlowEnchantmentEffect> slow_enchantment_effect_codec = MapCodec.unit(SlowEnchantmentEffect::new);
+    public static final MapCodec<SlowEnchantmentEffect> CODEC = MapCodec.unit(SlowEnchantmentEffect::new);
 
     @Override
     public void apply(
@@ -30,6 +29,6 @@ public record SlowEnchantmentEffect() implements EnchantmentEntityEffect {
 
     @Override
     public @NotNull MapCodec<? extends EnchantmentEntityEffect> codec() {
-        return slow_enchantment_effect_codec;
+        return CODEC;
     }
 }

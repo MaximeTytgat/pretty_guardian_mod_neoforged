@@ -7,11 +7,8 @@ import com.max.prettyguardian.entity.ModEntities;
 import com.max.prettyguardian.entity.custom.CelestialRabbitEntity;
 import com.max.prettyguardian.entityonshoulder.PlayerEntityOnShoulder;
 import com.max.prettyguardian.item.ModItem;
-import com.max.prettyguardian.networking.ModMessages;
 import com.max.prettyguardian.networking.handler.ModClientPayloadHandler;
 import com.max.prettyguardian.networking.handler.ModServerPayloadHandler;
-import com.max.prettyguardian.networking.packet.PlayerEntityOnShoulderDataSCPacket;
-import com.mojang.datafixers.util.Either;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -201,23 +198,17 @@ public class ModEvents {
         }
     }
 
- // TODO: Needed ?
+ // TODO: Test ?
     @SubscribeEvent
     public static void onPlayerJoinWorld(EntityJoinLevelEvent event) {
         if(
                 !event.getLevel().isClientSide()
                 && event.getEntity() instanceof ServerPlayer player
+                && player.hasData(ModAttachmentTypes.PLAYER_ENTITY_ON_SHOULDER)
         ) {
-                player.getCapability(PlayerEntityOnShoulderProvider.PLAYER_ENTITY_ON_SHOULDER_CAPABILITY).ifPresent(entityOnShoulder -> {
-                    if (entityOnShoulder.getEntityType() != null) {
-                        PacketDistributor.sendToAllPlayers(new PlayerEntityOnShoulderDataSCPacket(
-                                player.getStringUUID(),
-                                true
-                        ));
-                    }
-                });
-            }
-
+            PlayerEntityOnShoulder entityOnShoulder = player.getData(ModAttachmentTypes.PLAYER_ENTITY_ON_SHOULDER);
+            PacketDistributor.sendToAllPlayers(entityOnShoulder);
+        }
     }
 
     // TODO: add config to choose if the rabbit should spawn, die or stay on the shoulder
@@ -249,19 +240,6 @@ public class ModEvents {
                 );
             }
         }
-    }
-
-    @SubscribeEvent
-    public static void register(final RegisterPayloadHandlersEvent event) {
-        final PayloadRegistrar registrar = event.registrar("1");
-        registrar.playBidirectional(
-                PlayerEntityOnShoulder.TYPE,
-                PlayerEntityOnShoulder.STREAM_CODEC,
-                new DirectionalPayloadHandler<>(
-                        ModClientPayloadHandler::handleDataOnMain,
-                        ModServerPayloadHandler::handleDataOnMain
-                )
-        );
     }
 
     @SubscribeEvent

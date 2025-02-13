@@ -1,13 +1,22 @@
 package com.max.prettyguardian;
 
 import com.max.prettyguardian.block.ModBlock;
+import com.max.prettyguardian.client.gui.sreens.inventory.ModMenuTypes;
+import com.max.prettyguardian.component.ModAttachmentTypes;
+import com.max.prettyguardian.component.ModDataComponentTypes;
+import com.max.prettyguardian.datagen.ModRecipeProvider;
 import com.max.prettyguardian.effect.ModEffects;
 import com.max.prettyguardian.enchantment.ModEnchantmentEffects;
+import com.max.prettyguardian.entity.ModEntities;
 import com.max.prettyguardian.item.ModItem;
 import com.max.prettyguardian.loot.ModLootModifiers;
 import com.max.prettyguardian.particle.ModParticles;
 import com.max.prettyguardian.potion.ModPotions;
 
+import com.max.prettyguardian.recipe.ModRecipeSerializer;
+import com.max.prettyguardian.recipe.ModRecipeType;
+import com.max.prettyguardian.sound.ModSounds;
+import com.max.prettyguardian.world.entity.ai.poi.ModPoiTypes;
 import com.max.prettyguardian.worldgen.entity.ModEntityType;
 import com.max.prettyguardian.worldgen.structure.ModStructures;
 import net.minecraft.resources.ResourceLocation;
@@ -44,13 +53,18 @@ public class PrettyGuardian
         ModBlock.register(modEventBus);
         ModItem.register(modEventBus);
         CreativeTab.register(modEventBus);
-
         ModEntityType.register(modEventBus);
         ModStructures.register(modEventBus);
-
         ModLootModifiers.register(modEventBus);
         ModEffects.register(modEventBus);
-
+        ModEntities.register(modEventBus);
+        ModMenuTypes.register(modEventBus);
+        ModDataComponentTypes.register(modEventBus);
+        ModAttachmentTypes.register(modEventBus);
+        ModSounds.register(modEventBus);
+        ModRecipeSerializer.register(modEventBus);
+        ModRecipeType.register(modEventBus);
+        ModPoiTypes.register(modEventBus);
         ModParticles.register(modEventBus);
         ModEnchantmentEffects.register(modEventBus);
         ModPotions.register(modEventBus);

@@ -7,6 +7,7 @@ import com.max.prettyguardian.block.custom.food.BaseCake;
 import com.max.prettyguardian.block.custom.food.BaseThreeCake;
 import com.max.prettyguardian.block.custom.crop.StrawberryCropBlock;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -50,7 +51,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     }
 
     private ResourceLocation getBlockKey(Block block) {
-        return ForgeRegistries.BLOCKS.getKey(block);
+        return BuiltInRegistries.BLOCK.getKey(block);
     }
 
     private String getBlockPath(Block block) {
