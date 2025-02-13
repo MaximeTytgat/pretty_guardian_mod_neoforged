@@ -1,6 +1,8 @@
 package com.max.prettyguardian.event;
 
 import com.max.prettyguardian.PrettyGuardian;
+import com.max.prettyguardian.client.gui.sreens.*;
+import com.max.prettyguardian.client.gui.sreens.inventory.ModMenuTypes;
 import com.max.prettyguardian.entity.ModEntities;
 import com.max.prettyguardian.entity.custom.ButterflyEntity;
 import com.max.prettyguardian.entity.custom.CelestialRabbitEntity;
@@ -9,11 +11,13 @@ import com.max.prettyguardian.entity.custom.StrawberryCowEntity;
 import com.max.prettyguardian.entityonshoulder.PlayerEntityOnShoulder;
 import com.max.prettyguardian.networking.handler.ModClientPayloadHandler;
 import com.max.prettyguardian.networking.handler.ModServerPayloadHandler;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -50,5 +54,14 @@ public class ModEventBusEvents {
                         ModServerPayloadHandler::handleDataOnMain
                 )
         );
+    }
+
+    @SubscribeEvent
+    public static void registerScreens(RegisterMenuScreensEvent event) {
+        event.register(ModMenuTypes.PICNIC_BASKET_MENU.get(), PicnicBasketScreen::new);
+        event.register(ModMenuTypes.GEM_POLISHING_MENU.get(), GemPolishingStationScreen::new);
+        event.register(ModMenuTypes.STAFF_MAGIC_TABLE_MENU.get(), MoonAltarScreen::new);
+        event.register(ModMenuTypes.GIFT_BOX_MENU.get(), GiftBoxScreen::new);
+        event.register(ModMenuTypes.LETTER_EDITOR_MENU.get(), LetterEditorScreen::new);
     }
 }

@@ -90,7 +90,7 @@ public class CropLeavesBlock extends LeavesBlock implements BonemealableBlock {
     }
 
     @Override
-    protected void randomTick(@NotNull BlockState state, ServerLevel level, @NotNull BlockPos pos, @NotNull RandomSource random) {
+    protected void randomTick(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull RandomSource random) {
         if (this.decaying(state)) {
             dropResources(state, level, pos);
             level.removeBlock(pos, false);
@@ -170,7 +170,7 @@ public class CropLeavesBlock extends LeavesBlock implements BonemealableBlock {
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
+    public @NotNull BlockState getStateForPlacement(BlockPlaceContext context) {
         FluidState fluidstate = context.getLevel().getFluidState(context.getClickedPos());
         return defaultBlockState().setValue(PERSISTENT, true).setValue(WATERLOGGED, fluidstate.getType() == Fluids.WATER);
     }

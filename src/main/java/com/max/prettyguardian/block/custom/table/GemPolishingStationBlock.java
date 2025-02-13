@@ -36,7 +36,7 @@ public class GemPolishingStationBlock extends AbstractFurnaceBlock {
         super(properties);
     }
 
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
         return new GemPolishingStationBlockEntity(pos, state);
     }
 

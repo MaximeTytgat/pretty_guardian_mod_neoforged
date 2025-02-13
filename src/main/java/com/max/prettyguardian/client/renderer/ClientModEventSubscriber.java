@@ -5,7 +5,7 @@ import com.max.prettyguardian.client.renderer.entity.projectiles.BubbleRenderer;
 import com.max.prettyguardian.client.renderer.entity.projectiles.CuteArrowRenderer;
 import com.max.prettyguardian.client.renderer.entity.projectiles.HeartRenderer;
 import com.max.prettyguardian.client.renderer.entity.projectiles.StarLightRenderer;
-import com.max.prettyguardian.worldgen.entity.ModEntityType;
+import com.max.prettyguardian.entity.ModEntities;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -17,9 +17,9 @@ public class ClientModEventSubscriber {
     private ClientModEventSubscriber() {}
     @SubscribeEvent
     public static void doSetup(EntityRenderersEvent.RegisterRenderers event) {
-        EntityRenderers.register(ModEntityType.HEART_ARROW.get(), CuteArrowRenderer::new);
-        EntityRenderers.register(ModEntityType.HEART.get(), HeartRenderer::new);
-        EntityRenderers.register(ModEntityType.BUBBLE.get(), BubbleRenderer::new);
-        EntityRenderers.register(ModEntityType.STAR_LIGHT.get(), StarLightRenderer::new);
+        EntityRenderers.register(ModEntities.HEART_ARROW.get(), CuteArrowRenderer::new);
+        EntityRenderers.register(ModEntities.HEART.get(), HeartRenderer::new);
+        EntityRenderers.register(ModEntities.BUBBLE.get(), BubbleRenderer::new);
+        EntityRenderers.register(ModEntities.STAR_LIGHT.get(), StarLightRenderer::new);
     }
 }

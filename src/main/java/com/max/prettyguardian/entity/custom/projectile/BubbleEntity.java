@@ -1,4 +1,4 @@
-package com.max.prettyguardian.worldgen.entity.projectile;
+package com.max.prettyguardian.entity.custom.projectile;
 
 
 import com.max.prettyguardian.particle.ModParticles;
@@ -13,7 +13,7 @@ import net.minecraft.server.level.ServerEntity;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.Level;
@@ -25,22 +25,14 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.NotNull;
 
-public class StarLightEntity extends Projectile {
+public class BubbleEntity extends Projectile {
     public static final String POWER = "power";
     private double xPower;
     private double yPower;
     private double zPower;
-    private final float baseDamage;
 
-
-    public StarLightEntity(EntityType<StarLightEntity> entityType, Level world) {
+    public BubbleEntity(EntityType<BubbleEntity> entityType, Level world) {
         super(entityType, world);
-        this.baseDamage = 8.0F;
-    }
-
-    public StarLightEntity(EntityType<StarLightEntity> entityType, Level world, float damage) {
-        super(entityType, world);
-        this.baseDamage = damage;
     }
 
     @Override
@@ -79,21 +71,21 @@ public class StarLightEntity extends Projectile {
                 this.xRotO = this.getXRot();
             }
 
+            this.xPower /= 2.0;
+            this.yPower /= 2.0;
+            this.zPower /= 2.0;
+
+
+
             double d5 = vec3.x;
             double d6 = vec3.y;
             double d1 = vec3.z;
             double d7 = this.getX() + d5;
             double d2 = this.getY() + d6;
             double d3 = this.getZ() + d1;
-            double d4 = vec3.horizontalDistance();
-            this.setYRot((float)(Mth.atan2(-d5, -d1) * (double)(180F / (float)Math.PI)));
-
-            this.setXRot((float)(Mth.atan2(d6, d4) * (double)(180F / (float)Math.PI)));
             this.setXRot(lerpRotation(this.xRotO, this.getXRot()));
             this.setYRot(lerpRotation(this.yRotO, this.getYRot()));
-            float f = 0.99F;
 
-            this.setDeltaMovement(vec3.scale(f));
             Vec3 vec34 = this.getDeltaMovement();
             this.setDeltaMovement(vec34.x, vec34.y - 0.02F, vec34.z);
 
@@ -104,7 +96,7 @@ public class StarLightEntity extends Projectile {
             double randy = -0.5 + (random.nextDouble() * 1);
             double randz = -0.5 + (random.nextDouble() * 1);
 
-            this.level().addParticle(ModParticles.STAR_LIGHT_PARTICLES.get(),
+            this.level().addParticle(ModParticles.BUBBLE.get(),
                     (randx + this.getX() + d5),
                     (randy + this.getY() + d6),
                     (randz + this.getZ() + d1),
@@ -134,11 +126,19 @@ public class StarLightEntity extends Projectile {
         if (entityHitResult.getEntity() == this.getOwner()) {
             return;
         }
-        Entity entity = entityHitResult.getEntity();
-        Entity entity1 = this.getOwner();
-        LivingEntity livingentity = entity1 instanceof LivingEntity livingEntity ? livingEntity : null;
+        Entity entityHit = entityHitResult.getEntity();
 
-        entity.hurt(this.damageSources().mobProjectile(this, livingentity), this.baseDamage);
+        if (entityHit instanceof LivingEntity livingentity) {
+            Vec3 position = this.position();
+            Vec3 subtract = entityHit.getEyePosition().subtract(position);
+
+            Vec3 normalize = subtract.normalize();
+
+            double v = 0.5 * (0.5 - livingentity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
+            double v1 = 2.5 * (0.5 - livingentity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
+
+            livingentity.push(normalize.x() * v1, normalize.y() * v, normalize.z() * v1);
+        }
 
         this.discard();
     }
@@ -205,11 +205,6 @@ public class StarLightEntity extends Projectile {
                 return false;
             }
         }
-    }
-
-    @Override
-    public float getLightLevelDependentMagicValue() {
-        return 0.6F;
     }
 
     @Override

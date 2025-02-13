@@ -5,7 +5,7 @@ import com.max.prettyguardian.item.ModItem;
 import com.max.prettyguardian.item.custom.projectiles.CuteArrowItem;
 import com.max.prettyguardian.util.EnchantmentUtils;
 import com.max.prettyguardian.util.ModTags;
-import com.max.prettyguardian.worldgen.entity.projectile.CuteArrowEntity;
+import com.max.prettyguardian.entity.custom.projectile.CuteArrowEntity;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;

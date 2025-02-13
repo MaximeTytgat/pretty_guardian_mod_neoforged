@@ -1,4 +1,4 @@
-package com.max.prettyguardian.worldgen.entity.projectile;
+package com.max.prettyguardian.entity.custom.projectile;
 
 import com.max.prettyguardian.effect.ModEffects;
 import com.max.prettyguardian.item.ModItem;

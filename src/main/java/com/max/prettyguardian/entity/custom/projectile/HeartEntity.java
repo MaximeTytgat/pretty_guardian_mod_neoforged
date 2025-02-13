@@ -1,4 +1,4 @@
-package com.max.prettyguardian.worldgen.entity.projectile;
+package com.max.prettyguardian.entity.custom.projectile;
 
 import com.max.prettyguardian.particle.ModParticles;
 import net.minecraft.core.BlockPos;
@@ -11,7 +11,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerEntity;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.level.Level;

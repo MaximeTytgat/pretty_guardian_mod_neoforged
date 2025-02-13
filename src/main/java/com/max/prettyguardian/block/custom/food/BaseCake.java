@@ -28,7 +28,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class BaseCake extends Block  {
     public static final IntegerProperty BITES = IntegerProperty.create("bites", 0, 6);
-    public static final int FULL_CAKE_SIGNAL = getOutputSignal(0);
     protected static final VoxelShape[] SHAPE_BY_BITE = new VoxelShape[]{Block.box(1, 0, 1, 15, 7, 15), Block.box(3, 0, 1, 15, 7, 15), Block.box(5, 0, 1, 15, 7, 15), Block.box(7, 0, 1, 15, 7, 15), Block.box(9, 0, 1, 15, 7, 15), Block.box(11, 0, 1, 15, 7, 15), Block.box(13, 0, 1, 15, 7, 15)};
 
     public BaseCake(Properties properties) {
@@ -110,7 +109,7 @@ public class BaseCake extends Block  {
             int i = blockState.getValue(BITES);
             accessor.gameEvent(player, GameEvent.EAT, blockPos);
             if (i < 6) {
-                accessor.setBlock(blockPos, blockState.setValue(BITES, Integer.valueOf(i + 1)), 3);
+                accessor.setBlock(blockPos, blockState.setValue(BITES, i + 1), 3);
             } else {
                 accessor.removeBlock(blockPos, false);
                 accessor.gameEvent(player, GameEvent.BLOCK_DESTROY, blockPos);

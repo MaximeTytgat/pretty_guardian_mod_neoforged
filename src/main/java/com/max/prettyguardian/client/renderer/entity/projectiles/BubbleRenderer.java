@@ -2,7 +2,7 @@ package com.max.prettyguardian.client.renderer.entity.projectiles;
 
 
 import com.max.prettyguardian.PrettyGuardian;
-import com.max.prettyguardian.worldgen.entity.projectile.BubbleEntity;
+import com.max.prettyguardian.entity.custom.projectile.BubbleEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;

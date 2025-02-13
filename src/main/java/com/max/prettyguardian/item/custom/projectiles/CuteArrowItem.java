@@ -1,9 +1,9 @@
 package com.max.prettyguardian.item.custom.projectiles;
 
 
+import com.max.prettyguardian.entity.ModEntities;
 import com.max.prettyguardian.util.EnchantmentUtils;
-import com.max.prettyguardian.worldgen.entity.ModEntityType;
-import com.max.prettyguardian.worldgen.entity.projectile.CuteArrowEntity;
+import com.max.prettyguardian.entity.custom.projectile.CuteArrowEntity;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
@@ -24,7 +24,7 @@ public class CuteArrowItem extends Item {
     }
 
     public CuteArrowEntity createArrow(Level world, LivingEntity shooter) {
-        CuteArrowEntity arrow = new CuteArrowEntity(ModEntityType.HEART_ARROW.get(), shooter, world);
+        CuteArrowEntity arrow = new CuteArrowEntity(ModEntities.HEART_ARROW.get(), shooter, world);
         arrow.setBaseDamage(this.damage);
         return arrow;
     }

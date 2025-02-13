@@ -2,7 +2,7 @@ package com.max.prettyguardian.item.custom.tool;
 
 import com.max.prettyguardian.item.ModItem;
 import com.max.prettyguardian.item.custom.projectiles.BubbleItem;
-import com.max.prettyguardian.worldgen.entity.projectile.BubbleEntity;
+import com.max.prettyguardian.entity.custom.projectile.BubbleEntity;
 import net.minecraft.client.model.AnimationUtils;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;

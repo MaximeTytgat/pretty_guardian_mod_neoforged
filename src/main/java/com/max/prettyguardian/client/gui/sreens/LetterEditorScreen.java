@@ -7,7 +7,6 @@ import com.max.prettyguardian.client.gui.components.CustomStringWidget;
 import com.max.prettyguardian.client.gui.sreens.inventory.FakeLoveLetterMenu;
 import com.max.prettyguardian.component.ModDataComponentTypes;
 import com.max.prettyguardian.component.custom.LoveLetterComponent;
-import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -22,7 +21,6 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.FireworkExplosion;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;

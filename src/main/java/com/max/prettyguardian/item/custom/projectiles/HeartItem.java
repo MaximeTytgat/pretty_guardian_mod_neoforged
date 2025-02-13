@@ -1,8 +1,8 @@
 package com.max.prettyguardian.item.custom.projectiles;
 
 
-import com.max.prettyguardian.worldgen.entity.ModEntityType;
-import com.max.prettyguardian.worldgen.entity.projectile.HeartEntity;
+import com.max.prettyguardian.entity.ModEntities;
+import com.max.prettyguardian.entity.custom.projectile.HeartEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 
@@ -16,6 +16,6 @@ public class HeartItem extends Item {
     }
 
     public HeartEntity createArrow(Level world, float damage) {
-        return new HeartEntity(ModEntityType.HEART.get(), world, damage);
+        return new HeartEntity(ModEntities.HEART.get(), world, damage);
     }
 }

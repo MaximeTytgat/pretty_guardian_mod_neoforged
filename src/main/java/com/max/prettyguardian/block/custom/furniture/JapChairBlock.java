@@ -1,19 +1,31 @@
 package com.max.prettyguardian.block.custom.furniture;
 
+import com.max.prettyguardian.entity.ModEntities;
+import com.max.prettyguardian.entity.custom.JapChairEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class JapChairBlock extends Block {
     public static final EnumProperty<Direction> FACING = DirectionalBlock.FACING;
@@ -127,10 +139,31 @@ public class JapChairBlock extends Block {
         return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
-
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
     }
 
+    @Override
+    protected @NotNull InteractionResult useWithoutItem(
+            @NotNull BlockState state,
+            @NotNull Level level,
+            @NotNull BlockPos pos,
+            @NotNull Player player,
+            @NotNull BlockHitResult hitResult
+    ) {
+        if (!level.isClientSide()) {
+            Entity entity = null;
+            List<JapChairEntity> entities = level.getEntities(ModEntities.JAP_CHAIR.get(), new AABB(pos), (entity1) -> true);
+            if (entities.isEmpty()) {
+                entity = ModEntities.JAP_CHAIR.get().spawn((ServerLevel) level, pos, MobSpawnType.TRIGGERED);
+            } else {
+                entity = entities.getFirst();
+            }
+
+            assert entity != null;
+            player.startRiding(entity);
+        }
+        return InteractionResult.SUCCESS;
+    }
 }

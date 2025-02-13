@@ -6,7 +6,7 @@ import com.max.prettyguardian.item.custom.projectiles.HeartItem;
 import com.max.prettyguardian.sound.ModSounds;
 import com.max.prettyguardian.util.EnchantmentUtils;
 import com.max.prettyguardian.util.ModTags;
-import com.max.prettyguardian.worldgen.entity.projectile.HeartEntity;
+import com.max.prettyguardian.entity.custom.projectile.HeartEntity;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;

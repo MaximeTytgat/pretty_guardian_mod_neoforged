@@ -2,6 +2,7 @@ package com.max.prettyguardian;
 
 import com.max.prettyguardian.block.ModBlock;
 import com.max.prettyguardian.block.entity.ModBlockEntities;
+import com.max.prettyguardian.client.gui.sreens.*;
 import com.max.prettyguardian.client.gui.sreens.inventory.ModMenuTypes;
 import com.max.prettyguardian.component.ModAttachmentTypes;
 import com.max.prettyguardian.component.ModDataComponentTypes;
@@ -9,6 +10,11 @@ import com.max.prettyguardian.config.Config;
 import com.max.prettyguardian.effect.ModEffects;
 import com.max.prettyguardian.enchantment.ModEnchantmentEffects;
 import com.max.prettyguardian.entity.ModEntities;
+import com.max.prettyguardian.entity.client.JapChairRenderer;
+import com.max.prettyguardian.entity.client.butterfly.ButterflyRenderer;
+import com.max.prettyguardian.entity.client.celestialrabbit.CelestialRabbitRenderer;
+import com.max.prettyguardian.entity.client.fairy.FairyRenderer;
+import com.max.prettyguardian.entity.client.strawberrycow.StrawberryCowRenderer;
 import com.max.prettyguardian.item.ModItem;
 import com.max.prettyguardian.loot.ModLootModifiers;
 import com.max.prettyguardian.particle.ModParticles;
@@ -18,8 +24,9 @@ import com.max.prettyguardian.recipe.ModRecipeSerializer;
 import com.max.prettyguardian.recipe.ModRecipeType;
 import com.max.prettyguardian.sound.ModSounds;
 import com.max.prettyguardian.world.entity.ai.poi.ModPoiTypes;
-import com.max.prettyguardian.worldgen.entity.ModEntityType;
 import com.max.prettyguardian.worldgen.structure.ModStructures;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 
@@ -54,7 +61,6 @@ public class PrettyGuardian
         ModBlock.register(modEventBus);
         ModItem.register(modEventBus);
         CreativeTab.register(modEventBus);
-        ModEntityType.register(modEventBus);
         ModStructures.register(modEventBus);
         ModLootModifiers.register(modEventBus);
         ModEffects.register(modEventBus);
@@ -105,6 +111,12 @@ public class PrettyGuardian
         {
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+
+            EntityRenderers.register(ModEntities.STRAWBERRY_COW.get(), StrawberryCowRenderer::new);
+            EntityRenderers.register(ModEntities.CELESTIAL_RABBIT.get(), CelestialRabbitRenderer::new);
+            EntityRenderers.register(ModEntities.BUTTERFLY.get(), ButterflyRenderer::new);
+            EntityRenderers.register(ModEntities.FAIRY.get(), FairyRenderer::new);
+            EntityRenderers.register(ModEntities.JAP_CHAIR.get(), JapChairRenderer::new);
         }
     }
 
