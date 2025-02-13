@@ -398,28 +398,22 @@ public class CelestialRabbitEntity extends TamableAnimal implements FlyingAnimal
                     serverLevel.sendParticles(ModParticles.PINK_SONIC_BOOM_PARTICLES.get(), add.x, add.y, add.z, 1, 0.0, 0.0, 0.0, 0.0);
                 }
 
-                if (livingentity instanceof Player player && (player.getName().getString().equals("___Max__________") || player.getName().getString().equals("Dev"))) {
-                    player.heal(9999);
-                    level().playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.FIREWORK_ROCKET_LARGE_BLAST_FAR, SoundSource.NEUTRAL, 1.0F, 1.0F);
+                if (livingentity instanceof Phantom) {
+                    livingentity.hurt(celestialRabbitEntity.damageSources().mobAttack(celestialRabbitEntity), 10.0F);
                 } else {
-                    if (livingentity instanceof Phantom) {
-                        livingentity.hurt(celestialRabbitEntity.damageSources().mobAttack(celestialRabbitEntity), 10.0F);
-                    } else {
-                        livingentity.hurt(celestialRabbitEntity.damageSources().mobAttack(celestialRabbitEntity), 1.0F);
-                    }
-
-                    livingentity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 200, 1));
-                    livingentity.addEffect(new MobEffectInstance(MobEffects.POISON, 200, 1));
-                    livingentity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, 1));
-                    livingentity.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 200, 1));
-                    livingentity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 1));
-
-                    double v = 0.5 * (0.8 - livingentity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
-                    double v1 = 2.5 * (0.8 - livingentity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
-                    livingentity.push(normalize.x() * v1, normalize.y() * v, normalize.z() * v1);
+                    livingentity.hurt(celestialRabbitEntity.damageSources().mobAttack(celestialRabbitEntity), 1.0F);
                 }
+
+                livingentity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 200, 1));
+                livingentity.addEffect(new MobEffectInstance(MobEffects.POISON, 200, 1));
+                livingentity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, 1));
+                livingentity.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 200, 1));
+                livingentity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 1));
+
+                double v = 0.5 * (0.8 - livingentity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
+                double v1 = 2.5 * (0.8 - livingentity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
+                livingentity.push(normalize.x() * v1, normalize.y() * v, normalize.z() * v1);
             }
         }
     }
-
 }

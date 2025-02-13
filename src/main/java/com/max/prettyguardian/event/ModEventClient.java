@@ -27,8 +27,7 @@ public class ModEventClient {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
         MinecraftServer server = minecraft.getSingleplayerServer();
-        if (server == null) return;
-        if (player == null) return;
+        if (server == null || player == null) return;
         server.getPlayerList().getPlayers().forEach(p -> {
             if(p != null && p.tickCount % 10 == 0 && p.level().isClientSide() && !minecraft.isPaused()) {
                 boolean hasEntityOnShoulder = ClientPlayerEntityOnShoulderData.hasEntityOnShoulder(p.getStringUUID());

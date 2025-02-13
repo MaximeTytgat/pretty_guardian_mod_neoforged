@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "A": {
+      "item": "minecraft:paper"
+    },
+    "B": {
+      "item": "minecraft:stick"
+    },
+    "C": {
+      "item": "minecraft:torch"
+    },
+    "D": {
+      "item": "minecraft:mangrove_log"
+    }
+  },
+  "pattern": [
+    "A A",
+    "BCB",
+    "D D"
+  ],
+  "result": {
+    "count": 1,
+    "id": "prettyguardian:lamp_japanese_mangrove"
+  }
+}

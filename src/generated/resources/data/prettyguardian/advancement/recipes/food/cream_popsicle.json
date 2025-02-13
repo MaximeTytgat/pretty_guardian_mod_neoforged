@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cream": {
+      "conditions": {
+        "items": [
+          {
+            "items": "prettyguardian:cream"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_snowball": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:snowball"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "prettyguardian:cream_popsicle"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_snowball",
+      "has_cream"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "prettyguardian:cream_popsicle"
+    ]
+  }
+}

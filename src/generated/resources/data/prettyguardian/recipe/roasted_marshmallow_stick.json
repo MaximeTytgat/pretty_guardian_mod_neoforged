@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "cookingtime": 200,
+  "experience": 0.35,
+  "group": "roasted_marshmallow_stick",
+  "ingredient": {
+    "item": "prettyguardian:marshmallow_stick"
+  },
+  "result": {
+    "count": 1,
+    "id": "prettyguardian:roasted_marshmallow_stick"
+  }
+}

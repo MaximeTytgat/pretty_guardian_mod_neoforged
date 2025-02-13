@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "prettyguardian:ruby"
+  },
+  "base": {
+    "item": "prettyguardian:pink_sapphire_boots"
+  },
+  "result": {
+    "count": 1,
+    "id": "prettyguardian:ruby_boots"
+  },
+  "template": {
+    "item": "prettyguardian:ruby_template_upgrade"
+  }
+}

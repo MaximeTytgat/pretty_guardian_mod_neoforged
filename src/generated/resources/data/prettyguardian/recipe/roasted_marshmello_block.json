@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:smelting",
+  "category": "blocks",
+  "cookingtime": 200,
+  "experience": 0.35,
+  "group": "roasted_marshmello_block",
+  "ingredient": {
+    "item": "prettyguardian:marshmello_block"
+  },
+  "result": {
+    "count": 1,
+    "id": "prettyguardian:roasted_marshmello_block"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "prettyguardian:door_shoji_blossom",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "half": "lower"
+              }
+            }
+          ],
+          "name": "prettyguardian:door_shoji_blossom"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "prettyguardian:blocks/door_shoji_blossom"
+}

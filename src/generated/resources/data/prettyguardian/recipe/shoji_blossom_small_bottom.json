@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "A": {
+      "item": "minecraft:cherry_planks"
+    },
+    "B": {
+      "item": "minecraft:paper"
+    }
+  },
+  "pattern": [
+    "BAB",
+    "ABA",
+    "AAA"
+  ],
+  "result": {
+    "count": 3,
+    "id": "prettyguardian:shoji_blossom_small_bottom"
+  }
+}

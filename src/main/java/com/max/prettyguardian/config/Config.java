@@ -1,14 +1,14 @@
-package com.max.prettyguardian;
+package com.max.prettyguardian.config;
 
 import java.util.List;
 
+import com.max.prettyguardian.PrettyGuardian;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-// An example config class. This is not required, but it's a good idea to have one to keep your config organized.
-// Demonstrates how to use Neo's config APIs
+
 @EventBusSubscriber(modid = PrettyGuardian.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class Config
 {
@@ -18,9 +18,14 @@ public class Config
             .comment("List of players who one shot with the scepter")
             .defineListAllowEmpty("oneShotPlayers", List.of("player1", "player2"),  () -> "", Config::validatePlayerName);
 
-    static final ModConfigSpec SPEC = BUILDER.build();
+    private static final ModConfigSpec.EnumValue<EntityOnShoulderOnPlayerDeath> ENTITY_ON_SHOULDER_ON_PLAYER_DEATH = BUILDER
+            .comment("What to do with the entity on the player's shoulder when the player dies")
+            .defineEnum("entityOnShoulderOnPlayerDeath", EntityOnShoulderOnPlayerDeath.DROP);
+
+    public static final ModConfigSpec SPEC = BUILDER.build();
 
     public static List<? extends String> oneShotPlayers;
+    public static EntityOnShoulderOnPlayerDeath entityOnShoulderOnPlayerDeath;
     
     private static boolean validatePlayerName(final Object obj)
     {
@@ -31,5 +36,6 @@ public class Config
     static void onLoad(final ModConfigEvent event)
     {
         oneShotPlayers = ONE_SHOT_PLAYERS.get();
+        entityOnShoulderOnPlayerDeath = ENTITY_ON_SHOULDER_ON_PLAYER_DEATH.get();
     }
 }

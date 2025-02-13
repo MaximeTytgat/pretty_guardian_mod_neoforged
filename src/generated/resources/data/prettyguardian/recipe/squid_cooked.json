@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:smelting",
+  "category": "food",
+  "cookingtime": 200,
+  "experience": 0.35,
+  "group": "roasted_marshmallow_stick",
+  "ingredient": {
+    "item": "prettyguardian:squid_stick"
+  },
+  "result": {
+    "count": 1,
+    "id": "prettyguardian:squid_cooked"
+  }
+}

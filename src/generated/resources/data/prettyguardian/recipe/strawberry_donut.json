@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "prettyguardian:donut"
+    },
+    {
+      "item": "prettyguardian:strawberry"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "prettyguardian:strawberry_donut"
+  }
+}

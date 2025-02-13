@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "prettyguardian:mint"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "prettyguardian:mint_seeds"
+  }
+}

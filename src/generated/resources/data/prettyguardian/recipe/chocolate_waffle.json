@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "prettyguardian:waffle"
+    },
+    {
+      "item": "prettyguardian:chocolate"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "prettyguardian:chocolate_waffle"
+  }
+}

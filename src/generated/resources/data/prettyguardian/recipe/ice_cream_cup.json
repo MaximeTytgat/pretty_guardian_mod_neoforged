@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:glass_pane"
+    }
+  },
+  "pattern": [
+    "AAA",
+    " A "
+  ],
+  "result": {
+    "count": 3,
+    "id": "prettyguardian:ice_cream_cup"
+  }
+}

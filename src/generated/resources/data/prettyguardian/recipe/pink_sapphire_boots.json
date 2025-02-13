@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "item": "prettyguardian:pink_sapphire"
+    }
+  },
+  "pattern": [
+    "A A",
+    "A A"
+  ],
+  "result": {
+    "count": 1,
+    "id": "prettyguardian:pink_sapphire_boots"
+  }
+}

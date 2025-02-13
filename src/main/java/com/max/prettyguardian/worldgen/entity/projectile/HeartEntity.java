@@ -134,12 +134,7 @@ public class HeartEntity extends Projectile {
         Entity entity1 = this.getOwner();
         LivingEntity livingentity = entity1 instanceof LivingEntity livingEntity ? livingEntity : null;
 
-
-        if (entity instanceof Player player && (player.getName().getString().equals("___Max__________") || player.getName().getString().equals("Dev"))) {
-            player.heal(9999);
-        } else {
-            entity.hurt(this.damageSources().mobProjectile(this, livingentity), this.baseDamage);
-        }
+        entity.hurt(this.damageSources().mobProjectile(this, livingentity), this.baseDamage);
 
         this.discard();
     }

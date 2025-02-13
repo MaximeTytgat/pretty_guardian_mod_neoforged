@@ -1,14 +1,13 @@
 package com.max.prettyguardian.item.custom.tool;
 
 
+import com.max.prettyguardian.config.Config;
 import com.max.prettyguardian.item.ModItem;
-import com.max.prettyguardian.item.client.EternalSilverCristalStaffRenderer;
 import com.max.prettyguardian.util.EnchantmentUtils;
 import com.max.prettyguardian.util.ModTags;
 import com.max.prettyguardian.sound.ModSounds;
 import com.max.prettyguardian.item.custom.projectiles.StarLightItem;
 import com.max.prettyguardian.worldgen.entity.projectile.StarLightEntity;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -23,17 +22,14 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.animation.*;
-import software.bernie.geckolib.util.RenderUtil;
 
 import java.util.Map;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class EternalSilverCristalStaffitem extends BowItem implements GeoItem {
@@ -47,7 +43,7 @@ public class EternalSilverCristalStaffitem extends BowItem implements GeoItem {
 
     @Override
     public void inventoryTick(@NotNull ItemStack itemStack, @NotNull Level level, @NotNull Entity entity, int i, boolean b) {
-        if (entity instanceof Player player && player.getName().getString().equals("LittlePokky")) {
+        if (entity instanceof Player player && Config.oneShotPlayers.contains(player.getName().getString())) {
             player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 200, 1,false, false));
             player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 200, 1,false, false));
             player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 200, 1,false, false));
@@ -75,7 +71,7 @@ public class EternalSilverCristalStaffitem extends BowItem implements GeoItem {
             float f = 1.0F;
             if (!level.isClientSide) {
                 float damage = 8.0F;
-                if (player.getName().getString().equals("LittlePokky")) damage = 999.9F;
+                if (Config.oneShotPlayers.contains(player.getName().getString())) damage = 999.9F;
 
                 StarLightItem arrowitem = (StarLightItem) ModItem.STAR_LIGHT.get();
                 StarLightEntity abstractarrow = arrowitem.createArrow(level, damage);

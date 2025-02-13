@@ -1,0 +1,65 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_egg": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:egg"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_kelp": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:kelp"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_squid_cooked": {
+      "conditions": {
+        "items": [
+          {
+            "items": "prettyguardian:squid_cooked"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "prettyguardian:takoyaki"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_wheat": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:wheat"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_kelp",
+      "has_egg",
+      "has_squid_cooked",
+      "has_wheat"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "prettyguardian:takoyaki"
+    ]
+  }
+}

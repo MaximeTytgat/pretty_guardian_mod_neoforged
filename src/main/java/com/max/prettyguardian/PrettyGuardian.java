@@ -1,10 +1,11 @@
 package com.max.prettyguardian;
 
 import com.max.prettyguardian.block.ModBlock;
+import com.max.prettyguardian.block.entity.ModBlockEntities;
 import com.max.prettyguardian.client.gui.sreens.inventory.ModMenuTypes;
 import com.max.prettyguardian.component.ModAttachmentTypes;
 import com.max.prettyguardian.component.ModDataComponentTypes;
-import com.max.prettyguardian.datagen.ModRecipeProvider;
+import com.max.prettyguardian.config.Config;
 import com.max.prettyguardian.effect.ModEffects;
 import com.max.prettyguardian.enchantment.ModEnchantmentEffects;
 import com.max.prettyguardian.entity.ModEntities;
@@ -60,6 +61,7 @@ public class PrettyGuardian
         ModEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
         ModDataComponentTypes.register(modEventBus);
+        ModBlockEntities.register(modEventBus);
         ModAttachmentTypes.register(modEventBus);
         ModSounds.register(modEventBus);
         ModRecipeSerializer.register(modEventBus);

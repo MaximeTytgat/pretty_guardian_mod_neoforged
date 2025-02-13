@@ -3,12 +3,12 @@ package com.max.prettyguardian.event;
 import com.max.prettyguardian.PrettyGuardian;
 import com.max.prettyguardian.block.ModBlock;
 import com.max.prettyguardian.component.ModAttachmentTypes;
+import com.max.prettyguardian.config.Config;
+import com.max.prettyguardian.config.EntityOnShoulderOnPlayerDeath;
 import com.max.prettyguardian.entity.ModEntities;
 import com.max.prettyguardian.entity.custom.CelestialRabbitEntity;
 import com.max.prettyguardian.entityonshoulder.PlayerEntityOnShoulder;
 import com.max.prettyguardian.item.ModItem;
-import com.max.prettyguardian.networking.handler.ModClientPayloadHandler;
-import com.max.prettyguardian.networking.handler.ModServerPayloadHandler;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -24,18 +24,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.LogicalSide;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-import net.neoforged.neoforge.event.level.ChunkWatchEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import net.neoforged.neoforge.network.handling.DirectionalPayloadHandler;
-import net.neoforged.neoforge.network.registration.PayloadRegistrar;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
@@ -111,51 +109,55 @@ public class ModEvents {
     }
 
     private static void bringTheAnimalDownFromTheShoulder(PlayerInteractEvent.RightClickBlock event, PlayerEntityOnShoulder entityOnShoulder, Player player) {
-        CelestialRabbitEntity newRabbit = new CelestialRabbitEntity(ModEntities.CELESTIAL_RABBIT.get(), player.level());
-
-        Direction direction = event.getFace();
-        switch (direction) {
-            case UP:
-                newRabbit.setPos(event.getPos().getX() + 0.5, event.getPos().getY() + 1, event.getPos().getZ() + 0.5);
-                break;
-            case DOWN:
-                newRabbit.setPos(event.getPos().getX() + 0.5, event.getPos().getY() - 1, event.getPos().getZ() + 0.5);
-                break;
-            case NORTH:
-                newRabbit.setPos(event.getPos().getX() + 0.5, event.getPos().getY(), event.getPos().getZ() - 0.5);
-                break;
-            case SOUTH:
-                newRabbit.setPos(event.getPos().getX() + 0.5, event.getPos().getY(), event.getPos().getZ() + 1.5);
-                break;
-            case WEST:
-                newRabbit.setPos(event.getPos().getX() - 0.5, event.getPos().getY(), event.getPos().getZ() + 0.5);
-                break;
-            case EAST:
-                newRabbit.setPos(event.getPos().getX() + 1.5, event.getPos().getY(), event.getPos().getZ() + 0.5);
-                break;
-            case null:
-                break;
-        }
-
-        newRabbit.setCollarColor(DyeColor.byId(entityOnShoulder.collarDyeColorId()));
-        newRabbit.setOrderedToSit(entityOnShoulder.isInSittingPose());
-
-        if (entityOnShoulder.name() != null) newRabbit.setCustomName(Component.nullToEmpty(entityOnShoulder.name()));
-        newRabbit.tame(player);
+        Vec3 newRabbitPos = getPosByClickedFace(event);
+        CelestialRabbitEntity newRabbit = getCelestialRabbitEntity(player, entityOnShoulder, newRabbitPos, entityOnShoulder.isInSittingPose());
 
         player.level().addFreshEntity(newRabbit);
-
         player.removeData(ModAttachmentTypes.PLAYER_ENTITY_ON_SHOULDER);
 
+        playerDropEntityOnShoulder(player.getStringUUID());
+    }
+
+    private static void playerDropEntityOnShoulder(String playerUUID) {
         PacketDistributor.sendToAllPlayers(
                 new PlayerEntityOnShoulder(
-                        player.getStringUUID(),
+                        playerUUID,
                         null,
                         0,
                         null,
                         false
                 )
         );
+    }
+
+    private static Vec3 getPosByClickedFace(PlayerInteractEvent.RightClickBlock event) {
+        Direction direction = event.getFace();
+        Vec3 newPos = null;
+
+        switch (direction) {
+            case UP:
+                newPos = new Vec3(event.getPos().getX() + 0.5, event.getPos().getY() + 1, event.getPos().getZ() + 0.5);
+                break;
+            case DOWN:
+                newPos = new Vec3(event.getPos().getX() + 0.5, event.getPos().getY() - 1, event.getPos().getZ() + 0.5);
+                break;
+            case NORTH:
+                newPos = new Vec3(event.getPos().getX() + 0.5, event.getPos().getY(), event.getPos().getZ() - 0.5);
+                break;
+            case SOUTH:
+                newPos = new Vec3(event.getPos().getX() + 0.5, event.getPos().getY(), event.getPos().getZ() + 1.5);
+                break;
+            case WEST:
+                newPos = new Vec3(event.getPos().getX() - 0.5, event.getPos().getY(), event.getPos().getZ() + 0.5);
+                break;
+            case EAST:
+                newPos = new Vec3(event.getPos().getX() + 1.5, event.getPos().getY(), event.getPos().getZ() + 0.5);
+                break;
+            case null:
+                break;
+        }
+
+        return newPos;
     }
 
     @SubscribeEvent
@@ -211,35 +213,38 @@ public class ModEvents {
         }
     }
 
-    // TODO: add config to choose if the rabbit should spawn, die or stay on the shoulder
     @SubscribeEvent
     public static void onEntityDeath(LivingDeathEvent event) {
         if(event.getEntity() instanceof Player player && player.hasData(ModAttachmentTypes.PLAYER_ENTITY_ON_SHOULDER)) {
             PlayerEntityOnShoulder entityOnShoulder = player.getData(ModAttachmentTypes.PLAYER_ENTITY_ON_SHOULDER);
+            EntityOnShoulderOnPlayerDeath entityOnShoulderOnPlayerDeath = Config.entityOnShoulderOnPlayerDeath;
 
-            if(entityOnShoulder.entityTypeDescriptionId() != null) {
-                CelestialRabbitEntity newRabbit = new CelestialRabbitEntity(ModEntities.CELESTIAL_RABBIT.get(), player.level());
-                newRabbit.setPos(player.getX(), player.getY() + 1.5, player.getZ());
-                newRabbit.setCollarColor(DyeColor.byId(entityOnShoulder.collarDyeColorId()));
-                newRabbit.setOrderedToSit(false);
-                if (entityOnShoulder.name() != null) newRabbit.setCustomName(Component.nullToEmpty(entityOnShoulder.name()));
-                newRabbit.tame(player);
+            if (entityOnShoulder.entityTypeDescriptionId() == null) return;
 
-                player.level().addFreshEntity(newRabbit);
+            if (entityOnShoulderOnPlayerDeath == EntityOnShoulderOnPlayerDeath.RESPAWN_WITH_PLAYER) return;
 
-                player.removeData(ModAttachmentTypes.PLAYER_ENTITY_ON_SHOULDER);
+            Vec3 newRabbitPos = new Vec3(player.position().x, player.position().y + 1.5, player.position().z);
+            CelestialRabbitEntity newRabbit = getCelestialRabbitEntity(player, entityOnShoulder, newRabbitPos, false);
+            player.level().addFreshEntity(newRabbit);
+            player.removeData(ModAttachmentTypes.PLAYER_ENTITY_ON_SHOULDER);
+            playerDropEntityOnShoulder(player.getStringUUID());
 
-                PacketDistributor.sendToAllPlayers(
-                        new PlayerEntityOnShoulder(
-                                player.getStringUUID(),
-                                null,
-                                0,
-                                null,
-                                false
-                        )
-                );
+            if (entityOnShoulderOnPlayerDeath == EntityOnShoulderOnPlayerDeath.DEATH) {
+                newRabbit.kill();
             }
+
+            player.removeData(ModAttachmentTypes.PLAYER_ENTITY_ON_SHOULDER);
         }
+    }
+
+    private static @NotNull CelestialRabbitEntity getCelestialRabbitEntity(Player player, PlayerEntityOnShoulder entityOnShoulder, Vec3 pos, boolean sittingPose) {
+        CelestialRabbitEntity newRabbit = new CelestialRabbitEntity(ModEntities.CELESTIAL_RABBIT.get(), player.level());
+        newRabbit.setPos(pos.x(), pos.y(), pos.z());
+        newRabbit.setCollarColor(DyeColor.byId(entityOnShoulder.collarDyeColorId()));
+        newRabbit.setOrderedToSit(sittingPose);
+        if (entityOnShoulder.name() != null) newRabbit.setCustomName(Component.nullToEmpty(entityOnShoulder.name()));
+        newRabbit.tame(player);
+        return newRabbit;
     }
 
     @SubscribeEvent

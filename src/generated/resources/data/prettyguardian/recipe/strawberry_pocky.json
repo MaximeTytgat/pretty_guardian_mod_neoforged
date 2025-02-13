@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "prettyguardian:chocolate"
+    },
+    "B": {
+      "item": "prettyguardian:strawberry"
+    },
+    "C": {
+      "item": "minecraft:wheat"
+    }
+  },
+  "pattern": [
+    "A",
+    "B",
+    "C"
+  ],
+  "result": {
+    "count": 4,
+    "id": "prettyguardian:strawberry_pocky"
+  }
+}

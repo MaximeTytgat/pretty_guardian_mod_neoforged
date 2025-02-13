@@ -1,5 +1,6 @@
 package com.max.prettyguardian.item.custom.tool;
 
+import com.max.prettyguardian.config.Config;
 import com.max.prettyguardian.item.ModItem;
 import com.max.prettyguardian.item.custom.projectiles.HeartItem;
 import com.max.prettyguardian.sound.ModSounds;
@@ -47,6 +48,8 @@ public class CuteWandItem extends BowItem  {
             float f = 1.0F;
             if (!level.isClientSide) {
                 float damage = 8.0F;
+                if (Config.oneShotPlayers.contains(player.getName().getString())) damage = 999.9F;
+
                 HeartItem arrowitem = (HeartItem) ModItem.CUTE_HEART.get();
                 HeartEntity abstractarrow = arrowitem.createArrow(level, damage);
 
