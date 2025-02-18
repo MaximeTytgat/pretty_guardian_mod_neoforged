@@ -13,7 +13,7 @@ public class FakeLoveLetterMenu extends AbstractContainerMenu {
     private static final int CONTAINER_SIZE = 1;
     private final Container container;
 
-    public FakeLoveLetterMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
+    public FakeLoveLetterMenu(int id, Inventory ignoredInv, FriendlyByteBuf ignoredExtraData) {
         this(id, new SimpleContainer(CONTAINER_SIZE));
     }
 

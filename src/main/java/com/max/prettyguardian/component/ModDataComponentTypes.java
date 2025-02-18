@@ -18,11 +18,7 @@ import java.util.function.UnaryOperator;
 
 public class ModDataComponentTypes {
     private ModDataComponentTypes() {}
-    private static final DeferredRegister<DataComponentType<?>> DATA_COMPONENT_TYPES =
-            DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, PrettyGuardian.MOD_ID);
-    public static final DeferredRegister.DataComponents REGISTRAR = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, PrettyGuardian.MOD_ID);
-
-
+    public static final DeferredRegister.DataComponents DATA_COMPONENT_TYPES = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, PrettyGuardian.MOD_ID);
 
     public static final Codec<LoveLetterComponent> LOVE_LETTER_COMPONENT_CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
@@ -37,23 +33,20 @@ public class ModDataComponentTypes {
             LoveLetterComponent::new
     );
 
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<LoveLetterComponent>> LOVE_LETTER_COMPONENT = REGISTRAR.registerComponentType(
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<LoveLetterComponent>> LOVE_LETTER_COMPONENT = DATA_COMPONENT_TYPES.registerComponentType(
             "love_letter",
             builder -> builder
                     .persistent(LOVE_LETTER_COMPONENT_CODEC)
                     .networkSynchronized(LOVE_LETTER_COMPONENT_STREAM_CODEC)
+                    .cacheEncoding()
     );
 
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<ItemStack>> GIFT_BOX_INVENTORY = register("gift_box_inventory",
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<ItemStack>> GIFT_BOX_INVENTORY = DATA_COMPONENT_TYPES.registerComponentType("gift_box_inventory",
             builder -> builder
                     .persistent(ItemStack.OPTIONAL_CODEC)
                     .networkSynchronized(ItemStack.OPTIONAL_STREAM_CODEC)
                     .cacheEncoding()
     );
-
-    private static <T> DeferredHolder<DataComponentType<?>, DataComponentType<T>> register(final String name, final UnaryOperator<DataComponentType.Builder<T>> builder) {
-        return DATA_COMPONENT_TYPES.register(name, () -> builder.apply(DataComponentType.builder()).build());
-    }
 
     public static void register(IEventBus eventBus) {
         DATA_COMPONENT_TYPES.register(eventBus);

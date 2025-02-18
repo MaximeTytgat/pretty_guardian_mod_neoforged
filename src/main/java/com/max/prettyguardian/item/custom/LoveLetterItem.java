@@ -1,7 +1,6 @@
 package com.max.prettyguardian.item.custom;
 
 import com.max.prettyguardian.client.gui.sreens.inventory.FakeLoveLetterMenu;
-import com.max.prettyguardian.component.ModAttachmentTypes;
 import com.max.prettyguardian.component.ModDataComponentTypes;
 import com.max.prettyguardian.component.custom.LoveLetterComponent;
 import net.minecraft.network.chat.Component;

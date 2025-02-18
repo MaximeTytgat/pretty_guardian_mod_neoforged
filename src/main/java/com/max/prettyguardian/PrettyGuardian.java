@@ -2,7 +2,6 @@ package com.max.prettyguardian;
 
 import com.max.prettyguardian.block.ModBlock;
 import com.max.prettyguardian.block.entity.ModBlockEntities;
-import com.max.prettyguardian.client.gui.sreens.*;
 import com.max.prettyguardian.client.gui.sreens.inventory.ModMenuTypes;
 import com.max.prettyguardian.component.ModAttachmentTypes;
 import com.max.prettyguardian.component.ModDataComponentTypes;

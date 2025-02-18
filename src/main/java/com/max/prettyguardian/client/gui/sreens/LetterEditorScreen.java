@@ -7,6 +7,7 @@ import com.max.prettyguardian.client.gui.components.CustomStringWidget;
 import com.max.prettyguardian.client.gui.sreens.inventory.FakeLoveLetterMenu;
 import com.max.prettyguardian.component.ModDataComponentTypes;
 import com.max.prettyguardian.component.custom.LoveLetterComponent;
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -30,12 +31,12 @@ import java.util.Objects;
 
 public class LetterEditorScreen extends AbstractContainerScreen<FakeLoveLetterMenu> {
     private static final ResourceLocation LOVE_LETTER_LOCATION = ResourceLocation.fromNamespaceAndPath(PrettyGuardian.MOD_ID, "textures/gui/love_letter.png");
-    private static final ResourceLocation LOVE_LETTER_LAYER_LOCATIION = ResourceLocation.fromNamespaceAndPath(PrettyGuardian.MOD_ID, "textures/gui/love_letter_layer.png");
+    private static final ResourceLocation LOVE_LETTER_LAYER_LOCATION = ResourceLocation.fromNamespaceAndPath(PrettyGuardian.MOD_ID, "textures/gui/love_letter_layer.png");
     private CustomMultiLineEditBox output;
     private final ItemStack stack;
     private final List<FormattedCharSequence> cachedPageComponents;
 
-    public LetterEditorScreen(FakeLoveLetterMenu fakeMenu, Inventory inventory, Component component) {
+    public LetterEditorScreen(FakeLoveLetterMenu fakeMenu, Inventory inventory, Component ignoredComponent) {
         super(fakeMenu, inventory, Component.empty());
         this.cachedPageComponents = Collections.emptyList();
         this.stack = inventory.getSelected();
@@ -66,46 +67,49 @@ public class LetterEditorScreen extends AbstractContainerScreen<FakeLoveLetterMe
         this.output.setMessage(Component.translatable("screen.prettyguardian.love_letter.placeholder").withStyle(Style.EMPTY.withColor(11828699)));
 
 
-        if (this.stack.has(ModDataComponentTypes.LOVE_LETTER_COMPONENT.get())) {
-            LoveLetterComponent loveLetter = this.stack.get(ModDataComponentTypes.LOVE_LETTER_COMPONENT.get());
-            if (loveLetter == null) {
-                return;
-            }
-
-            String author = loveLetter.loveLetterAuthor();
-            String text = loveLetter.loveLetterText();
-
-            if (loveLetter.isSigned()) {
-                CustomFittingMultiLineTextWidget writtenOutput = new CustomFittingMultiLineTextWidget(
-                        bookX + 30, bookY + 18, 105, 115,
-                        Component.literal(text).withStyle(Style.EMPTY.withColor(11828699)),
-                        this.font
-                );
-
-                this.addRenderableWidget(new CustomStringWidget(bookX + 22, 160, 100, 20,
-                        Component.translatable("screen.prettyguardian.love_letter.send_by").withStyle(Style.EMPTY.withColor(10455011).applyFormats(ChatFormatting.BOLD))
-                                .append(" ")
-                                .append(author),
-                        this.font));
-
-                this.addRenderableWidget(writtenOutput);
-                this.addRenderableWidget(Button.builder(
-                        CommonComponents.GUI_DONE,
-                        button -> this.onClose()
-                ).bounds((this.width / 2) - 100, 196, 200, 20).build());
-            } else {
-                if (text != null) {
-                    this.output.setValue(text);
-                }
-                this.addRenderableWidget(this.output);
-                this.addRenderableWidget(doneButton.build());
-                this.addRenderableWidget(signButton.build());
-            }
-        } else {
+        if (!this.stack.has(ModDataComponentTypes.LOVE_LETTER_COMPONENT.get())) {
             this.addRenderableWidget(this.output);
             this.addRenderableWidget(doneButton.build());
             this.addRenderableWidget(signButton.build());
+            return;
         }
+
+        LoveLetterComponent loveLetter = this.stack.get(ModDataComponentTypes.LOVE_LETTER_COMPONENT.get());
+        if (loveLetter != null && loveLetter.loveLetterText() != null) {
+            this.output.setValue(loveLetter.loveLetterText());
+        }
+
+        if (loveLetter == null || !loveLetter.isSigned()) {
+            this.addRenderableWidget(this.output);
+            this.addRenderableWidget(doneButton.build());
+            this.addRenderableWidget(signButton.build());
+            return;
+        }
+
+        String text = loveLetter.loveLetterText();
+        String author = loveLetter.loveLetterAuthor();
+
+        if (text == null) {
+            text = "";
+        }
+
+        CustomFittingMultiLineTextWidget writtenOutput = new CustomFittingMultiLineTextWidget(
+                bookX + 30, bookY + 18, 105, 115,
+                Component.literal(text).withStyle(Style.EMPTY.withColor(11828699)),
+                this.font
+        );
+
+        this.addRenderableWidget(new CustomStringWidget(bookX + 22, 160, 100, 20,
+                Component.translatable("screen.prettyguardian.love_letter.send_by").withStyle(Style.EMPTY.withColor(10455011).applyFormats(ChatFormatting.BOLD))
+                        .append(" ")
+                        .append(author),
+                this.font));
+
+        this.addRenderableWidget(writtenOutput);
+        this.addRenderableWidget(Button.builder(
+                CommonComponents.GUI_DONE,
+                button -> this.onClose()
+        ).bounds((this.width / 2) - 100, 196, 200, 20).build());
     }
 
     @Override
@@ -127,7 +131,7 @@ public class LetterEditorScreen extends AbstractContainerScreen<FakeLoveLetterMe
             graphics.renderComponentHoverEffect(this.font, hoveredComponentStyle, mouseX, mouseY);
         }
 
-        graphics.blit(LOVE_LETTER_LAYER_LOCATIION, bookX, bookY, 0, 0, 192, 192);
+        graphics.blit(LOVE_LETTER_LAYER_LOCATION, bookX, bookY, 0, 0, 192, 192);
 
         for (Renderable renderable : this.renderables) {
             renderable.render(graphics, mouseX, mouseY, partialTicks);
@@ -135,7 +139,7 @@ public class LetterEditorScreen extends AbstractContainerScreen<FakeLoveLetterMe
     }
 
     @Override
-    protected void renderBg(@NotNull GuiGraphics guiGraphics, float v, int i, int i1) { /* TODO document why this method is empty */ }
+    protected void renderBg(@NotNull GuiGraphics guiGraphics, float v, int i, int i1) { /* no background rendering */ }
 
     @Nullable
     public Style getClickedComponentStyleAt(double v, double v1) {
@@ -164,22 +168,33 @@ public class LetterEditorScreen extends AbstractContainerScreen<FakeLoveLetterMe
     }
 
     @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        PrettyGuardian.LOGGER.info("Key pressed !");
+        InputConstants.Key mouseKey = InputConstants.getKey(keyCode, scanCode);
+        if (this.minecraft != null && this.minecraft.options.keyInventory.isActiveAndMatches(mouseKey)) {
+            return true;
+        }
+        return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    @Override
     public void onClose() {
         String text = this.output.getValue();
         if (text == null || text.isEmpty()) {
+            super.onClose();
             return;
         }
 
-        this.stack.update(
-                ModDataComponentTypes.LOVE_LETTER_COMPONENT.get(),
-                LoveLetterComponent.DEFAULT,
-                loveLetter -> {
-                    if (!loveLetter.isSigned()) {
-                        return new LoveLetterComponent("", text);
-                    }
-                    return loveLetter;
-                }
-        );
+        LoveLetterComponent loveLetter = new LoveLetterComponent(null, text);
+        if (this.stack.has(ModDataComponentTypes.LOVE_LETTER_COMPONENT.get())) {
+            LoveLetterComponent oldLoveLetter = this.stack.get(ModDataComponentTypes.LOVE_LETTER_COMPONENT.get());
+            if (oldLoveLetter == null || !oldLoveLetter.isSigned()) {
+                this.stack.set(ModDataComponentTypes.LOVE_LETTER_COMPONENT.get(), loveLetter);
+            }
+        } else {
+            this.stack.set(ModDataComponentTypes.LOVE_LETTER_COMPONENT.get(), loveLetter);
+        }
+
         super.onClose();
     }
 
@@ -188,11 +203,8 @@ public class LetterEditorScreen extends AbstractContainerScreen<FakeLoveLetterMe
         String playerName = Minecraft.getInstance().player.getName().getString();
 
         if (Objects.equals(action, "sign")) {
-            this.stack.update(
-                    ModDataComponentTypes.LOVE_LETTER_COMPONENT.get(),
-                    LoveLetterComponent.DEFAULT,
-                    loveLetter -> new LoveLetterComponent(playerName, loveLetter.loveLetterText())
-            );
+            LoveLetterComponent loveLetter = new LoveLetterComponent(playerName, this.output.getValue());
+            this.stack.set(ModDataComponentTypes.LOVE_LETTER_COMPONENT.get(), loveLetter);
         }
 
         super.onClose();
