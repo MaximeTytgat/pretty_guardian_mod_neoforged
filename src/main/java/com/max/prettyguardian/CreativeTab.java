@@ -280,7 +280,7 @@ public class CreativeTab {
                 output.accept(ModBlock.CHAIR_JAPANESE_CHERRY_PLANK.get());
                 output.accept(ModBlock.CHAIR_JAPANESE_CHERRY_LOG.get());
 
-                output.accept(ModBlock.BONZAI_CHERRY.get());
+                output.accept(ModBlock.CHERRY_BONSAI.get());
                 output.accept(ModBlock.LUCKY_NEKO.get());
 
                 output.accept(ModBlock.SEA_SHELL.get());

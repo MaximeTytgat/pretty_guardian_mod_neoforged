@@ -1,0 +1,22 @@
+{
+  "values": {
+    "prettyguardian:mint": {
+      "chance": 0.65
+    },
+    "prettyguardian:mint_seeds": {
+      "chance": 0.3
+    },
+    "prettyguardian:strawberry": {
+      "chance": 0.65
+    },
+    "prettyguardian:strawberry_seeds": {
+      "chance": 0.3
+    },
+    "prettyguardian:vanilla": {
+      "chance": 0.65
+    },
+    "prettyguardian:vanilla_seeds": {
+      "chance": 0.3
+    }
+  }
+}

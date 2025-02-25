@@ -18,21 +18,18 @@ import com.max.prettyguardian.item.ModItem;
 import com.max.prettyguardian.loot.ModLootModifiers;
 import com.max.prettyguardian.particle.ModParticles;
 import com.max.prettyguardian.potion.ModPotions;
-
 import com.max.prettyguardian.recipe.ModRecipeSerializer;
 import com.max.prettyguardian.recipe.ModRecipeType;
 import com.max.prettyguardian.sound.ModSounds;
 import com.max.prettyguardian.util.ModItemProperties;
 import com.max.prettyguardian.world.entity.ai.poi.ModPoiTypes;
 import com.max.prettyguardian.worldgen.structure.ModStructures;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
-import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -85,13 +82,6 @@ public class PrettyGuardian
     private void commonSetup(final FMLCommonSetupEvent event)
     {
         LOGGER.info("HELLO FROM COMMON SETUP");
-
-        ComposterBlock.COMPOSTABLES.put(ModItem.VANILLA_SEEDS.get(), 0.3F);
-        ComposterBlock.COMPOSTABLES.put(ModItem.MINT_SEEDS.get(), 0.3F);
-        ComposterBlock.COMPOSTABLES.put(ModItem.STRAWBERRY_SEEDS.get(), 0.3F);
-        ComposterBlock.COMPOSTABLES.put(ModItem.STRAWBERRY.get(), 0.65F);
-        ComposterBlock.COMPOSTABLES.put(ModItem.MINT.get(), 0.65F);
-        ComposterBlock.COMPOSTABLES.put(ModItem.VANILLA.get(), 0.65F);
 
         if (Config.oneShotPlayers != null)
             LOGGER.info("ONE SHOT PLAYERS >> {}", Config.oneShotPlayers);

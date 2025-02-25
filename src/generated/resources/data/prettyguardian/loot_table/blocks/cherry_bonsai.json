@@ -13,18 +13,18 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "block": "prettyguardian:cherry_bonzai",
+              "block": "prettyguardian:cherry_bonsai",
               "condition": "minecraft:block_state_property",
               "properties": {
                 "half": "lower"
               }
             }
           ],
-          "name": "prettyguardian:cherry_bonzai"
+          "name": "prettyguardian:cherry_bonsai"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "prettyguardian:blocks/cherry_bonzai"
+  "random_sequence": "prettyguardian:blocks/cherry_bonsai"
 }

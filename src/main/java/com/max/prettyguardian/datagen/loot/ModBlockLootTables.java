@@ -35,7 +35,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 public class ModBlockLootTables extends BlockLootSubProvider {
-    private final List<Block> knownBlocks = new ArrayList<Block>();
+    private final List<Block> knownBlocks = new ArrayList<>();
 
     public ModBlockLootTables(HolderLookup.Provider provider) {
         super(Set.of(), FeatureFlags.REGISTRY.allFlags(), provider);
@@ -98,7 +98,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.add(ModBlock.LANTERN_SAKURA_HUGE_JAPANESE.get(), this::createHugeLanternLootTable);
         this.add(ModBlock.LANTERN_FESTIVAL_HUGE_JAPANESE.get(), this::createHugeLanternLootTable);
 
-        this.add(ModBlock.BONZAI_CHERRY.get(), this::createBonzaiLootTable);
+        this.add(ModBlock.CHERRY_BONSAI.get(), this::createBonzaiLootTable);
         this.add(ModBlock.LUCKY_NEKO.get(), this::createBonzaiLootTable);
         this.add(ModBlock.SCROLL_JAPANESE_AXOLOTL.get(), this::createBonzaiLootTable);
         this.add(ModBlock.SCROLL_JAPANESE_BEE.get(), this::createBonzaiLootTable);

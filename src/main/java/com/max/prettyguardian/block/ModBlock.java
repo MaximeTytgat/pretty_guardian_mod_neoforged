@@ -166,7 +166,7 @@ public class ModBlock {
     public static final DeferredBlock<Block> SCROLL_JAPANESE_DAY_2 = registryBlock("scroll_japanese_day2", () -> new JapScrollBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS).sound(SoundType.WOOD).strength(2.5F, 2.5F)));
     public static final DeferredBlock<Block> SCROLL_JAPANESE_SUNFLOWER = registryBlock("scroll_japanese_sunflower", () -> new JapScrollBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS).sound(SoundType.WOOD).strength(2.5F, 2.5F)));
 
-    public static final DeferredBlock<Block> BONZAI_CHERRY = registryBlock("cherry_bonzai", () -> new JapBonzaiBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS).strength(2.5F, 2.5F)));
+    public static final DeferredBlock<Block> CHERRY_BONSAI = registryBlock("cherry_bonsai", () -> new JapBonzaiBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS).strength(2.5F, 2.5F)));
     public static final DeferredBlock<Block> LUCKY_NEKO = registryBlock("lucky_neko", () -> new LuckyNekoBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion().requiresCorrectToolForDrops()));
 
     public static final DeferredBlock<Block> SILVER_CRYSTAL = registryBlock("silver_crystal", () -> new SilverCrystalBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.DIAMOND_BLOCK).requiresCorrectToolForDrops().strength(5.0F, 6.0F).lightLevel(blockState -> 8)));

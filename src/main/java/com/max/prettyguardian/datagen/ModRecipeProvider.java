@@ -548,7 +548,7 @@ public class ModRecipeProvider extends RecipeProvider {
         simpleChair(recipeOutput, ModBlock.CHAIR_JAPANESE_OAK.get(), Blocks.STRIPPED_OAK_LOG, Blocks.OAK_SLAB);
         simpleChair(recipeOutput, ModBlock.CHAIR_JAPANESE_SPRUCE.get(), Blocks.STRIPPED_SPRUCE_LOG, Blocks.SPRUCE_SLAB);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlock.BONZAI_CHERRY.get(), 1)
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlock.CHERRY_BONSAI.get(), 1)
                 .pattern(" A ")
                 .pattern("ABA")
                 .pattern(" C ")

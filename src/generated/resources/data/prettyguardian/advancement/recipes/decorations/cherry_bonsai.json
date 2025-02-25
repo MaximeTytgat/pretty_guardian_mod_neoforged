@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "prettyguardian:cherry_bonzai"
+        "recipe": "prettyguardian:cherry_bonsai"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -48,7 +48,7 @@
   ],
   "rewards": {
     "recipes": [
-      "prettyguardian:cherry_bonzai"
+      "prettyguardian:cherry_bonsai"
     ]
   }
 }

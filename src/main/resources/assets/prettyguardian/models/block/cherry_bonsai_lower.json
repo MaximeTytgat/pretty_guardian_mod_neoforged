@@ -1,6 +1,6 @@
 {
   "parent": "prettyguardian:block/base_bonsai_lower",
   "textures": {
-    "texture": "prettyguardian:block/cherry_bonzai"
+    "texture": "prettyguardian:block/cherry_bonsai"
   }
 }
