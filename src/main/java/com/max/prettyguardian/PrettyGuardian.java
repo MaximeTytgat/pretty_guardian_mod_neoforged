@@ -22,6 +22,7 @@ import com.max.prettyguardian.potion.ModPotions;
 import com.max.prettyguardian.recipe.ModRecipeSerializer;
 import com.max.prettyguardian.recipe.ModRecipeType;
 import com.max.prettyguardian.sound.ModSounds;
+import com.max.prettyguardian.util.ModItemProperties;
 import com.max.prettyguardian.world.entity.ai.poi.ModPoiTypes;
 import com.max.prettyguardian.worldgen.structure.ModStructures;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -116,6 +117,8 @@ public class PrettyGuardian
             EntityRenderers.register(ModEntities.BUTTERFLY.get(), ButterflyRenderer::new);
             EntityRenderers.register(ModEntities.FAIRY.get(), FairyRenderer::new);
             EntityRenderers.register(ModEntities.JAP_CHAIR.get(), JapChairRenderer::new);
+
+            ModItemProperties.addCustomProperties();
         }
     }
 
