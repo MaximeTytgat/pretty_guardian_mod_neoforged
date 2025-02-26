@@ -4,6 +4,7 @@ import com.max.prettyguardian.entityonshoulder.PlayerEntityOnShoulder;
 import net.minecraft.world.item.DyeColor;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
@@ -26,6 +27,10 @@ public class ModAttachmentTypes {
                             false
                     )
             ).serialize(PlayerEntityOnShoulder.SHOULDER_CODEC).copyOnDeath().build()
+    );
+
+    public static final Supplier<AttachmentType<ItemStackHandler>> MOON_ALTAR_HANDLER = ATTACHMENT_TYPES.register(
+            "moon_altar_handler", () -> AttachmentType.serializable(() -> new ItemStackHandler(4)).build()
     );
 
     public static void register(IEventBus eventBus) {
