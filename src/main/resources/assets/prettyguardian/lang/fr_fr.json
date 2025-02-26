@@ -315,6 +315,10 @@
   "effect.prettyguardian.love": "Véritablement Amoureux",
 
   "prettyguardian.container.giftBox.hoverText": "Une boîte cadeau pour toi ! Ouvre-la et découvre ce qu'il y a à l'intérieur !",
+  "prettyguardian.container.picnicBasket": "Panier pique-nique",
+  "prettyguardian.container.picnicBasket.itemCount": "%s x%s",
+  "prettyguardian.container.picnicBasket.more": "et %s autres...",
+  "prettyguardian.container.picnicBasket.unknownContents": "???????",
   "gui.sign_and_close": "Signer et Fermer",
   "screen.prettyguardian.love_letter.placeholder": "Saisis ta lettre d'amour ici...",
   "screen.prettyguardian.love_letter.title": "Lettre d'Amour",
