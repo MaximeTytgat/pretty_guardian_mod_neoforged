@@ -1,6 +1,7 @@
     package com.max.prettyguardian.datagen;
 
 import com.max.prettyguardian.PrettyGuardian;
+import com.max.prettyguardian.datagen.blockstate.ModBlockStateProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;

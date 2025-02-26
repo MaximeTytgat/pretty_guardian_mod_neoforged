@@ -22,6 +22,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -35,7 +36,7 @@ import org.jetbrains.annotations.Nullable;
 public class BasePie extends Block {
     private final Boolean critical;
     public static final int MAX_BITES = 3;
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final IntegerProperty BITES = IntegerProperty.create("bites", 0, 3);
     protected static final VoxelShape[] SHAPE_BY_BITE_NORTH = new VoxelShape[]{
             Block.box(2, 0, 2, 14, 4.5, 14),

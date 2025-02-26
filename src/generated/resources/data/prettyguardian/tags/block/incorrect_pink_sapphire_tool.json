@@ -1,0 +1,8 @@
+{
+  "remove": [
+    "#prettyguardian:needs_pink_sapphire_tool"
+  ],
+  "values": [
+    "#minecraft:incorrect_for_diamond_tool"
+  ]
+}

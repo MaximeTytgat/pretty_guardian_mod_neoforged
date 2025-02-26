@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.Optional;
 
 public class EnchantmentUtils {
+    private EnchantmentUtils() {}
+
     public static Map<ResourceKey<Enchantment>, Integer> getEnchantments(ItemStack itemStack) {
         ItemEnchantments list = (itemStack != null && itemStack.isEnchanted()) ? itemStack.getEnchantments() : null;
 
@@ -20,7 +22,7 @@ public class EnchantmentUtils {
 
         ImmutableMap.Builder<ResourceKey<Enchantment>, Integer> result = ImmutableMap.builder();
 
-        list.entrySet().forEach((entry) -> {
+        list.entrySet().forEach(entry -> {
             Holder<Enchantment> id = entry.getKey();
             int level = entry.getIntValue();
 

@@ -12,13 +12,13 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -68,7 +68,7 @@ public class MoonAltarBlock extends BaseEntityBlock {
             Block.box(15, 9, 3, 15.5, 12, 13),
             Block.box(15, 12, 2, 15.5, 15, 14)
     );
-    public static final EnumProperty<Direction> FACING = DirectionalBlock.FACING;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public MoonAltarBlock(Properties properties) {
         super(properties);
@@ -111,8 +111,8 @@ public class MoonAltarBlock extends BaseEntityBlock {
     ) {
         if (blockState.getBlock() != blockState1.getBlock()) {
             BlockEntity blockEntity = level.getBlockEntity(blockPos);
-            if (blockEntity instanceof MoonAltarBlockEntity) {
-                ((MoonAltarBlockEntity) blockEntity).drops();
+            if (blockEntity instanceof MoonAltarBlockEntity moonAltarBlockEntity) {
+                moonAltarBlockEntity.drops();
             }
         }
 

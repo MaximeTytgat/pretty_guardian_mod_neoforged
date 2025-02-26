@@ -43,7 +43,7 @@ public class PicnicBasketBlock extends BaseEntityBlock {
 
     public static final MapCodec<PicnicBasketBlock> CODEC = simpleCodec(PicnicBasketBlock::new);
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
-    public static final EnumProperty<Direction> FACING = DirectionalBlock.FACING;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final ResourceLocation CONTENTS = ResourceLocation.withDefaultNamespace("contents");
     private static final Component UNKNOWN_CONTENTS = Component.translatable("prettyGuardian.container.picnicBasket.unknownContents");
 

@@ -12,7 +12,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -180,7 +179,7 @@ public class JapScreenBlock extends Block {
     }
 
     static {
-        FACING = DirectionalBlock.FACING;
+        FACING = BlockStateProperties.HORIZONTAL_FACING;
         PART = EnumProperty.create("part", ParaventPart.class);
         HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
     }

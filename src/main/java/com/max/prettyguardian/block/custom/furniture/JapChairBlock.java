@@ -13,9 +13,9 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
@@ -28,7 +28,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class JapChairBlock extends Block {
-    public static final EnumProperty<Direction> FACING = DirectionalBlock.FACING;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     private static final VoxelShape SHAPE_NORTH = Shapes.or(
             Block.box(2, 8, 2, 4, 19, 4),
             Block.box(5, 17, 2.5, 7, 18, 3.5),
@@ -154,7 +154,7 @@ public class JapChairBlock extends Block {
     ) {
         if (!level.isClientSide()) {
             Entity entity = null;
-            List<JapChairEntity> entities = level.getEntities(ModEntities.JAP_CHAIR.get(), new AABB(pos), (entity1) -> true);
+            List<JapChairEntity> entities = level.getEntities(ModEntities.JAP_CHAIR.get(), new AABB(pos), entity1 -> true);
             if (entities.isEmpty()) {
                 entity = ModEntities.JAP_CHAIR.get().spawn((ServerLevel) level, pos, MobSpawnType.TRIGGERED);
             } else {

@@ -1,0 +1,8 @@
+{
+  "remove": [
+    "#prettyguardian:needs_ruby_tool"
+  ],
+  "values": [
+    "#prettyguardian:incorrect_pink_sapphire_tool"
+  ]
+}

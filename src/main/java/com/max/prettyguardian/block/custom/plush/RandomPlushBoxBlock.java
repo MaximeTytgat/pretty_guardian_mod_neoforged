@@ -10,9 +10,9 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Random;
 
 public class RandomPlushBoxBlock extends Block {
-    public static final EnumProperty<Direction> FACING = DirectionalBlock.FACING;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     private static final VoxelShape SHAPE_NORTH = Shapes.or(
             Block.box(4, 4, 4, 12, 8, 12),
             Block.box(4.25, 0, 4.25, 11.75, 4, 11.75),

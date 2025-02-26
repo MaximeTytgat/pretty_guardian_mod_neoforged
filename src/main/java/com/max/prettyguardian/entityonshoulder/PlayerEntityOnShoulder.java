@@ -10,11 +10,11 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-public record PlayerEntityOnShoulder(String playerId, String entityTypeDescriptionId, int collarDyeColorId, String name, boolean isInSittingPose) implements CustomPacketPayload {
-    public static final CustomPacketPayload.Type<PlayerEntityOnShoulder> TYPE =
+public record  PlayerEntityOnShoulder(String playerId, String entityTypeDescriptionId, int collarDyeColorId, String name, boolean isInSittingPose) implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<PlayerEntityOnShoulder> PLAYER_ENTITY_ON_SHOULDER_TYPE =
             new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(PrettyGuardian.MOD_ID, "player_entity_on_shoulder"));
 
-    public static final Codec<PlayerEntityOnShoulder> CODEC = RecordCodecBuilder.create(instance ->
+    public static final Codec<PlayerEntityOnShoulder> SHOULDER_CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     Codec.STRING.fieldOf("playerId").forGetter(PlayerEntityOnShoulder::playerId),
                     Codec.STRING.fieldOf("entityTypeDescriptionId").forGetter(PlayerEntityOnShoulder::entityTypeDescriptionId),
@@ -39,6 +39,6 @@ public record PlayerEntityOnShoulder(String playerId, String entityTypeDescripti
 
     @Override
     public @NotNull Type<? extends CustomPacketPayload> type() {
-        return TYPE;
+        return PLAYER_ENTITY_ON_SHOULDER_TYPE;
     }
 }

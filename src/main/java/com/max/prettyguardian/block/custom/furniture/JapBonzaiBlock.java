@@ -11,7 +11,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -24,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class JapBonzaiBlock extends Block {
-    public static final EnumProperty<Direction> FACING = DirectionalBlock.FACING;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
     public static final VoxelShape SHAPE_NORTH_LOWER = Shapes.or(Block.box(1, 0, 1, 15, 10, 15), Block.box(6, 10, 6, 10, 16, 10), Block.box(7, 14, 1, 9, 16, 6), Block.box(7, 15, 10, 9, 16, 15));
     public static final VoxelShape SHAPE_EAST_LOWER = Shapes.or(Block.box(1, 0, 1, 15, 10, 15), Block.box(6, 10, 6, 10, 16, 10), Block.box(10, 14, 7, 15, 16, 9), Block.box(1, 15, 7, 6, 16, 9));

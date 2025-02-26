@@ -7,13 +7,12 @@ import com.max.prettyguardian.entity.ModEntities;
 import com.max.prettyguardian.entity.custom.ButterflyEntity;
 import com.max.prettyguardian.entity.custom.CelestialRabbitEntity;
 import com.max.prettyguardian.entity.custom.FairyEntity;
-import com.max.prettyguardian.entity.custom.StrawberryCowEntity;
 import com.max.prettyguardian.entityonshoulder.PlayerEntityOnShoulder;
 import com.max.prettyguardian.networking.handler.ModClientPayloadHandler;
 import com.max.prettyguardian.networking.handler.ModServerPayloadHandler;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -31,7 +30,7 @@ public class ModEventBusEvents {
 
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
-        event.put(ModEntities.STRAWBERRY_COW.get(), StrawberryCowEntity.createAttributes().build());
+        event.put(ModEntities.STRAWBERRY_COW.get(), Cow.createAttributes().build());
         event.put(ModEntities.CELESTIAL_RABBIT.get(), CelestialRabbitEntity.createAttributes().build());
         event.put(ModEntities.BUTTERFLY.get(), ButterflyEntity.createAttributes().build());
         event.put(ModEntities.FAIRY.get(), FairyEntity.createAttributes().build());
@@ -47,7 +46,7 @@ public class ModEventBusEvents {
     public static void register(final RegisterPayloadHandlersEvent event) {
         final PayloadRegistrar registrar = event.registrar("1");
         registrar.playBidirectional(
-                PlayerEntityOnShoulder.TYPE,
+                PlayerEntityOnShoulder.PLAYER_ENTITY_ON_SHOULDER_TYPE,
                 PlayerEntityOnShoulder.STREAM_CODEC,
                 new DirectionalPayloadHandler<>(
                         ModClientPayloadHandler::handleDataOnMain,
@@ -65,3 +64,4 @@ public class ModEventBusEvents {
         event.register(ModMenuTypes.LETTER_EDITOR_MENU.get(), LetterEditorScreen::new);
     }
 }
+

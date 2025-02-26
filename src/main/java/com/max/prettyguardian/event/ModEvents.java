@@ -13,7 +13,6 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.npc.VillagerProfession;
@@ -41,9 +40,8 @@ import java.util.Optional;
 
 @EventBusSubscriber(modid = PrettyGuardian.MOD_ID)
 public class ModEvents {
-    private static Object PlayerEntityOnShoulderProvider;
-
     private ModEvents() {}
+
 // TODO: Suppress this
 //    @SubscribeEvent
 //    public static void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
@@ -85,7 +83,7 @@ public class ModEvents {
             if (hasAllConditionsForProcess(event, player) && player.hasData(ModAttachmentTypes.PLAYER_ENTITY_ON_SHOULDER)) {
                 PlayerEntityOnShoulder entityOnShoulder = player.getData(ModAttachmentTypes.PLAYER_ENTITY_ON_SHOULDER);
 
-                if (entityOnShoulder.entityTypeDescriptionId() != null) {
+                if (entityOnShoulder.entityTypeDescriptionId() != null && !entityOnShoulder.entityTypeDescriptionId().isEmpty()) {
                     Optional<EntityType<?>> maybeEntityType = EntityType.byString(entityOnShoulder.entityTypeDescriptionId());
 
                     if (maybeEntityType.isPresent() && maybeEntityType.get() == ModEntities.CELESTIAL_RABBIT.get()) {
@@ -103,8 +101,7 @@ public class ModEvents {
 
     private static boolean hasAllConditionsForProcess(PlayerInteractEvent.RightClickBlock event, Player player) {
         return player.isShiftKeyDown()
-                && event.getHand() == InteractionHand.MAIN_HAND
-                && player.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Items.AIR
+                && player.getItemInHand(event.getHand()).getItem() == Items.AIR
                 && event.getSide() == LogicalSide.SERVER;
     }
 
@@ -122,9 +119,9 @@ public class ModEvents {
         PacketDistributor.sendToAllPlayers(
                 new PlayerEntityOnShoulder(
                         playerUUID,
-                        null,
+                        "",
                         0,
-                        null,
+                        "",
                         false
                 )
         );
@@ -133,25 +130,28 @@ public class ModEvents {
     private static Vec3 getPosByClickedFace(PlayerInteractEvent.RightClickBlock event) {
         Direction direction = event.getFace();
         Vec3 newPos = null;
+        double defaultX = event.getPos().getX() + 0.5;
+        double defaultY = event.getPos().getY();
+        double defaultZ = event.getPos().getZ() + 0.5;
 
         switch (direction) {
             case UP:
-                newPos = new Vec3(event.getPos().getX() + 0.5, event.getPos().getY() + 1, event.getPos().getZ() + 0.5);
+                newPos = new Vec3(defaultX, (event.getPos().getY() + 1), (defaultZ));
                 break;
             case DOWN:
-                newPos = new Vec3(event.getPos().getX() + 0.5, event.getPos().getY() - 1, event.getPos().getZ() + 0.5);
+                newPos = new Vec3(defaultX, (event.getPos().getY() - 1), (defaultZ));
                 break;
             case NORTH:
-                newPos = new Vec3(event.getPos().getX() + 0.5, event.getPos().getY(), event.getPos().getZ() - 0.5);
+                newPos = new Vec3(defaultX, defaultY, (event.getPos().getZ() - 0.5));
                 break;
             case SOUTH:
-                newPos = new Vec3(event.getPos().getX() + 0.5, event.getPos().getY(), event.getPos().getZ() + 1.5);
+                newPos = new Vec3(defaultX, defaultY, (event.getPos().getZ() + 1.5));
                 break;
             case WEST:
-                newPos = new Vec3(event.getPos().getX() - 0.5, event.getPos().getY(), event.getPos().getZ() + 0.5);
+                newPos = new Vec3((event.getPos().getX() - 0.5), defaultY, (defaultZ));
                 break;
             case EAST:
-                newPos = new Vec3(event.getPos().getX() + 1.5, event.getPos().getY(), event.getPos().getZ() + 0.5);
+                newPos = new Vec3((event.getPos().getX() + 1.5), defaultY, (defaultZ));
                 break;
             case null:
                 break;
@@ -179,16 +179,16 @@ public class ModEvents {
         ) {
             PlayerEntityOnShoulder entityOnShoulder = player.getData(ModAttachmentTypes.PLAYER_ENTITY_ON_SHOULDER);
 
-            if (entityOnShoulder.entityTypeDescriptionId() == null) {
+            if (entityOnShoulder.entityTypeDescriptionId() == null || entityOnShoulder.entityTypeDescriptionId().isEmpty()) {
                 DyeColor collarColor = celestialRabbit.getCollarColor();
                 Component name = celestialRabbit.hasCustomName() ? celestialRabbit.getCustomName() : null;
                 boolean isInSittingPose = celestialRabbit.isInSittingPose();
 
                 entityOnShoulder = new PlayerEntityOnShoulder(
                         player.getStringUUID(),
-                        ModEntities.CELESTIAL_RABBIT.get().getDescriptionId(),
+                        (PrettyGuardian.MOD_ID+":"+ ModEntities.CELESTIAL_RABBIT.get().toShortString()),
                         collarColor.getId(),
-                        name != null ? name.getString() : null,
+                        name != null ? name.getString() : "",
                         isInSittingPose
                 );
 
@@ -219,7 +219,7 @@ public class ModEvents {
             PlayerEntityOnShoulder entityOnShoulder = player.getData(ModAttachmentTypes.PLAYER_ENTITY_ON_SHOULDER);
             EntityOnShoulderOnPlayerDeath entityOnShoulderOnPlayerDeath = Config.entityOnShoulderOnPlayerDeath;
 
-            if (entityOnShoulder.entityTypeDescriptionId() == null) return;
+            if (entityOnShoulder.entityTypeDescriptionId() == null || entityOnShoulder.entityTypeDescriptionId().isEmpty()) return;
 
             if (entityOnShoulderOnPlayerDeath == EntityOnShoulderOnPlayerDeath.RESPAWN_WITH_PLAYER) return;
 
@@ -242,7 +242,7 @@ public class ModEvents {
         newRabbit.setPos(pos.x(), pos.y(), pos.z());
         newRabbit.setCollarColor(DyeColor.byId(entityOnShoulder.collarDyeColorId()));
         newRabbit.setOrderedToSit(sittingPose);
-        if (entityOnShoulder.name() != null) newRabbit.setCustomName(Component.nullToEmpty(entityOnShoulder.name()));
+        if (entityOnShoulder.name() != null && !entityOnShoulder.name().isEmpty()) newRabbit.setCustomName(Component.nullToEmpty(entityOnShoulder.name()));
         newRabbit.tame(player);
         return newRabbit;
     }

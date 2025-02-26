@@ -31,6 +31,18 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(Items.SUGAR), has(Items.SUGAR))
                 .save(recipeOutput);
 
+//        SimpleCookingRecipeBuilder.generic(
+//                        Ingredient.of(ModItem.RAW_RUBY), RecipeCategory.TRANSPORTATION, ModItem.RUBY.get(), 0.35F, 200, ModRecipeSerializer.POLISHING_RECIPE_SERIALIZER.get(), PolishingRecipe::new)
+//                .group("caramel_from_sugar")
+//                .unlockedBy(getHasName(ModItem.RAW_RUBY), has(ModItem.RAW_RUBY))
+//                .save(recipeOutput);
+//
+//        SimpleCookingRecipeBuilder.generic(
+//                        Ingredient.of(ModItem.RAW_PINK_SAPPHIRE), RecipeCategory.TRANSPORTATION, ModItem.PINK_SAPPHIRE.get(), 0.35F, 200, ModRecipeSerializer.POLISHING_RECIPE_SERIALIZER.get(), PolishingRecipe::new)
+//                .group("caramel_from_sugar")
+//                .unlockedBy(getHasName(ModItem.RAW_PINK_SAPPHIRE), has(ModItem.RAW_PINK_SAPPHIRE))
+//                .save(recipeOutput);
+
         SimpleCookingRecipeBuilder.generic(
                         Ingredient.of(ModBlock.PINK_SAPPHIRE_ORE.get()), RecipeCategory.MISC, ModItem.PINK_SAPPHIRE.get(), 0.35F, 200, RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new)
                 .unlockedBy(getHasName(ModBlock.PINK_SAPPHIRE_ORE.get()), has(ModBlock.PINK_SAPPHIRE_ORE.get()))
