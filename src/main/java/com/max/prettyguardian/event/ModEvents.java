@@ -13,6 +13,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.npc.VillagerProfession;
@@ -29,6 +30,7 @@ import net.neoforged.fml.LogicalSide;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -245,6 +247,19 @@ public class ModEvents {
         if (entityOnShoulder.name() != null && !entityOnShoulder.name().isEmpty()) newRabbit.setCustomName(Component.nullToEmpty(entityOnShoulder.name()));
         newRabbit.tame(player);
         return newRabbit;
+    }
+
+    @SubscribeEvent
+    public static void fallDamageEvent(LivingFallEvent event) {
+        if (event.getEntity() instanceof Player player &&
+                !event.getEntity().level().isClientSide() &&
+                (
+                        player.getItemInHand(InteractionHand.MAIN_HAND).getItem() == ModItem.PLUTONS_KEY.get() &&
+                                player.getCooldowns().getCooldownPercent(ModItem.PLUTONS_KEY.get(), 0) >= 0.98F
+                )
+        ) {
+            event.setCanceled(true);
+        }
     }
 
     @SubscribeEvent
