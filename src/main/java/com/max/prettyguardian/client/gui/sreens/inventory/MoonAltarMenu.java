@@ -1,57 +1,67 @@
 package com.max.prettyguardian.client.gui.sreens.inventory;
 
 import com.max.prettyguardian.PrettyGuardian;
+import com.max.prettyguardian.block.ModBlock;
+import com.max.prettyguardian.block.entity.MoonAltarBlockEntity;
 import com.max.prettyguardian.item.ModItem;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.Container;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class MoonAltarMenu extends AbstractContainerMenu {
-    private final Container container;
+    public final MoonAltarBlockEntity blockEntity;
+    private final Level level;
+    private final ContainerData data;
     public MoonAltarMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(pContainerId, inv, new SimpleContainer(4));
+        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
     }
 
-    public MoonAltarMenu(int pContainerId, Inventory inv, Container data) {
+    public MoonAltarMenu(int pContainerId, Inventory inv, BlockEntity blockEntity, ContainerData data) {
         super(ModMenuTypes.STAFF_MAGIC_TABLE_MENU.get(), pContainerId);
         checkContainerSize(inv, 4);
-        this.container = data;
+        this.data = data;
+        this.blockEntity = (MoonAltarBlockEntity) blockEntity;
+        this.level = inv.player.level();
+        ItemStackHandler itemHandler = this.blockEntity.getItemHandler();
 
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
 
-        this.addSlot(new Slot(data, 0, 56, -9) {
+        addSlot(new SlotItemHandler(itemHandler, 0, 56, -9) {
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
                 return stack.is(ModItem.PLUTONS_KEY.get());
             }
         });
-        this.addSlot(new Slot(data, 1, 104, -9) {
+        addSlot(new SlotItemHandler(itemHandler, 1, 104, -9) {
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
                 return stack.is(ModItem.SPACE_SWORD.get());
             }
         });
-        this.addSlot(new Slot(data, 2, 80, 7) {
+        addSlot(new SlotItemHandler(itemHandler, 2, 80, 7) {
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
                 return stack.is(ModItem.NEPTUNES_MIRROR.get());
             }
 
         });
-        this.addSlot(new Slot(data, 3, 80, 55) {
+        addSlot(new SlotItemHandler(itemHandler, 3, 80, 55) {
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
                 return false;
             }
-
         });
+
+        addDataSlots(data);
     }
 
 
@@ -129,7 +139,7 @@ public class MoonAltarMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(@NotNull Player player) {
-        return this.container.stillValid(player);
+        return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()), player, ModBlock.MOON_ALTAR.get());
     }
 
     private void addPlayerInventory(Inventory playerInventory) {
@@ -146,5 +156,15 @@ public class MoonAltarMenu extends AbstractContainerMenu {
         }
     }
 
+    public boolean isCrafting() {
+        return data.get(0) > 0;
+    }
 
+    public int getScaledProgress() {
+        int progress = data.get(0);
+        int maxProgress = data.get(1);
+        int progressArrowSize = 36;
+
+        return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
+    }
 }

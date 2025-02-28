@@ -132,7 +132,7 @@ public class MoonAltarBlock extends BaseEntityBlock {
         } else {
             BlockEntity blockEntity = level.getBlockEntity(blockPos);
             if (blockEntity instanceof MoonAltarBlockEntity moonAltarBlockEntity) {
-                player.openMenu(moonAltarBlockEntity);
+                player.openMenu(moonAltarBlockEntity, moonAltarBlockEntity.getBlockPos());
             }
 
             return InteractionResult.CONSUME;
