@@ -19,17 +19,30 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class MoonAltarBlockEntity extends RandomizableContainerBlockEntity implements MenuProvider, Container {
-    private NonNullList<ItemStack> items = NonNullList.withSize(4, ItemStack.EMPTY);
     private static final int INPUT_SLOT_1 = 0;
     private static final int INPUT_SLOT_2 = 1;
     private static final int INPUT_SLOT_3 = 2;
     private static final int OUTPUT_SLOT = 3;
+
+    private final ItemStackHandler items = new ItemStackHandler(4) {
+        @Override
+        public void onContentsChanged(int slot) {
+            super.onContentsChanged(slot);
+            if (level != null && !level.isClientSide) {
+                //If an item got added via the item handler, then rerender the block
+                BlockState state = getBlockState();
+                level.sendBlockUpdated(worldPosition, state, state, Block.UPDATE_IMMEDIATE);
+            }
+        }
+    };
 
     public MoonAltarBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(ModBlockEntities.MOON_ALTAR_BE.get(), blockPos, blockState);
@@ -45,9 +58,9 @@ public class MoonAltarBlockEntity extends RandomizableContainerBlockEntity imple
 
     public void drops() {
         if (this.level == null) return;
-        SimpleContainer inventory = new SimpleContainer(items.size());
-        for (int i = 0; i < items.size(); i++) {
-            inventory.setItem(i, items.get(i));
+        SimpleContainer inventory = new SimpleContainer(items.getSlots());
+        for (int i = 0; i < items.getSlots(); i++) {
+            inventory.setItem(i, items.getStackInSlot(i));
         }
         Containers.dropContents(this.level, this.worldPosition, inventory);
     }
@@ -64,12 +77,18 @@ public class MoonAltarBlockEntity extends RandomizableContainerBlockEntity imple
 
     @Override
     protected @NotNull NonNullList<ItemStack> getItems() {
-        return this.items;
+        NonNullList<ItemStack> items = NonNullList.withSize(this.items.getSlots(), ItemStack.EMPTY);
+        for (int i = 0; i < this.items.getSlots(); i++) {
+            items.set(i, this.items.getStackInSlot(i));
+        }
+        return items;
     }
 
     @Override
     protected void setItems(@NotNull NonNullList<ItemStack> itemStacks) {
-        this.items = itemStacks;
+        for (int i = 0; i < this.items.getSlots(); i++) {
+            this.items.setStackInSlot(i, itemStacks.get(i));
+        }
     }
 
     @Override
@@ -80,11 +99,12 @@ public class MoonAltarBlockEntity extends RandomizableContainerBlockEntity imple
     @Override
     public void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
         super.loadAdditional(tag, provider);
-        this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
+        NonNullList<ItemStack> items = NonNullList.withSize(this.items.getSlots(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(tag)) {
-            ContainerHelper.loadAllItems(tag, this.items, provider);
+            ContainerHelper.loadAllItems(tag, items, provider);
         }
 
+        this.setItems(items);
     }
 
     @Override
@@ -109,10 +129,12 @@ public class MoonAltarBlockEntity extends RandomizableContainerBlockEntity imple
 
     @Override
     protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
+        NonNullList<ItemStack> items = this.getItems();
         if (!this.trySaveLootTable(tag)) {
-            ContainerHelper.saveAllItems(tag, this.items, provider);
+            ContainerHelper.saveAllItems(tag, items, provider);
         }
 
+        this.setItems(items);
         super.saveAdditional(tag, provider);
     }
 
@@ -131,7 +153,7 @@ public class MoonAltarBlockEntity extends RandomizableContainerBlockEntity imple
         }
         this.items.clear();
 
-        this.items.set(OUTPUT_SLOT, new ItemStack(result.getItem(), this.items.get(OUTPUT_SLOT).getCount() + result.getCount()));
+        this.items.setStackInSlot(OUTPUT_SLOT, new ItemStack(result.getItem(), this.items.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount()));
         setChanged();
     }
 
@@ -167,6 +189,7 @@ public class MoonAltarBlockEntity extends RandomizableContainerBlockEntity imple
     @Nullable
     @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
+        setChanged();
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
