@@ -4,18 +4,20 @@ import com.max.prettyguardian.PrettyGuardian;
 import com.max.prettyguardian.client.ClientPlayerEntityOnShoulderData;
 import com.max.prettyguardian.entity.client.ModModelLayers;
 import com.max.prettyguardian.entity.custom.CelestialRabbitEntity;
+import com.max.prettyguardian.entityonshoulder.PlayerEntityOnShoulder;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
 import org.jetbrains.annotations.NotNull;
-
 
 public class CelestialRabbitOnShoulderLayer<T extends Player> extends RenderLayer<T, PlayerModel<T>> {
     private static final ResourceLocation CELESTIAL_RABBIT_LOCATION = ResourceLocation.fromNamespaceAndPath(PrettyGuardian.MOD_ID, "textures/entity/rabbit/celestial/celestial_rabbit.png");
@@ -31,8 +33,7 @@ public class CelestialRabbitOnShoulderLayer<T extends Player> extends RenderLaye
     }
 
     private void render(PoseStack poseStack, MultiBufferSource bufferSource, int light, T player, float netHeadYaw, float headPitch) {
-        if(ClientPlayerEntityOnShoulderData.hasEntityOnShoulder(player.getStringUUID())) {
-
+        if(ClientPlayerEntityOnShoulderData.hasEntityOnShoulder(player.getStringUUID()) && !player.isInvisible()) {
             poseStack.pushPose();
             poseStack.translate(0.4F, player.isCrouching() ? -1.3F : -1.5F, 0.0F);
             poseStack.scale(0.75f, 0.75f, 0.75f);
@@ -40,6 +41,14 @@ public class CelestialRabbitOnShoulderLayer<T extends Player> extends RenderLaye
 
             VertexConsumer vertexConsumer = bufferSource.getBuffer(this.model.renderType(CELESTIAL_RABBIT_LOCATION)/*.renderType(ParrotRenderer.getVariantTexture(variant))*/);
             this.model.renderOnShoulder(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, netHeadYaw, headPitch);
+            CelestialRabbitCollarLayer.renderCollar(model, poseStack, bufferSource, light, LivingEntityRenderer.getOverlayCoords(player, 0.0F));
+            CelestialRabbitGlowLayer.renderGlowLayer(model, poseStack, bufferSource);
+
+            PlayerEntityOnShoulder entityOnShoulderData = ClientPlayerEntityOnShoulderData.get(player.getStringUUID());
+            if (entityOnShoulderData != null && !entityOnShoulderData.entityTypeDescriptionId().isEmpty()) {
+                CelestialRabbitCollarPearlLayer.renderCollarPearl(model, poseStack, bufferSource, light, LivingEntityRenderer.getOverlayCoords(player, 0.0F), entityOnShoulderData.collarDyeColorId());
+                CelestialRabbitFlameLayer.renderFlames(model, poseStack, bufferSource, light, player.tickCount, DyeColor.byId(entityOnShoulderData.collarDyeColorId()), true);
+            }
 
             poseStack.popPose();
         }

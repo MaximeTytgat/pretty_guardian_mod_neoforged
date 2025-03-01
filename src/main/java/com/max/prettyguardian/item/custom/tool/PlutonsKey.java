@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.portal.DimensionTransition;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class PlutonsKey extends Item {
 
@@ -29,7 +30,7 @@ public class PlutonsKey extends Item {
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand interactionHand) {
         if (interactionHand == InteractionHand.MAIN_HAND && player instanceof ServerPlayer serverPlayer) {
             ResourceKey<Level> dimension = serverPlayer.getRespawnDimension();
-            ServerLevel serverLevel = null;
+           @Nullable ServerLevel serverLevel = null;
             if (level instanceof ServerLevel serverLevel1) {
                 if (dimension == level.dimension()) {
                     serverLevel = serverLevel1;

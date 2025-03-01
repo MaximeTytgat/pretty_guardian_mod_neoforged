@@ -67,6 +67,5 @@ public class StrawberryCowStrawberryLayer<T extends MushroomCow> extends Mushroo
         } else {
             this.blockRenderer.renderSingleBlock(blockState, poseStack, multiBufferSource, i, i1);
         }
-
     }
 }

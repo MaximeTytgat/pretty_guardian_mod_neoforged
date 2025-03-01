@@ -21,4 +21,8 @@ public class ClientPlayerEntityOnShoulderData {
     public static boolean hasEntityOnShoulder(String playerId) {
         return playerEntityOnShoulderList.stream().anyMatch(playerEntityOnShoulder -> playerEntityOnShoulder.playerId().equals(playerId));
     }
+
+    public static PlayerEntityOnShoulder get(String stringUUID) {
+        return playerEntityOnShoulderList.stream().filter(playerEntityOnShoulder -> playerEntityOnShoulder.playerId().equals(stringUUID)).findFirst().orElse(null);
+    }
 }

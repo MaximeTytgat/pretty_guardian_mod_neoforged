@@ -9,6 +9,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.Util;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
@@ -45,34 +46,34 @@ public class CelestialRabbitFlameLayer<T extends CelestialRabbitEntity, M extend
     @Override
     public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource multiBufferSource, int i, T celestialRabbitEntity, float v, float v1, float v2, float v3, float v4, float v5) {
         if (!celestialRabbitEntity.isBaby() && !celestialRabbitEntity.isInvisible() && celestialRabbitEntity.level().isClientSide) {
-            int animationTicks = celestialRabbitEntity.tickCount;
-
-            DyeColor dyeColor = celestialRabbitEntity.getCollarColor();
-
-            ResourceLocation[] flameFrames;
-            if (celestialRabbitEntity.isTame()) {
-                flameFrames = getFlameFrames(dyeColor);
-            } else {
-                flameFrames = getFlameFrames(DyeColor.PINK);
-            }
-
-            ResourceLocation flameTexture = switch (animationTicks % 16) {
-                case 2, 3 -> flameFrames[1];
-                case 4, 5 -> flameFrames[2];
-                case 6, 7 -> flameFrames[3];
-                case 8, 9 -> flameFrames[4];
-                case 10, 11 -> flameFrames[5];
-                case 12, 13 -> flameFrames[6];
-                case 14, 15 -> flameFrames[7];
-                default -> flameFrames[0];
-            };
-
-            poseStack.pushPose();
-            poseStack.popPose();
-
-            VertexConsumer vertexConsumer = multiBufferSource.getBuffer(ENTITY_TRANSLUCENT_EMISSIVE.apply(flameTexture, true));
-            this.getParentModel().renderToBuffer(poseStack, vertexConsumer, i, OverlayTexture.NO_OVERLAY, 1);
+            renderFlames((EntityModel<CelestialRabbitEntity>) this.getParentModel(), poseStack, multiBufferSource, i, celestialRabbitEntity.tickCount, celestialRabbitEntity.getCollarColor(), celestialRabbitEntity.isTame());
         }
+    }
+
+    public static void renderFlames(EntityModel<CelestialRabbitEntity> model,  @NotNull PoseStack poseStack, @NotNull MultiBufferSource multiBufferSource, int i, int animationTicks, DyeColor dyeColor, boolean isTame) {
+        ResourceLocation[] flameFrames;
+        if (isTame) {
+            flameFrames = getFlameFrames(dyeColor);
+        } else {
+            flameFrames = getFlameFrames(DyeColor.PINK);
+        }
+
+        ResourceLocation flameTexture = switch (animationTicks % 16) {
+            case 2, 3 -> flameFrames[1];
+            case 4, 5 -> flameFrames[2];
+            case 6, 7 -> flameFrames[3];
+            case 8, 9 -> flameFrames[4];
+            case 10, 11 -> flameFrames[5];
+            case 12, 13 -> flameFrames[6];
+            case 14, 15 -> flameFrames[7];
+            default -> flameFrames[0];
+        };
+
+        poseStack.pushPose();
+        poseStack.popPose();
+
+        VertexConsumer vertexConsumer = multiBufferSource.getBuffer(ENTITY_TRANSLUCENT_EMISSIVE.apply(flameTexture, true));
+        model.renderToBuffer(poseStack, vertexConsumer, i, OverlayTexture.NO_OVERLAY, -1);
     }
 
     private static ResourceLocation[] getFlameFrames(DyeColor color) {
