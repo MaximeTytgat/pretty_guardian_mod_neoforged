@@ -174,7 +174,6 @@ public class CelestialRabbitModel<T extends Entity> extends HierarchicalModel<T>
 		FLYING,
 		IDLE,
 		SITTING,
-		ON_SHOULDER;
 
 		State() {
 		}

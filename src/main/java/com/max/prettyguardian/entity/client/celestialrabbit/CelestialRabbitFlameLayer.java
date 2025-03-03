@@ -32,11 +32,11 @@ public class CelestialRabbitFlameLayer<T extends CelestialRabbitEntity, M extend
         RenderSystem.defaultBlendFunc();
     });
     protected static final RenderStateShard.OverlayStateShard OVERLAY = new RenderStateShard.OverlayStateShard(true);
-    protected static final RenderStateShard.CullStateShard NO_CULL = new RenderStateShard.CullStateShard(false);
-    protected static final RenderStateShard.WriteMaskStateShard COLOR_WRITE = new RenderStateShard.WriteMaskStateShard(true, false);
+    protected static final RenderStateShard.CullStateShard NO_CULL = new RenderStateShard.CullStateShard(true);
+    protected static final RenderStateShard.WriteMaskStateShard COLOR_WRITE = new RenderStateShard.WriteMaskStateShard(true, true);
     protected static final RenderStateShard.ShaderStateShard RENDERTYPE_ENTITY_TRANSLUCENT_EMISSIVE_SHADER = new RenderStateShard.ShaderStateShard(GameRenderer::getRendertypeEntityTranslucentEmissiveShader);
     private static final BiFunction<ResourceLocation, Boolean, RenderType>  ENTITY_TRANSLUCENT_EMISSIVE = Util.memoize((resourceLocation, b) -> {
-        RenderType.CompositeState compositeState = RenderType.CompositeState.builder().setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_EMISSIVE_SHADER).setTextureState(new RenderStateShard.TextureStateShard(resourceLocation, false, false)).setTransparencyState(TRANSLUCENT_TRANSPARENCY).setCullState(NO_CULL).setWriteMaskState(COLOR_WRITE).setOverlayState(OVERLAY).createCompositeState(b);
+        RenderType.CompositeState compositeState = RenderType.CompositeState.builder().setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_EMISSIVE_SHADER).setTextureState(new RenderStateShard.TextureStateShard(resourceLocation, false, false)).setWriteMaskState(COLOR_WRITE).setTransparencyState(TRANSLUCENT_TRANSPARENCY).setCullState(NO_CULL).setOverlayState(OVERLAY).createCompositeState(b);
         return RenderType.create("entity_translucent_emissive", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, true, true, compositeState);
     });
     public CelestialRabbitFlameLayer(RenderLayerParent<T, M> renderLayerParent) {
@@ -46,11 +46,11 @@ public class CelestialRabbitFlameLayer<T extends CelestialRabbitEntity, M extend
     @Override
     public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource multiBufferSource, int i, T celestialRabbitEntity, float v, float v1, float v2, float v3, float v4, float v5) {
         if (!celestialRabbitEntity.isBaby() && !celestialRabbitEntity.isInvisible() && celestialRabbitEntity.level().isClientSide) {
-            renderFlames((EntityModel<CelestialRabbitEntity>) this.getParentModel(), poseStack, multiBufferSource, i, celestialRabbitEntity.tickCount, celestialRabbitEntity.getCollarColor(), celestialRabbitEntity.isTame());
+            renderFlames((EntityModel<CelestialRabbitEntity>) this.getParentModel(), poseStack, multiBufferSource, celestialRabbitEntity.tickCount, celestialRabbitEntity.getCollarColor(), celestialRabbitEntity.isTame());
         }
     }
 
-    public static void renderFlames(EntityModel<CelestialRabbitEntity> model,  @NotNull PoseStack poseStack, @NotNull MultiBufferSource multiBufferSource, int i, int animationTicks, DyeColor dyeColor, boolean isTame) {
+    public static void renderFlames(EntityModel<CelestialRabbitEntity> model,  @NotNull PoseStack poseStack, @NotNull MultiBufferSource multiBufferSource, int animationTicks, DyeColor dyeColor, boolean isTame) {
         ResourceLocation[] flameFrames;
         if (isTame) {
             flameFrames = getFlameFrames(dyeColor);
@@ -73,7 +73,7 @@ public class CelestialRabbitFlameLayer<T extends CelestialRabbitEntity, M extend
         poseStack.popPose();
 
         VertexConsumer vertexConsumer = multiBufferSource.getBuffer(ENTITY_TRANSLUCENT_EMISSIVE.apply(flameTexture, true));
-        model.renderToBuffer(poseStack, vertexConsumer, i, OverlayTexture.NO_OVERLAY, -1);
+        model.renderToBuffer(poseStack, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY, -1);
     }
 
     private static ResourceLocation[] getFlameFrames(DyeColor color) {

@@ -7,7 +7,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -63,9 +65,13 @@ public class CropLeavesBlock extends LeavesBlock implements BonemealableBlock {
         return this.defaultBlockState().setValue(this.getAgeProperty(), age);
     }
 
+    public final boolean canGrow(BlockState state) {
+        return this.getAge(state) < this.getMaxAge();
+    }
+
     @Override
     public boolean isValidBonemealTarget(@NotNull LevelReader levelReader, @NotNull BlockPos blockPos, @NotNull BlockState blockState) {
-        return false;
+        return this.canGrow(blockState);
     }
 
     @Override
@@ -73,20 +79,28 @@ public class CropLeavesBlock extends LeavesBlock implements BonemealableBlock {
         return state.getValue(AGE) != 3;
     }
 
-    protected int getBonemealAgeIncrease(Level level) {
-        return Mth.nextInt(level.random, 2, 5);
-    }
-
-
-    @Override
-    public void performBonemeal(ServerLevel world, @NotNull RandomSource rand, @NotNull BlockPos pos, BlockState state) {
-        int i = state.getValue(AGE) + this.getBonemealAgeIncrease(world.getLevel());
-        int j = MAX_AGE;
+    public void growCrops(Level level, BlockPos pos, BlockState state) {
+        int i = this.getAge(state) + this.getBonemealAgeIncrease(level);
+        int j = this.getMaxAge();
         if (i > j) {
             i = j;
         }
 
-        world.setBlock(pos, state.setValue(AGE, i), 2);
+        level.setBlock(pos, this.getStateForAge(i), 2);
+    }
+
+    protected int getBonemealAgeIncrease(Level level) {
+        return Mth.nextInt(level.random, 2, this.getMaxAge());
+    }
+
+    @Override
+    public void performBonemeal(@NotNull ServerLevel level, @NotNull RandomSource rand, @NotNull BlockPos pos, @NotNull BlockState state) {
+        growCrops(level, pos, state);
+    }
+
+    @Override
+    protected boolean isRandomlyTicking(@NotNull BlockState state) {
+        return shouldDecay(state) || this.canGrow(state);
     }
 
     @Override
@@ -133,25 +147,13 @@ public class CropLeavesBlock extends LeavesBlock implements BonemealableBlock {
         }
     }
 
-
-
     @Override
     public void tick(@NotNull BlockState blockState, ServerLevel serverLevel, @NotNull BlockPos blockPos, @NotNull RandomSource randomSource) {
         serverLevel.setBlock(blockPos, updateDistance(blockState, serverLevel, blockPos), 3);
     }
 
-    @Override
-    public boolean isRandomlyTicking(@NotNull BlockState state) {
-        return shouldDecay(state) || canGrow(state) || state.getValue(AGE) == 0;
-    }
-
     public boolean shouldDecay(BlockState state) {
         return state.getValue(DISTANCE) == 7 && !state.getValue(PERSISTENT);
-    }
-
-    // TODO: test !(Boolean)state.getValue(PERSISTENT)
-    public boolean canGrow(BlockState state) {
-        return state.getValue(AGE) >= 0 && (!state.getValue(PERSISTENT) || state.getValue(DISTANCE) == 1);
     }
 
     @Override
@@ -163,16 +165,18 @@ public class CropLeavesBlock extends LeavesBlock implements BonemealableBlock {
             @NotNull BlockPos currentPos,
             @NotNull BlockPos facingPos
     ) {
-        if (canGrow(state) || state.getValue(AGE) == 0) {
+        if (canGrow(state)) {
             return super.updateShape(state, facing, facingState, worldIn, currentPos, facingPos);
         }
+
         return state;
     }
 
     @Override
-    public @NotNull BlockState getStateForPlacement(BlockPlaceContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         FluidState fluidstate = context.getLevel().getFluidState(context.getClickedPos());
-        return defaultBlockState().setValue(PERSISTENT, true).setValue(WATERLOGGED, fluidstate.getType() == Fluids.WATER);
+        BlockState blockstate = this.defaultBlockState().setValue(PERSISTENT, true).setValue(WATERLOGGED, fluidstate.getType() == Fluids.WATER);
+        return updateDistance(blockstate, context.getLevel(), context.getClickedPos());
     }
 
     @Override
@@ -195,5 +199,29 @@ public class CropLeavesBlock extends LeavesBlock implements BonemealableBlock {
             return InteractionResult.SUCCESS;
         }
         return super.useWithoutItem(blockState, level, blockPos, player, blockHitResult);
+    }
+
+    @Override
+    protected @NotNull ItemInteractionResult useItemOn(
+            @NotNull ItemStack stack,
+            @NotNull BlockState state,
+            @NotNull Level level,
+            @NotNull BlockPos pos,
+            @NotNull Player player,
+            @NotNull InteractionHand hand,
+            @NotNull BlockHitResult hitResult
+    ) {
+        if (state.getValue(AGE) == 3 && level.setBlockAndUpdate(pos, state.setValue(AGE, 1))) {
+            if (!level.isClientSide) {
+                ItemStack fruitItem = new ItemStack(this.fruit.get());
+                if (player instanceof ServerPlayer) {
+                    popResourceFromFace(level, pos, hitResult.getDirection(), fruitItem);
+                } else {
+                    ItemHandlerHelper.giveItemToPlayer(player, fruitItem);
+                }
+            }
+            return ItemInteractionResult.SUCCESS;
+        }
+        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
 }

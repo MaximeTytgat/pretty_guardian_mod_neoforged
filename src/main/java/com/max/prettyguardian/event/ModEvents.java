@@ -170,12 +170,14 @@ public class ModEvents {
             return;
         }
 
+        // TODO: add is baby to enbtity on shoulder to reCreate the rabbit in baby form
         if (
             event.getTarget() instanceof LivingEntity livingEntity
             && !player.level().isClientSide
             && livingEntity instanceof CelestialRabbitEntity celestialRabbit
             && player.isShiftKeyDown()
             && celestialRabbit.isTame()
+            && !celestialRabbit.isBaby()
             &&  (Objects.equals(Objects.requireNonNull(celestialRabbit.getOwnerUUID()).toString(), player.getUUID().toString()))
             && event.getSide() == LogicalSide.SERVER
         ) {

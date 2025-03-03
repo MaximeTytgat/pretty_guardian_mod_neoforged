@@ -10,5 +10,6 @@
       "condition": "minecraft:random_chance"
     }
   ],
+  "count": 1,
   "item": "prettyguardian:ruby_template_upgrade"
 }

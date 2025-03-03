@@ -2,6 +2,7 @@ package com.max.prettyguardian;
 
 import com.max.prettyguardian.block.ModBlock;
 import com.max.prettyguardian.item.ModItem;
+import com.max.prettyguardian.item.custom.tool.SpaceSwordItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -173,7 +174,7 @@ public class CreativeTab {
 
                 output.accept(ModItem.PLUTONS_KEY.get());
                 output.accept(ModItem.NEPTUNES_MIRROR.get());
-                output.accept(ModItem.SPACE_SWORD.get());
+                SpaceSwordItem.addToMainCreativeTab(parameters, output);
 
                 output.accept(ModBlock.PICNIC_BASKET.get());
                 output.accept(ModItem.SAILORMOON_OST_MUSIC_DISC.get());

@@ -46,8 +46,9 @@ public class CelestialRabbitOnShoulderLayer<T extends Player> extends RenderLaye
 
             PlayerEntityOnShoulder entityOnShoulderData = ClientPlayerEntityOnShoulderData.get(player.getStringUUID());
             if (entityOnShoulderData != null && !entityOnShoulderData.entityTypeDescriptionId().isEmpty()) {
-                CelestialRabbitCollarPearlLayer.renderCollarPearl(model, poseStack, bufferSource, light, LivingEntityRenderer.getOverlayCoords(player, 0.0F), entityOnShoulderData.collarDyeColorId());
-                CelestialRabbitFlameLayer.renderFlames(model, poseStack, bufferSource, light, player.tickCount, DyeColor.byId(entityOnShoulderData.collarDyeColorId()), true);
+                DyeColor collarDyeColor = DyeColor.byId(entityOnShoulderData.collarDyeColorId());
+                CelestialRabbitCollarPearlLayer.renderCollarPearl(model, poseStack, bufferSource, light, LivingEntityRenderer.getOverlayCoords(player, 0.0F), collarDyeColor.getTextureDiffuseColor());
+                CelestialRabbitFlameLayer.renderFlames(model, poseStack, bufferSource, player.tickCount, collarDyeColor, true);
             }
 
             poseStack.popPose();
