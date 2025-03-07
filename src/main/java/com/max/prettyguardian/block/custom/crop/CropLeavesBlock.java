@@ -1,5 +1,6 @@
 package com.max.prettyguardian.block.custom.crop;
 
+import com.max.prettyguardian.PrettyGuardian;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -61,8 +62,8 @@ public class CropLeavesBlock extends LeavesBlock implements BonemealableBlock {
         return MAX_AGE;
     }
 
-    public BlockState getStateForAge(int age) {
-        return this.defaultBlockState().setValue(this.getAgeProperty(), age);
+    public BlockState getStateForAge(BlockState state, int age) {
+        return state.setValue(AGE, age);
     }
 
     public final boolean canGrow(BlockState state) {
@@ -75,8 +76,13 @@ public class CropLeavesBlock extends LeavesBlock implements BonemealableBlock {
     }
 
     @Override
-    public boolean isBonemealSuccess(@NotNull Level worldIn, @NotNull RandomSource rand, @NotNull BlockPos pos, BlockState state) {
-        return state.getValue(AGE) != 3;
+    public boolean isBonemealSuccess(
+            @NotNull Level level,
+            @NotNull RandomSource random,
+            @NotNull BlockPos pos,
+            @NotNull BlockState state
+    ) {
+        return true;
     }
 
     public void growCrops(Level level, BlockPos pos, BlockState state) {
@@ -86,7 +92,7 @@ public class CropLeavesBlock extends LeavesBlock implements BonemealableBlock {
             i = j;
         }
 
-        level.setBlock(pos, this.getStateForAge(i), 2);
+        level.setBlock(pos, this.getStateForAge(state, i),2);
     }
 
     protected int getBonemealAgeIncrease(Level level) {
@@ -100,20 +106,23 @@ public class CropLeavesBlock extends LeavesBlock implements BonemealableBlock {
 
     @Override
     protected boolean isRandomlyTicking(@NotNull BlockState state) {
-        return shouldDecay(state) || this.canGrow(state);
+        return super.isRandomlyTicking(state) || this.canGrow(state);
     }
 
+    // TODO: test drop fruit on decay
     @Override
     protected void randomTick(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull RandomSource random) {
+        PrettyGuardian.LOGGER.info("randomTick, persistent: {}, distance: {}", state.getValue(PERSISTENT), state.getValue(DISTANCE));
         if (this.decaying(state)) {
             dropResources(state, level, pos);
+            if (!this.canGrow(state)) popResource(level, pos, new ItemStack(this.fruit.get()));
             level.removeBlock(pos, false);
         } else if (level.isAreaLoaded(pos, 1) && level.getRawBrightness(pos, 0) >= 9) {
             int i = this.getAge(state);
             if (i < this.getMaxAge()) {
                 float f = 1;
                 if (CommonHooks.canCropGrow(level, pos, state, random.nextInt((int)(25.0F / f) + 1) == 0)) {
-                    level.setBlock(pos, this.getStateForAge(i + 1), 2);
+                    level.setBlock(pos, this.getStateForAge(state,i + 1),2);
                     CommonHooks.fireCropGrowPost(level, pos, state);
                 }
             }
@@ -173,9 +182,10 @@ public class CropLeavesBlock extends LeavesBlock implements BonemealableBlock {
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
+    public @NotNull BlockState getStateForPlacement(BlockPlaceContext context) {
+        PrettyGuardian.LOGGER.info("getStateForPlacement");
         FluidState fluidstate = context.getLevel().getFluidState(context.getClickedPos());
-        BlockState blockstate = this.defaultBlockState().setValue(PERSISTENT, true).setValue(WATERLOGGED, fluidstate.getType() == Fluids.WATER);
+        BlockState blockstate = this.defaultBlockState().setValue(DISTANCE, 7).setValue(PERSISTENT, true).setValue(AGE, 0).setValue(WATERLOGGED, fluidstate.getType() == Fluids.WATER);
         return updateDistance(blockstate, context.getLevel(), context.getClickedPos());
     }
 
@@ -201,6 +211,7 @@ public class CropLeavesBlock extends LeavesBlock implements BonemealableBlock {
         return super.useWithoutItem(blockState, level, blockPos, player, blockHitResult);
     }
 
+    // TODO: check if this is needed
     @Override
     protected @NotNull ItemInteractionResult useItemOn(
             @NotNull ItemStack stack,

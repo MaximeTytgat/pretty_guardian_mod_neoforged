@@ -24,6 +24,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.LogicalSide;
@@ -225,7 +226,10 @@ public class ModEvents {
 
             if (entityOnShoulder.entityTypeDescriptionId() == null || entityOnShoulder.entityTypeDescriptionId().isEmpty()) return;
 
-            if (entityOnShoulderOnPlayerDeath == EntityOnShoulderOnPlayerDeath.RESPAWN_WITH_PLAYER) return;
+            if (
+                    entityOnShoulderOnPlayerDeath == EntityOnShoulderOnPlayerDeath.RESPAWN_WITH_PLAYER
+                    || player.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)
+            ) return;
 
             Vec3 newRabbitPos = new Vec3(player.position().x, player.position().y + 1.5, player.position().z);
             CelestialRabbitEntity newRabbit = getCelestialRabbitEntity(player, entityOnShoulder, newRabbitPos, false);

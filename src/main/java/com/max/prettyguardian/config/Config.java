@@ -20,6 +20,10 @@ public class Config
 
     private static final ModConfigSpec.EnumValue<EntityOnShoulderOnPlayerDeath> ENTITY_ON_SHOULDER_ON_PLAYER_DEATH = BUILDER
             .comment("What to do with the entity on the player's shoulder when the player dies")
+            .comment("RESPAWN_WITH_PLAYER: The entity will respawn with the player on his shoulder")
+            .comment("DROP: The entity will drop on the ground (not on sitting pose)")
+            .comment("DEATH: The entity will die")
+            .comment("This config is overridden by the gamerule 'keepInventory' if it is set to true, the entity will respawn with the player")
             .defineEnum("entityOnShoulderOnPlayerDeath", EntityOnShoulderOnPlayerDeath.DROP);
 
     public static final ModConfigSpec SPEC = BUILDER.build();
