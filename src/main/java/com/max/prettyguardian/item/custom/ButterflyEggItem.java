@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
+// FIXME: répare tout ça !
 public class ButterflyEggItem extends EggItem {
     private final Supplier<? extends EntityType<? extends Mob>> type;
     private final ButterflyEntity.Variant variant;

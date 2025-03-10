@@ -23,6 +23,7 @@ public class ModEventClient {
 
     @SubscribeEvent
     // TODO: apply particle effects to all players with entities on their shoulders (we need to tick on all players in client side)
+    // FIXME: les particules ne sont pas affichées sur les autres joueurs à l'ecran, tester en multi
     public static void onPlayerTick(ClientTickEvent.Post event) {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;

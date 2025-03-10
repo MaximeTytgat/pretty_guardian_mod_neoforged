@@ -398,6 +398,7 @@ public class CelestialRabbitEntity extends TamableAnimal implements FlyingAnimal
                     serverLevel.sendParticles(ModParticles.PINK_SONIC_BOOM_PARTICLES.get(), add.x, add.y, add.z, 1, 0.0, 0.0, 0.0, 0.0);
                 }
 
+                // TODO: Vérifier que le message quand un joueur ce fait tuer par le celestial rabbit n'est pas un message en rapport avec le Warden
                 if (livingentity instanceof Phantom) {
                     livingentity.hurt(celestialRabbitEntity.damageSources().mobAttack(celestialRabbitEntity), 10.0F);
                 } else {

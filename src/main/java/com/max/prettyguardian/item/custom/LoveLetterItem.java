@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
+// TODO: ajouter les des etats pour pouvoir afficher differentes textures d'item
 public class LoveLetterItem extends Item {
     public LoveLetterItem(Properties properties) {
         super(properties);

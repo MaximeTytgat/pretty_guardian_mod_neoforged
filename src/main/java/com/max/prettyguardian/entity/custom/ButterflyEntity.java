@@ -76,7 +76,12 @@ public class ButterflyEntity extends Animal implements FlyingAnimal, VariantHold
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor serverLevelAccessor, @NotNull DifficultyInstance difficultyInstance, @NotNull MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnGroupData) {
+    public @NotNull SpawnGroupData finalizeSpawn(
+            @NotNull ServerLevelAccessor serverLevelAccessor,
+            @NotNull DifficultyInstance difficultyInstance,
+            @NotNull MobSpawnType mobSpawnType,
+            SpawnGroupData spawnGroupData
+    ) {
         boolean flag = false;
         if (mobSpawnType == MobSpawnType.BUCKET) {
             return spawnGroupData;

@@ -56,6 +56,7 @@ public class StarLightEntity extends Projectile {
     @Override
     protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {}
 
+    @SuppressWarnings("deprecation")
     @Override
     public void tick() {
         Entity entity = this.getOwner();
@@ -206,6 +207,7 @@ public class StarLightEntity extends Projectile {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public float getLightLevelDependentMagicValue() {
         return 0.6F;
